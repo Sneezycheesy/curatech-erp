@@ -49,7 +49,7 @@ class ComponentController extends Controller
     public function details($id) {
         return view('curatech_components.Details', [
             'comp' => Component::find($id),
-            'vendors' => Component::find($id)->vendors()->get(),
+            'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
             'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
         ]);
     }
@@ -75,7 +75,10 @@ class ComponentController extends Controller
     }
 
     public function addVendor($id, Request $request) {
-        Component::find($id)->vendors()->attach($request->vendor_id, ['vendor_product_nr' => $request->vendor_product_nr]);
+        Component::find($id)->vendors()->attach($request->vendor_id, [
+            'vendor_product_nr' => $request->vendor_product_nr,
+            'component_unit_price' => $request->component_unit_price,
+        ]);
 
         return redirect()->back();
     }
