@@ -11,7 +11,7 @@
                         {{$message}}
                     </div>
                     @enderror
-                    <input type="text" name="curatech_product_id" id="curatech_product_id" class="text-black" value="{{$curatech_product->curatech_product_id}}">
+                    <x-text-input type="text" name="curatech_product_id" id="curatech_product_id" class="text-black">{{$curatech_product->curatech_product_id}}</x-text-input>
                     
                     <label for="name">Naam</label>
                     @error('name')
@@ -19,7 +19,7 @@
                             {{$message}}
                         </div>
                     @enderror
-                    <input type="text" name="name" id="name" class="text-black" value="{{$curatech_product->name}}">
+                    <x-text-input type="text" name="name" id="name" class="text-black">{{$curatech_product->name}}</x-text-input>
                     
                     <label for="description">Beschrijving</label>
                     @error('description')
