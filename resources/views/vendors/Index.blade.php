@@ -1,11 +1,13 @@
 <x-app-layout>
     <div class="grid gap-2 grid-cols-10 grid-flow-cols grid-rows-1 mt-5 py-7 px-7 dark:text-white dark:bg-gray-700 w-3/4 mx-auto h-full rounded">
-            <input hx-get="{{route('vendors')}}" hx-target="#vendors_container" hx-swap="outerHTML" hx-include="[name='search']" hx-trigger="keyup[keyCode==13]" type="text" value="" name="search" id="search_components" placeholder="Zoekt en gij zult vinden" class="col-span-6 align-center dark:text-black" />
-            <button hx-get="{{route('vendors')}}" hx-target="#vendors_container" hx-swap="outerHTML" hx-include="[name='search']" class="col-span-2 text-center bg-gray-400 dark:bg-gray-800 w-full hover:bg-red-700 hover:cursor-pointer">Go</button>
+        <div class="grid col-1 col-span-8">
+            <x-searchbar route="{{route('vendors')}}"
+                target="#vendors_container"
+                swap="outerHTML">    
+            </x-searchbar>
+        </div>
         
-        <a href="{{route('vendors.create')}}" class="text-center bg-green-700 w-full h-full hover:bg-green-900 hover:cursor-pointer align-center">
-            <input type="button" value="Creëer" class="w-full h-full">
-        </a>
+        <x-new-button hx-get="{{route('vendors.create')}}" class="col-span-2"/>
         <!-- TODO: Add vendors.delete route -->
         <!-- <input type="button" value="Verwijder" class="disabled text-center bg-red-700 hover:bg-red-900 hover:cursor-default"> -->
     </div>

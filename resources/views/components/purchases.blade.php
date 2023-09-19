@@ -17,7 +17,7 @@
                         </div>
                         @endforeach
                     </div>
-                    <input class="col-span-8 dark:bg-gray-800 w-1/2 mt-4 hover:dark:bg-red-600 rounded-xl hover:cursor-pointer" type="submit" value="Update" />
+                    <x-primary-button type="submit" value="Update" class="w-1/2 mt-3">Update</x-primary-button>
                 </form>
         </div>
 
@@ -86,7 +86,7 @@
                         <p>Suppliers</p>
                     </div>
                     <div>
-                        <p><a href="/components/edit/{{$component->component_id}}">☺</a></p>
+                        <p><a href="{{route('components_update', $component->component_id)}}">☺</a></p>
                     </div>
                 </div>
                     <!-- Display desired component fields to display

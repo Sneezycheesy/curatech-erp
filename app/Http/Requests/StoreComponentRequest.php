@@ -22,7 +22,7 @@ class StoreComponentRequest extends FormRequest
     public function rules(): array
     {        
         return [
-            'component_id' => 'required|max:10|unique:components',
+            'component_id' => 'required|max:10|unique:components,component_id',
             'description' => 'required',
             'courant' => 'required',
             'unit_price' => 'required|numeric',

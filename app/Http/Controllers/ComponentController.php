@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Mauricius\LaravelHtmx\Http\HtmxRequest;
+use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
+
 use App\Http\Requests\UpdateComponentRequest;
 use App\Http\Requests\StoreComponentRequest;
+use App\Http\Requests\ConnectVendorToComponentRequest;
 use App\Models\Component;
 use App\Models\Vendor;
 
 class ComponentController extends Controller
 {
-    public function get(Request $request) {
+    public function get(HtmxRequest $request) {
         $search = '';
         $comps = [];
+
+        if($request->isHtmxRequest()) {
+            return view('curatech_components.partials.components', [
+                'components' => Component::where('component_id', 'like', "%$request->search%")
+                ->orWhere('description', 'like', "%$request->search%")
+                ->get()
+            ]);
+        }
+
         if (!empty($request->query()['search'])) {
             $search = $request->query()['search'];
             $comps = Component::where('component_id', 'like', "%$search%")
@@ -54,12 +66,13 @@ class ComponentController extends Controller
         ]);
     }
 
-    public function createPage() {
-        return view('curatech_components.Create');
+    public function createPage(HtmxRequest $request) {
+
+        return $request->isHtmxRequest() ? new HtmxResponseClientRedirect(route('components_create')) : view('curatech_components.Create');
     }
 
     public function create(StoreComponentRequest $request) {
-        $valid = $request->validated(true);
+        $valid = $request->validated();
 
         if ($valid) {
             $valid['courant'] = $valid['courant'] == 'Y' ? 1 : 0;
@@ -74,7 +87,9 @@ class ComponentController extends Controller
         return redirect()->back();
     }
 
-    public function addVendor($id, Request $request) {
+    public function addVendor($id, ConnectVendorToComponentRequest $request) {
+        $request->validated();
+
         Component::find($id)->vendors()->attach($request->vendor_id, [
             'vendor_product_nr' => $request->vendor_product_nr,
             'component_unit_price' => $request->component_unit_price,

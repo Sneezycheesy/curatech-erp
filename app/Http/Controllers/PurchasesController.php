@@ -25,7 +25,7 @@ class PurchasesController extends Controller
 
     public function updateStock(Request $request) {
         foreach ($request->except('_token') as $curatech_product_id=>$stock) {
-            CuratechProduct::findOrFail($curatech_product_id)->update(['stock_desired' => $stock]);
+            CuratechProduct::find(str_replace('_', '.', $curatech_product_id))->update(['stock_desired' => $stock ?? 0]);
         }
 
         return redirect()->back();

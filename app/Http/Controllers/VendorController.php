@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Mauricius\LaravelHtmx\Http\HtmxRequest;
 use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
 use App\Http\Requests\StoreVendorRequest;
+use App\Http\Requests\UpdateVendorRequest;
 use App\Models\Vendor;
 use App\Models\Component;
 
@@ -38,12 +39,31 @@ class VendorController extends Controller
         return view('vendors.Details', [
             'vendor' => Vendor::find($id),
             // 'comps' => Vendor::find($id)->components()->get(),
-            'comps' => Component::all(),
+            'comps' => Vendor::find($id)->components()->get(),
         ]);
     }
 
-    public function createPage() {
+    public function createPage(HtmxRequest $rq) {
+        if($rq->isHtmxRequest()) {
+            return new HtmxResponseClientRedirect(route('vendors.create'));
+        }
         return view('vendors.Create');
+    }
+
+    public function edit($id, HtmxRequest $request) {
+        if ($request->isHtmxRequest()) {
+            return new HtmxResponseClientRedirect(route('vendors.edit', $id));
+        }
+
+        return view('vendors.Edit', [
+            'vendor' => Vendor::find($id),
+        ]);
+    }
+
+    public function update($id, UpdateVendorRequest $request) {
+        Vendor::find($id)->update($request->except('_token'));
+        
+        return redirect()->back()->with('success', 'Succesvol opgeslagen!');
     }
 
     public function create(StoreVendorRequest $request) {

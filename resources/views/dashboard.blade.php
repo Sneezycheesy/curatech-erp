@@ -5,29 +5,18 @@
         </h2>
     </x-slot>
 
-    <div class="flex flex-cols justify-around py-12 mx-auto max-w-xl">
-        <a href="/curatech_products" class="w-32 h-28 py-6 sm:px-6 lg:px-8 dark:bg-gray-700 dark:text-white rounded-xl bg-red-300 hover:bg-red-600 hover:text-white">
-            <div>
-                <p class="text-center">Curatech Products</p>
-            </div>
+    <div class="grid grid-cols-4 max-w-7xl w-full mt-4 py-5 mx-auto text-center gap-x-5">
+        <a href="{{route('components')}}" class="flex items-center hover:bg-red-400 hover:black:bg-red-500 justify-center bg-red-200 w-full h-[100px] text-black dark:bg-red-600 dark:text-white">
+            Componenten
         </a>
-
-        <a href="{{route('components')}}" class="w-32 h-28 py-6 sm:px-6 lg:px-8 dark:bg-gray-700 dark:text-white rounded-xl bg-red-300 hover:bg-red-600 hover:text-white">
-            <div>
-                <p class="text-center">Componenten</p>
-            </div>
+        <a href="{{route('curatech_products')}}" class="flex items-center hover:bg-red-400 hover:black:bg-red-500 justify-center bg-red-200 w-full h-[100px] text-black dark:bg-red-600 dark:text-white">
+            Producten
         </a>
-
-        <a href="/purchases" class="w-32 h-28 py-6 sm:px-6 lg:px-8 dark:bg-gray-700 dark:text-white rounded-xl bg-red-300 hover:bg-red-600 hover:text-white">
-            <div>            
-                <p class="text-center">Purchases</p>
-            </div>
+        <a href="{{route('vendors')}}" class="flex items-center hover:bg-red-400 hover:black:bg-red-500 justify-center bg-red-200 w-full h-[100px] text-black dark:bg-red-600 dark:text-white">
+            Leveranciers
         </a>
-
-        <a href="{{route('vendors')}}" class="w-32 h-28 py-6 sm:px-6 lg:px-8 dark:bg-gray-700 dark:text-white rounded-xl bg-red-300 hover:bg-red-600 hover:text-white">
-            <div>            
-                <p class="text-center">Leveranciers</p>
-            </div>
+        <a href="{{route('purchases')}}" class="flex items-center hover:bg-red-400 hover:black:bg-red-500 justify-center bg-red-200 w-full h-[100px] text-black dark:bg-red-600 dark:text-white">
+            Inkoop (WIP)
         </a>
     </div>
 </x-app-layout>

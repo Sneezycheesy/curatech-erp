@@ -6,7 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\CuratechProduct;
 use App\Models\Component;
 
+use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
+use Mauricius\LaravelHtmx\Http\HtmxRequest;
+
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+
 use App\Http\Requests\UpdateCuratechProductRequest;
+use App\Http\Requests\StoreCuratechProductRequest;
+use App\Http\Requests\AddComponentToCuratechProductRequest;
 
 class CuratechProductController extends Controller
 {
@@ -17,7 +25,11 @@ class CuratechProductController extends Controller
         ]);
     }
 
-    public function details(string $id) {
+    public function details(string $id, HtmxRequest $request) {
+        if($request->isHtmxRequest()) {
+            return new HtmxResponseClientRedirect(route('curatech_product_details', $id));
+        }
+
         $curatech_product = CuratechProduct::find($id);
         return view('curatech_products.Details', [
             'curatech_product' => $curatech_product,
@@ -25,11 +37,15 @@ class CuratechProductController extends Controller
         ]);
     }
 
-    public function updatePage(string $id) {
+    public function updatePage(string $id, HtmxRequest $request) {
+        if($request->isHtmxRequest()) {
+            return new HtmxResponseClientRedirect(route('curatech_product_update', $id));
+        }
+
         $curatech_product = CuratechProduct::find($id);
         $components = $curatech_product->components()->get();
         // Return only components that are NOT connected to $curatech_product
-        $all_components = Component::all()->whereNotIn('id', $curatech_product->components()->pluck('curatech_products_components.component_id')->toArray());
+        $all_components = Component::all();
         return view('curatech_products.Update', [
             'curatech_product' => $curatech_product,
             'components' => $components,
@@ -48,21 +64,40 @@ class CuratechProductController extends Controller
         return redirect(route('curatech_product_update', $cp->curatech_product_id))->withSuccess('Product opgeslagen');
     }
 
-    public function addComponent(Request $request) {
+    public function addComponent(AddComponentToCuratechProductRequest $request) {
+        $comp = CuratechProduct::find($request->route('id'))->components()->wherePivot('curatech_product_component_position', strtoupper($request->curatech_product_component_position))->get();
+        
+        if(count($comp) > 0) {
+            throw ValidationException::withMessages(['curatech_product_component_position' => 'Positie is al bezet']);
+        }
+
+        $request->validated();
+
         $curatech_product = CuratechProduct::find($request->route('id'));
         $existing_components_ids = $curatech_product->components()->pluck('curatech_products_components.component_id')->toArray();
         if (!in_array($request->component_id, $existing_components_ids)){
-            $curatech_product->components()->attach(Component::find($request->component_id)->id);
+            $curatech_product->components()->attach(Component::find($request->component_id)->id, [
+                'curatech_product_component_position' => strtoupper($request->curatech_product_component_position)
+            ]);
         }
         return redirect()->back();
     }
 
     public function removeComponent(Request $request) {
         $curatech_product = CuratechProduct::find($request->route('id'));
-        $existing_components_ids = $curatech_product->components()->pluck('curatech_products_components.component_id')->toArray();
-        if (in_array(Component::find($request->component_id)->id, $existing_components_ids)){
-            $curatech_product->components()->detach(Component::find($request->component_id)->id);
-        }
+        $curatech_product->components()->wherePivot('curatech_product_component_position', $request->curatech_product_component_position)->detach();
         return redirect()->back();
+    }
+
+    public function create() {
+        return view('curatech_products.Create', [
+            'components' => [],
+            'all_components' => Component::all()
+        ]);
+    }
+
+    public function createProduct(StoreCuratechProductRequest $request) {
+        CuratechProduct::create($request->validated());
+        return redirect()->back()->with('success', 'Product aangemaakt');
     }
 }
