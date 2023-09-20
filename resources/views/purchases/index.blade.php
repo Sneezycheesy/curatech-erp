@@ -17,7 +17,7 @@
                         </div>
                         @endforeach
                     </div>
-                    <x-primary-button hx-post="{{route('purchases_update_stock')}}" hx-target='#components_table' value="Update" class="w-1/6 mt-3">Update</x-primary-button>
+                    <x-primary-button hx-post="{{route('purchases_update_stock')}}" hx-target='#components_table' class="w-1/6 my-3">Update</x-primary-button>
                 </form>
         </div>
 

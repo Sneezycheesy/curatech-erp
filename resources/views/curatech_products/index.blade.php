@@ -8,10 +8,11 @@
             </x-searchbar>
         </div>
         
-        <a href="{{route('curatech_products.create')}}"
+        <x-new-button hx-get="{{route('curatech_products.create')}}"
             class="text-center bg-green-700 w-full h-full hover:bg-green-900 hover:cursor-pointer align-center col-span-2">
-            <input type="button" value="Creëer" class="w-full h-full">
-        </a>
+            <!-- <input type="button" value="Creëer" class="w-full h-full"> -->
+            +
+        </x-new-button>
         <!-- TODO: Add vendors.delete route -->
         <!-- <input type="button" value="Verwijder" class="disabled text-center bg-red-700 hover:bg-red-900 hover:cursor-default"> -->
     </div>

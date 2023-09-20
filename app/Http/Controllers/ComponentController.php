@@ -45,7 +45,7 @@ class ComponentController extends Controller
             return new HtmxResponseClientRedirect(route('components.edit', $id));
         }
 
-        return view('curatech_components.Edit', [
+        return view('curatech_components.edit', [
             'comp' => Component::where('component_id', $id)->First(),
             'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
             'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
@@ -70,7 +70,7 @@ class ComponentController extends Controller
             return new HtmxResponseClientRedirect(route('components.details', $id));
         }
 
-        return view('curatech_components.Details', [
+        return view('curatech_components.details', [
             'comp' => Component::find($id),
             'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
             'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
@@ -125,7 +125,7 @@ class ComponentController extends Controller
             return new HtmxresponseClientRedirect(route('components.restock', $id));
         }
 
-        return view('curatech_components.Restock', [
+        return view('curatech_components.restock', [
             'id' => $id,
             'vendors' => Component::find($id)->vendors()->get(),
         ]);

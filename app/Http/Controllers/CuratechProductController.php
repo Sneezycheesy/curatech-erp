@@ -93,7 +93,11 @@ class CuratechProductController extends Controller
         ]);
     }
 
-    public function create() {
+    public function create(HtmxRequest $rq) {
+        if($rq->isHtmxRequest()) {
+            return new HtmxResponseClientRedirect(route('curatech_products.create'));
+        }
+
         return view('curatech_products.create', [
             'components' => [],
             'all_components' => Component::all()
