@@ -1,4 +1,6 @@
-<div class="col-span-2 grid w-full grid-cols-7 grid-flow-cols auto-grid-rows gap-y-2 gap-x-2 text-center max-w-7xl mx-auto h-max px-2">
+
+<div class="grid w-full grid-cols-7 grid-flow-cols auto-grid-rows gap-y-2 gap-x-2 text-center max-w-7xl mx-auto h-max px-2">
+    @if (!$disabled)
     <div class="grid grid-cols-7 col-span-7 text-white">
         <div class="col-span-3 text-2xl grid auto-rows-max grid-cols-1">
             <x-input-label>Leverancier</x-input-label>
@@ -18,7 +20,8 @@
                 <p class="text-red-500 text-base">{{$message}}</p>
             @enderror
         </div>
-    </div>       
+    </div>
+
     <!-- Show a selectbox that allows the user to add EXISTING components to the product -->
     <form id="add_vendor_form" method="post" action="{{route('components.vendor.add', $comp->component_id)}}" class="grid grid-cols-7 gap-x-2 col-span-7 w-full h-max">
         @csrf
@@ -35,25 +38,32 @@
     </form>
     
     <x-primary-button type="submit" form="add_vendor_form" class="col-span-7">Toevoegen</x-primary-button>
+    @endif
 
     <!-- Display TABLE of linked COMPONENTS-->
-    <div class="grid grid-cols-4 border-b-2 border-gray-700 col-span-7 mt-3">
-        <div>Naam</div>
-        <div>Productnummer</div>
-        <div>stukprijs</div>
+    <div class="grid {{$disabled ? 'grid-cols-3' : 'grid-cols-4 mt-3'}} border-b-2 border-gray-700 col-span-7">
+        <x-input-label>Naam</x-input-label>
+        <x-input-label>Productnummer</x-input-label>
+        <x-input-label>stukprijs</x-input-label>
+
+        @if (!$disabled)
         <div><i class="fa-solid fa-gear"></i></div>
+        @endif
     </div>
 
     @foreach ( $vendors as $vendor )
-    <div class="grid col-span-7 grid-cols-4 hover:bg-red-700rounded overflow-y-scroll">
+    <div class="grid col-span-7 {{$disabled ? 'grid-cols-3' : 'grid-cols-4'}} hover:bg-red-700rounded overflow-y-scroll">
         <div>{{$vendor->name}}</div>
         <div>{{$vendor->pivot->vendor_product_nr}}</div>
-        <div>{{$vendor->pivot->component_unit_price}}</div>
+        <div>€{{$vendor->pivot->component_unit_price}}</div>
+
+        @if(!$disabled)
         <form>
             @csrf
-            <div hx-delete="{{route('components.removeVendor', $comp->component_id)}}" hx-include="[name='vendor_id_{{$vendor->id}}']"><i class="fa-solid fa-trash"></i></div>
+            <div hx-delete="{{route('components.removeVendor', $comp->component_id)}}" hx-include="[name='vendor_id_{{$vendor->id}}']"><i class="fa-solid fa-trash hover:cursor-pointer hover:text-red-400"></i></div>
             <input type="hidden" name="vendor_id_{{$vendor->id}}" value="{{$vendor->id}}" />
         </form>
+        @endif
     </div>
     @endforeach
 </div>

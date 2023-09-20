@@ -1,18 +1,15 @@
-<div id="components_container" class="col-span-4 grid grid-cols-4 auto-rows-max py-2">
-@foreach($components as $component)
-    <a href="{{route('components.details', $component->component_id)}}" class="col-span-4 grid grid-cols-4 auto-rows-max hover:bg-red-800 hover:cursor-pointer py-2">
+<div id="components_container" class="col-span-3 grid grid-cols-3 auto-rows-max max-h-[400px] overflow-y-scroll">
+@for($i = 0; $i < count($components); $i++)
+    <a href="{{route('components.details', $components[$i]->component_id)}}" class="col-span-3 grid grid-cols-3 auto-rows-max hover:bg-red-800 hover:text-white hover:cursor-pointer py-2 {{$i % 2 ? 'dark:bg-gray-700 bg-gray-300' : 'dark:bg-gray-500 bg-gray-400'}}">
         <div>
-            {{$component->component_id}}
+            {{$components[$i]->component_id}}
         </div>
         <div class="inline overflow-hidden text-ellipsis whitespace-nowrap">
-            {{$component->description}}
+            {{$components[$i]->description}}
         </div>
         <div>
-            {{$component->stock}}
-        </div>
-        <div>
-            €{{$component->unit_price}}
+            {{$components[$i]->stock}}
         </div>
     </a>
-@endforeach
+@endfor
 </div>

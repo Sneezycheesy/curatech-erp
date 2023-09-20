@@ -6,14 +6,16 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class select-box extends Component
+class SelectBox extends Component
 {
+    public $disabled;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($disabled)
     {
         //
+        $this->disabled = $disabled;
     }
 
     /**

@@ -25,9 +25,7 @@ class StoreComponentRequest extends FormRequest
             'component_id' => 'required|max:10|unique:components,component_id',
             'description' => 'required',
             'courant' => 'required',
-            'unit_price' => 'required|numeric',
             'lt' => 'required|numeric',
-            'stock' => 'required|numeric',
         ];
     }
 

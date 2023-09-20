@@ -83,10 +83,14 @@ class CuratechProductController extends Controller
         return redirect()->back();
     }
 
-    public function removeComponent(Request $request) {
+    public function removeComponent(HtmxRequest $request) {
         $curatech_product = CuratechProduct::find($request->route('id'));
         $curatech_product->components()->wherePivot('curatech_product_component_position', $request->curatech_product_component_position)->detach();
-        return redirect()->back();
+        
+        return view('curatech_products.partials.components', [
+            'components' => CuratechProduct::find($request->route('id'))->components()->get(),
+            'curatech_product' => $curatech_product,
+        ]);
     }
 
     public function create() {

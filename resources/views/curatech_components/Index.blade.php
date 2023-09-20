@@ -22,8 +22,8 @@
     </div>
 
     <!-- Components overview -->
-    <div class="grid grid-cols-4 grid-flow-cols dark:text-white pt-7 px-7 w-3/4 mx-auto text-center gap-y-2">
-        <div class="grid col-span-5 grid-cols-4 grid-flows-cols text-center dark:text-white pb-2 border-b-2 border-gray-700 overlow-y-scroll">
+    <div class="grid grid-cols-3 grid-flow-cols dark:text-white pt-7 px-7 w-3/4 mx-auto text-center gap-y-2">
+        <div class="grid col-span-5 grid-cols-3 grid-flows-cols text-center dark:text-white pb-2 border-b-2 border-gray-700 overlow-y-scroll">
             <div>
                 ID
             </div>
@@ -32,9 +32,6 @@
             </div>
             <div>
                 Voorraad
-            </div>
-            <div>
-                Stukprijs
             </div>
         </div>
         @include('curatech_components.partials.components')

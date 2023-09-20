@@ -3,7 +3,7 @@
         @csrf
         <div class="grid grid-cols-2 gap-x-20 gap-y-8 auto-rows-max grid-flow-rows max-w-5xl mx-auto w-full h-min overflow-y-scroll">
             <div class="col-span-2 text-3xl">
-                Component details
+                Component aanmaken
             </div>
             <div class="grid grid-cols-1 grid-rows-2 w-full text-center">
                 <x-input-label for="component_id" class="w-full text-2xl">Artikelnummer</x-input-label>
@@ -36,15 +36,6 @@
                         <option value="N" @if(old('courant') == 'N') selected @endif>Nee</option>
                     </x-slot>
                 </x-select-box>
-            </div>            
-            <div class="grid grid-cols-1 grid-rows-2 grid-flow-rows w-full text-center">
-                <x-input-label for="unit_price" class="w-full text-2xl">Stukprijs</x-input-label>
-                @error('unit_price')
-                    <div class="text-red-900 dark:text-red-500">
-                        {{$message}}
-                    </div>
-                @enderror
-                <x-text-input type="text" name="unit_price" id="unit_price" placeholder="Prijs in €" class="w-full text-center text-black">{{old('unit_price')}}</x-text-input>
             </div>
             <div class="grid grid-cols-1 grid-rows-2 grid-flow-rows w-full text-center">
                 <x-input-label for="lt" class="w-full text-2xl">LT</x-input-label>
@@ -69,6 +60,9 @@
     
     <div class="grid grid-cols-1 grid-rows grid-flow-rows max-w-7xl text-center mx-auto mt-5">
         <x-primary-button type="submit" form="component_form" value="Aanmaken" class="w-1/2 mx-auto">Aanmaken</x-primary-button>
+        @if(session('success'))
+            <p class="text-green-400">{{session('success')}}</p>
+        @endif
     </div>
 
     <!-- Upload csv files to import components -->

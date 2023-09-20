@@ -1,32 +1,26 @@
 <x-app-layout>
     <div class=" dark:text-white py-6 max-w-7xl mx-auto">
-        <div class="w-1/2 mx-auto">
-            <x-edit-button hx-get="{{route('curatech_product_update', $curatech_product->curatech_product_id)}}" class="w-full" type="button">Wijzigen</x-edit-button>
-        </div>
         
-        <div class="grid grid-cols-2 auto-rows-max dark:bg-gray-700 py-6 mt-3 text-center max-w-6xl w-1/2 mx-auto">
-            <div class="col-span-2 grid grid-cols-2 px-3">
-                <p class="text-2xl">Naam</p>
-                <x-text-input disabled value="{{ $curatech_product->name }}" />
-            </div>
-            <div class="col-span-2 grid grid-cols-2 px-3">
-                <p class="text-2xl">Beschrijving</p>
-                <x-text-area-input disabled>{{ $curatech_product->description }}</x-text-area-input>
-            </div>
-        </div>
-        <div class="grid w-full grid-cols-3 grid-flow-cols auto-grid-rows overflow-y-scroll mt-6 text-center">
-            <!-- Display TABLE of linked COMPONENTS-->
-            <div class="grid grid-cols-3 border-b-2 border-gray-700 col-span-3">
-                <div>ID</div>
-                <div>Description</div>
-                <div>Position</div>
-            </div>
+        <div class="grid grid-cols-2 w-full max-w-7xl gap-x-4">
+            <div class="grid grid-cols-2 auto-rows-max dark:bg-gray-700 gap-y-3 py-6 w-3/4 mx-auto">
+                <div class="col-span-2 grid grid-cols-1 px-3">
+                    <x-input-label class="text-2xl">Naam</x-input-label>
+                    <x-text-input disabled value="{{ $curatech_product->name }}" />
+                </div>
+                <div class="col-span-2 grid grid-cols-1 px-3 items-top">
+                    <x-input-label class="text-2xl">Beschrijving</x-input-label>
+                    <x-text-area-input disabled>{{ $curatech_product->description }}</x-text-area-input>
+                </div>
 
-            @foreach ( $components as $component )
-                <div>{{$component->component_id}}</div>
-                <div class="whitespace-nowrap overflow-x-hidden text-ellipsis">{{$component->description}}</div>
-                <div>{{$component->pivot->curatech_product_component_position}}</div>
-            @endforeach
+                
+                <div class="flex justify-end col-span-2 w-full px-3 pt-3">
+                    <a href="{{route('curatech_products')}}"><x-primary-button class="mr-2 fa-solid fa-arrow-left"></x-primary-button></a>
+                    <x-edit-button hx-get="{{route('curatech_product_update', $curatech_product->curatech_product_id)}}" class="w-max" type="button">Wijzigen</x-edit-button>
+                </div>
+            </div>
+            <div class="grid w-full grid-cols-3 auto-grid-rows overflow-y-scroll text-center h-max">
+                @include('curatech_products.partials.components-table', ['disabled' => true])
+            </div>
         </div>
     </div>
 </x-app-layout>

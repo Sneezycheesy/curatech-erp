@@ -86,7 +86,7 @@
                         <p>Suppliers</p>
                     </div>
                     <div>
-                        <p><a href="{{route('components_update', $component->component_id)}}">☺</a></p>
+                        <p><a href="{{route('components.restock', $component->component_id)}}"><i class="fa-solid fa-arrow-right"></i></a></p>
                     </div>
                 </div>
                     <!-- Display desired component fields to display
