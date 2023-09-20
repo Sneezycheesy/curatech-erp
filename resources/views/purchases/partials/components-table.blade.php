@@ -6,7 +6,7 @@
     @php $i = !$i @endphp
     <div class="grid py-3 gap-x-1 grid-flow-col grid-cols-6 mx-auto text-center max-h-[400px] hover:bg-red-200 {{$i ? 'bg-gray-200 dark:bg-gray-700' : 'bg-gray-300 dark:bg-gray-600'}}">
         <div class="items-end">
-            <p>{{$component->component_id}}</p>
+            <p class="hover:cursor-pointer hover:text-gray-400" hx-get="{{route('components.details', $component->component_id)}}">{{$component->component_id}}</p>
         </div>
         <div class="inline overflow-hidden">
             <p class="whitespace-nowrap overflow-hidden text-ellipsis" aria-label="{{$component->description}}">{{$component->description}}</p>

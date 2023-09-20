@@ -32,7 +32,7 @@ class ComponentController extends Controller
                         ->get();
         }
 
-        return view('curatech_components.Index', [
+        return view('curatech_components.index', [
             'components' => empty($comps) ? Component::all() : $comps,
             'search' => $search,
         ]);
@@ -80,7 +80,7 @@ class ComponentController extends Controller
 
     public function createPage(HtmxRequest $request) {
 
-        return $request->isHtmxRequest() ? new HtmxResponseClientRedirect(route('components_create')) : view('curatech_components.Create', [
+        return $request->isHtmxRequest() ? new HtmxResponseClientRedirect(route('components_create')) : view('curatech_components.create', [
             'disabled' => false,
         ]);
     }
@@ -120,7 +120,11 @@ class ComponentController extends Controller
         }
     }
 
-    public function restock($id) {
+    public function restock($id, HtmxRequest $rq) {
+        if ($rq->isHtmxRequest()) {
+            return new HtmxresponseClientRedirect(route('components.restock', $id));
+        }
+
         return view('curatech_components.Restock', [
             'id' => $id,
             'vendors' => Component::find($id)->vendors()->get(),

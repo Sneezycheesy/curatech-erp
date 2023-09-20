@@ -40,8 +40,8 @@ Route::get('/curatech_products/create', [CuratechProductController::class, 'crea
 Route::post('/curatech_products/create', [CuratechProductController::class, 'createProduct'])->middleware(['auth', 'verified'])->name('curatech_products.create_product');
 
 // Purchases
-Route::get('/purchases', [PurchasesController::class, 'get'])->middleware(['auth', 'verified'])->name('purchases');
-Route::post('/purchases', [PurchasesController::class, 'updateStock'])->middleware(['auth', 'verified'])->name('purchases_update_stock');
+Route::get('/purchases', [RestockController::class, 'index'])->middleware(['auth', 'verified'])->name('purchases');
+Route::post('/purchases', [RestockController::class, 'updateDesiredStock'])->middleware(['auth', 'verified'])->name('purchases_update_stock');
 
 // Components
 Route::get('components', [ComponentController::class, 'get'])->middleware(['auth', 'verified'])->name('components');

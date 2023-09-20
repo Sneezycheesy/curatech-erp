@@ -20,7 +20,7 @@ class CuratechProductController extends Controller
 {
     //
     public function index() {
-        return view('curatech_products.Index', [
+        return view('curatech_products.index', [
             'curatech_products' => CuratechProduct::all(),
         ]);
     }
@@ -94,7 +94,7 @@ class CuratechProductController extends Controller
     }
 
     public function create() {
-        return view('curatech_products.Create', [
+        return view('curatech_products.create', [
             'components' => [],
             'all_components' => Component::all()
         ]);

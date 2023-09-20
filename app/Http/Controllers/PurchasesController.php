@@ -18,7 +18,7 @@ class PurchasesController extends Controller
         }
 
 
-        return view('purchases.Index', [
+        return view('purchases.index', [
             'curatech_products' => CuratechProduct::with('components')->whereHas('components')->orderBy('name', 'ASC')->get(),
             'components' => Component::with('curatech_products')
                 ->whereHas('curatech_products')
@@ -42,7 +42,7 @@ class PurchasesController extends Controller
             ->get()
             ->filter(function($comp) {
                 return $comp->required_stock() > 0;
-            })
+            }),
         ]);
     }
 }
