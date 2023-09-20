@@ -122,6 +122,7 @@ class ComponentController extends Controller
 
     public function restock($id) {
         return view('curatech_components.Restock', [
+            'id' => $id,
             'vendors' => Component::find($id)->vendors()->get(),
         ]);
     }

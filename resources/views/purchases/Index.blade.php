@@ -3,7 +3,7 @@
 
     <!-- Display curatech device stock supplies -->
             <div class="text-center align-middle w-full">
-                <form action='/purchases' method="post">
+                <form>
                     @csrf
                     @if (count($curatech_products) > 4)
                     <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense grid-rows-2 overflow-scroll h-full">
@@ -12,12 +12,12 @@
                     @endif
                         @foreach ( $curatech_products as $curatech_product )
                         <div class="grid gap-y-1 grid-cols-1 px-2">
-                            <label class="" for="product-name">Product: {{$curatech_product->name}}</label>
-                            <input class="dark:text-black rounded-xl text-center" type="number" name="{{$curatech_product->curatech_product_id}}" value="{{$curatech_product->stock_desired}}" />
+                            <x-input-label class="" for="product-name">Product: {{$curatech_product->name}}</x-input-label>
+                            <x-text-input class="text-center" name="{{$curatech_product->curatech_product_id}}" value="{{$curatech_product->stock_desired}}" />
                         </div>
                         @endforeach
                     </div>
-                    <x-primary-button type="submit" value="Update" class="w-1/2 mt-3">Update</x-primary-button>
+                    <x-primary-button hx-post="{{route('purchases_update_stock')}}" hx-target='#components_table' value="Update" class="w-1/2 mt-3">Update</x-primary-button>
                 </form>
         </div>
 
@@ -64,46 +64,9 @@
                     Display number of component required if device is linked to component
                 Add column with component data for each column described above
             -->
-            @foreach ($components as $component)
-            <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-6 mx-auto text-center h-max-h-400">
-                    <div class="items-end">
-                        <p>{{$component->component_id}}</p>
-                    </div>
-                    <div class="inline overflow-hidden">
-                        <p class="whitespace-nowrap overflow-hidden text-ellipsis" aria-label="{{$component->description}}">{{$component->description}}</p>
-                    </div>
-                    @if($component->stock < $component->required_stock())
-                    <div class="dark:text-red-400">
-                    @else
-                    <div class="dark:text-white">
-                    @endif
-                        <p>{{$component->stock}}</p>
-                    </div>
-                    <div class="">
-                        <p>{{$component->required_stock()}}</p>
-                    </div>
-                    <div class="">
-                        <p>Suppliers</p>
-                    </div>
-                    <div>
-                        <p><a href="{{route('components.restock', $component->component_id)}}"><i class="fa-solid fa-arrow-right"></i></a></p>
-                    </div>
-                </div>
-                    <!-- Display desired component fields to display
-                        - ID
-                        - Description
-                        - Stock
-                        - Supplier(s)
-                        - Unit Price
-                        - Feed
-                        - Desired (based off product stock)
-                        - Shortage (current stock - desired)
-                        - Current stock
-                        - Amount to order (possibly based off packaging style)
-                        - Total order price
-                        - Total current stock price (amount of components in stock * unit price)
-                    -->
-            @endforeach
+            <div id="components_table">
+                @include('purchases.partials.components-table')
+            </div>
 
             <!-- Display total price of components to be ordered -->
     </div>
