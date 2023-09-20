@@ -10,12 +10,17 @@ class Restock extends Model
     use HasFactory;
 
     protected $fillables = [
-        'id',
         'component_id',
-        'amount_restock'
+        'amount',
+        'vendor_id',
+        'invoice'
     ];
 
     public function component() {
         return $this->hasOne(Component::class, 'component_id');
+    }
+
+    public function vendor() {
+        return $this->hasOne(Vendor::class, 'vendor_id');
     }
 }

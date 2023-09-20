@@ -45,4 +45,10 @@ class PurchasesController extends Controller
             })
         ]);
     }
+
+    public function restock(HtmxRequest $rq) {
+        
+
+        return new HtmxResponseClientRedirect(route('purchases'));
+    }
 }

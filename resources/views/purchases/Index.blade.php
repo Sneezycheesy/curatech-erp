@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto mt-10 bg-gray-300 text-black py-6 dark:bg-gray-700 dark:text-white">
+    <div class="max-w-7xl mx-auto mt-10 bg-gray-300 text-black pt-6 pb-4 dark:bg-gray-700 dark:text-white">
 
     <!-- Display curatech device stock supplies -->
             <div class="text-center align-middle w-full">
@@ -17,7 +17,7 @@
                         </div>
                         @endforeach
                     </div>
-                    <x-primary-button hx-post="{{route('purchases_update_stock')}}" hx-target='#components_table' value="Update" class="w-1/2 mt-3">Update</x-primary-button>
+                    <x-primary-button hx-post="{{route('purchases_update_stock')}}" hx-target='#components_table' value="Update" class="w-1/6 mt-3">Update</x-primary-button>
                 </form>
         </div>
 
