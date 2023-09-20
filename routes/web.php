@@ -46,7 +46,9 @@ Route::post('/purchases', [PurchasesController::class, 'updateStock'])->middlewa
 Route::get('components', [ComponentController::class, 'get'])->middleware(['auth', 'verified'])->name('components');
 Route::post('components/details/{id}/add_vendor', [ComponentController::class, 'addVendor'])->middleware(['auth', 'verified'])->name('components.vendor.add');
 Route::get('components/details/{id}', [ComponentController::class, 'details'])->middleware(['auth', 'verified'])->name('components_details');
-Route::post('components/details/{id}', [ComponentController::class, 'update'])->middleware(['auth', 'verified'])->name('components_update');
+Route::get('components/edit/{id}', [ComponentController::class, 'editPage'])->middleware(['auth', 'verified'])->name('components.edit');
+Route::post('components/edit/{id}', [ComponentController::class, 'update'])->middleware(['auth', 'verified'])->name('components.update');
+Route::delete('components/edit/{id}', [ComponentController::class, 'removeVendor'])->middleware(['auth', 'verified'])->name('components.removeVendor');
 Route::post('/components/upload', [FileUploadController::class, 'uploadComponentsCSV'])->name('components_upload');
 Route::get('/components/create', [ComponentController::class, 'createPage'])->name('components_create');
 Route::post('/components/create', [ComponentController::class, 'create'])->name('components_create');

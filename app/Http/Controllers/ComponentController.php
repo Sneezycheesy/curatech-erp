@@ -40,9 +40,15 @@ class ComponentController extends Controller
 
     // Request to the edit page for a specific component
     // Edit page displays a form to enter how much new stock there is and which vendor is was purchased from
-    public function editPage($id) {
-        return view('components/component_edit', [
+    public function editPage($id, HtmxRequest $rq) {
+        if ($rq->isHtmxRequest()) {
+            return new HtmxResponseClientRedirect(route('components.edit', $id));
+        }
+
+        return view('curatech_components.Edit', [
             'comp' => Component::where('component_id', $id)->First(),
+            'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
+            'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
         ]);
     }
 
@@ -96,6 +102,15 @@ class ComponentController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function removeVendor($id, HtmxRequest $rq) {
+        try {
+            Component::find($id)->vendors()->detach($rq->except('_token'));
+            return new HtmxResponseClientRedirect(route('components.edit', $id));
+        } catch (Exeption $e) {
+            return redirect()->back()->with(['error' => $e]);
+        }
     }
 }
 

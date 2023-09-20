@@ -1,4 +1,9 @@
 node_modules
 .env
 public/build
+vendor.editorconfig
+.env.example
+.gitattributes
+public/hot
+.editorconfig
 vendor

@@ -23,7 +23,7 @@ class ConnectVendorToComponentRequest extends FormRequest
     {
         return [
             'vendor_id' => 'required',
-            'vendor_product_nr' => 'required',
+            'vendor_product_nr' => 'required|max:20',
             'component_unit_price' => 'required|numeric',
         ];
     }
@@ -32,6 +32,7 @@ class ConnectVendorToComponentRequest extends FormRequest
         return [
             'vendor_id.required' => '*Vereist',
             'vendor_product_nr.required' => '*Vereist',
+            'vendor_product_nr.max' => 'Max 20 karakters',
             'component_unit_price.required' => '*Vereist',
             'component_unit_price.numeric' => '*Numeriek',
         ];
