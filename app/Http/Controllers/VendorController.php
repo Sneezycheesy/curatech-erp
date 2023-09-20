@@ -25,7 +25,7 @@ class VendorController extends Controller
         }
 
         // Return all vendors
-        return view('vendors.Index', [
+        return view('vendors.index', [
             'vendors' => Vendor::all(),
         ]);
     }
@@ -47,7 +47,7 @@ class VendorController extends Controller
         if($rq->isHtmxRequest()) {
             return new HtmxResponseClientRedirect(route('vendors.create'));
         }
-        return view('vendors.Create');
+        return view('vendors.create');
     }
 
     public function edit($id, HtmxRequest $request) {
@@ -55,7 +55,7 @@ class VendorController extends Controller
             return new HtmxResponseClientRedirect(route('vendors.edit', $id));
         }
 
-        return view('vendors.Edit', [
+        return view('vendors.edit', [
             'vendor' => Vendor::find($id),
         ]);
     }
