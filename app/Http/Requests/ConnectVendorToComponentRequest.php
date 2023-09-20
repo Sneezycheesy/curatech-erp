@@ -22,7 +22,7 @@ class ConnectVendorToComponentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'vendor_id' => 'required',
+            'vendor_id' => 'required|min:0',
             'vendor_product_nr' => 'required|max:20',
             'component_unit_price' => 'required|numeric',
         ];
