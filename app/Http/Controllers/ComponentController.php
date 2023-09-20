@@ -64,7 +64,11 @@ class ComponentController extends Controller
         return redirect()->back()->with('success', 'Component succesvol opgeslagen!');
     }
 
-    public function details($id) {
+    public function details($id, HtmxRequest $rq) {
+        if($rq->isHtmxRequest()) {
+            return new HtmxResponseClientRedirect(route('components.details', $id));
+        }
+
         return view('curatech_components.Details', [
             'comp' => Component::find($id),
             'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
