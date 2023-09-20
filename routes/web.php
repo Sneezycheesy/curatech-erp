@@ -6,6 +6,7 @@ use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\RestockController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -52,7 +53,10 @@ Route::delete('components/edit/{id}', [ComponentController::class, 'removeVendor
 Route::post('/components/upload', [FileUploadController::class, 'uploadComponentsCSV'])->name('components_upload');
 Route::get('/components/create', [ComponentController::class, 'createPage'])->name('components_create');
 Route::post('/components/create', [ComponentController::class, 'create'])->name('components_create');
+
+// Restocking
 Route::get('/components/{id}/restock', [ComponentController::class, 'restock'])->middleware(['auth', 'verified'])->name('components.restock');
+Route::post('/components/{id}/restock', [RestockController::class, 'store'])->middleware(['auth', 'verified'])->name('restock');
 
 // Vendors
 Route::get('vendors', [VendorController::class, 'index'])->middleware(['auth', 'verified'])->name('vendors');

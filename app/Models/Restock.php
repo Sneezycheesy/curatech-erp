@@ -9,7 +9,7 @@ class Restock extends Model
 {
     use HasFactory;
 
-    protected $fillables = [
+    protected $fillable = [
         'component_id',
         'amount',
         'vendor_id',

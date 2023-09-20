@@ -67,6 +67,10 @@ class Component extends Model
         return $this->belongsToMany(Vendor::class, 'vendors_components', 'component_id', 'vendor_id')->withPivot(['component_unit_price', 'vendor_product_nr']);
     }
 
+    public function restocks(): HasMany {
+        return $this->hasMany(Restock::class);
+    }
+
     public static function find($id) {
         return Component::where('component_id', $id)->first();
     }
