@@ -1,10 +1,6 @@
 <x-app-layout>
     <!-- Toolbar for searching and other actions -->
     <div class="grid gap-2 grid-cols-10 grid-flow-cols grid-rows-1 mt-5 py-7 px-7 dark:text-white dark:bg-gray-700 w-3/4 mx-auto h-full rounded">
-        <!-- <form class="col-span-8 grid grid-cols-8 grid-row-1 gap-x-2" method="get">
-            <input type="text" value="{{$search}}" name="search" id="search_components" placeholder="Zoekt en gij zult vinden" class="col-span-6 align-center dark:text-black" />
-            <input type="submit" value="Go" class="col-span-2 text-center bg-gray-400 dark:bg-gray-800 w-full hover:bg-red-700 hover:cursor-pointer" />
-        </form> -->
         <div class="grid grid-cols-1 col-span-8">
             <x-searchbar
                 route="{{route('components')}}"

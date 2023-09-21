@@ -14,7 +14,6 @@ use App\Models\Vendor;
 class ComponentController extends Controller
 {
     public function get(HtmxRequest $request) {
-        $comps = [];
 
         if($request->isHtmxRequest()) {
             return view('curatech_components.partials.components', [
@@ -25,8 +24,7 @@ class ComponentController extends Controller
         }
 
         return view('curatech_components.index', [
-            'components' => empty($comps) ? Component::all() : $comps,
-            'search' => $search,
+            'components' => Component::all(),
         ]);
     }
 
