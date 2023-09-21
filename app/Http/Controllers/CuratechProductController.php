@@ -19,7 +19,16 @@ use App\Http\Requests\AddComponentToCuratechProductRequest;
 class CuratechProductController extends Controller
 {
     //
-    public function index() {
+    public function index(HtmxRequest $rq) {
+        if ($rq->isHtmxRequest()) {
+            return view('curatech_products.partials.curatech_products', [
+                'curatech_products' => CuratechProduct::where('curatech_product_id', 'like', "%$rq->search%")
+                    ->orWhere('name', 'like', "%$rq->search%")
+                    ->orWhere('description', 'like', "%$rq->search%")
+                    ->get(),
+            ]);
+        }
+
         return view('curatech_products.index', [
             'curatech_products' => CuratechProduct::all(),
         ]);

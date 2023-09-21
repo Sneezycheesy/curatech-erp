@@ -90,7 +90,7 @@ class RestockController extends Controller
         }
     }
 
-    public function validateRequest(&$id, &$component, &$vendor_id, &$amount) {
+    private function validateRequest(&$id, &$component, &$vendor_id, &$amount) {
         $returnVal = [];
 
         if (!isset($vendor_id)) {

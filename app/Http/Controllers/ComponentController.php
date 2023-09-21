@@ -14,7 +14,6 @@ use App\Models\Vendor;
 class ComponentController extends Controller
 {
     public function get(HtmxRequest $request) {
-        $search = '';
         $comps = [];
 
         if($request->isHtmxRequest()) {
@@ -23,13 +22,6 @@ class ComponentController extends Controller
                 ->orWhere('description', 'like', "%$request->search%")
                 ->get()
             ]);
-        }
-
-        if (!empty($request->query()['search'])) {
-            $search = $request->query()['search'];
-            $comps = Component::where('component_id', 'like', "%$search%")
-                        ->orWhere('description', 'like', $search)
-                        ->get();
         }
 
         return view('curatech_components.index', [
