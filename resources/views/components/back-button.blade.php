@@ -1,0 +1,2 @@
+@props(['url' => isset($url) ? $url : url()->previous()])
+<a href="{{$url}}"><x-primary-button type="button" {{ $attributes->merge(['class' => 'mr-2 fa-solid fa-arrow-left'])}} ></x-primary-button></a>

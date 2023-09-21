@@ -13,7 +13,8 @@
     
     <div class="flex justify-end max-w-7xl mx-auto mt-3 w-full">
         <x-primary-button type="submit" form="component_form" value="Opslaan">Opslaan</x-primary-button>
-        <x-primary-button class="ml-2" type="button" hx-get="{{route('components.details', $comp->component_id)}}" form="component_form" value="Opslaan">Annuleren</x-primary-button>
+        <!-- <x-primary-button class="ml-2" type="button" hx-get="{{route('components.details', $comp->component_id)}}" form="component_form" value="Opslaan">Annuleren</x-primary-button> -->
+        <x-back-button class="ml-2" :url="route('components.details', $comp->component_id)" />
     </div>
 
     @if(session()->has('success'))

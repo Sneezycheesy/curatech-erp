@@ -72,6 +72,6 @@
             <p class="w-full mx-auto text-red-700">{{$message}}</p>
         @enderror
         <input type="file" name="file" class="text-center" accept="text/csv"/>
-        <x-primary-button type="submit" value="Upload" class="w-1/2 mx-auto">Upload</x-primary-button>
+        <x-primary-button type="submit" value="Upload" class="w-1/2 mt-3 mx-auto">Upload</x-primary-button>
     </form>
 </x-app-layout>

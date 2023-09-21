@@ -1,17 +1,19 @@
 <x-app-layout>
-    <div class=" dark:text-white py-6 mx-6 my-6 grid grid-cols-5 px-4 dark:bg-gray-700">
+    <div class=" dark:text-white py-6 mx-6 my-6 grid grid-cols-5 px-4 dark:bg-gray-600 max-w-7xl mx-auto rounded-xl">
         <!-- Life is available only in the present moment. - Thich Nhat Hanh -->
-        <div class="dark:bg-gray-700 py-6 col-span-2">
+        <div class="col-span-2">
             <form method="post" id="update_curatech_product_form">
                 @csrf
-                <div class="grid grid-cols-1 grid-flow-cols gap-2 px-7">
-                    <label for="curatech_product_id">Productnummer</label>
-                    @error('curatech_product_id')
-                    <div class="text-red-700">
-                        {{$message}}
+                <div class="grid grid-cols-1 gap-y-2 grid-flow-cols px-7">
+                    <div class="grid grid-cols-1">
+                        <label for="curatech_product_id">Productnummer</label>
+                        @error('curatech_product_id')
+                        <div class="text-red-700">
+                            {{$message}}
+                        </div>
+                        @enderror
+                        <x-text-input type="text" name="curatech_product_id" id="curatech_product_id" class="text-black" value="{{$curatech_product->curatech_product_id}}" />
                     </div>
-                    @enderror
-                    <x-text-input type="text" name="curatech_product_id" id="curatech_product_id" class="text-black" value="{{$curatech_product->curatech_product_id}}" />
                     
                     <label for="name">Naam</label>
                     @error('name')
@@ -30,8 +32,8 @@
                     <x-text-area-input name="description" id="description" class="text-black h-[120px]">{{$curatech_product->description}}</x-text-area-input>
 
                     <div class="flex justify-end mt-3">
-                        <x-primary-button hx-get="{{route('curatech_product_details', $curatech_product->curatech_product_id)}}">Terug</x-primary-button>
-                        <x-primary-button type="submit" class="ml-2 {{session('success') ? 'dark:bg-green-400 bg-green-400' : ''}}">Opslaan @if(session('success')) <i class="fa-solid fa-check ml-2"></i>  @endif</x-primary-button>
+                        <x-back-button />
+                        <x-primary-button type="submit" class="ml-1 {{session('success') ? 'dark:bg-green-400 bg-green-400' : ''}}">Opslaan @if(session('success')) <i class="fa-solid fa-check ml-2"></i>  @endif</x-primary-button>
                     </div>
                 </div>
             </form>

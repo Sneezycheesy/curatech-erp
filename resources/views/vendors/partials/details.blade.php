@@ -1,4 +1,4 @@
-<div class="grid grid-cols-3 auto-rows-max w-full max-w-7xl bg-gray-300 dark:bg-gray-500 mx-auto py-5 mt-5 rounded text-center">
+<div class="grid grid-cols-3 auto-rows-max w-full max-w-7xl bg-gray-300 dark:bg-gray-700 mx-auto py-5 mt-5 rounded-xl text-center">
     <!-- vendor details like name and address -->
     
     <div class="grid grid-cols-1 gap-y-4 px-2 h-max">

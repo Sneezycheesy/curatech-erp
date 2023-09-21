@@ -74,4 +74,11 @@ class Component extends Model
     public static function find($id) {
         return Component::where('component_id', $id)->first();
     }
+
+    protected static function booted() {
+        static::deleting(function(Component $comp) {
+            $comp->vendors()->detach();
+            $comp->curatech_products()->detach();
+        });
+    }
 }

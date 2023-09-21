@@ -12,9 +12,9 @@ class FileUploadController extends Controller
     }
     //
     public function uploadComponentsCSV(Request $request) {
-    //     $valid = $request->validate([
-    //         'file' => 'mimes:csv,txt,vnd.ms-excel',
-    //     ]);
+        $request->validate([
+            'file' => 'required|mimes:csv,txt,vnd.ms-excel',
+        ]);
 
         if ($request->has('file')) {
 
@@ -38,8 +38,4 @@ class FileUploadController extends Controller
         }
         return redirect(route('components'));
     }
-}
-
-class FileUploadValidator {
-
 }

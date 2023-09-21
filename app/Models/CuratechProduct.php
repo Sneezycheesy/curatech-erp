@@ -29,4 +29,10 @@ class CuratechProduct extends Model
     public static function find($id) {
         return CuratechProduct::where('curatech_product_id', $id)->first();
     }
+
+    protected static function booted() {
+        static::deleting(function (CuratechProduct $cp) {
+            $cp->components()->detach();
+        });
+    }
 }

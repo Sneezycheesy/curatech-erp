@@ -22,7 +22,7 @@ class UpdateVendorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:vendors,id,'.$this->route('id').',id',
+            'name' => 'required|unique:vendors,name,'.$this->route('id').',id',
             'address' => 'required',
             'zipcode' => 'required',
             'city' => 'required',

@@ -27,21 +27,7 @@
             @endforeach
         </div>
         <div>
-            <p><a href="{{route('components.restock', $component->component_id)}}"><i class="fa-solid fa-wallet hover:text-gray-400"></i></a></p>
+            <p hx-get="{{route('components.restock', $component->component_id)}}"><i class="fa-solid fa-hand-holding-dollar hover:text-gray-400 hover:cursor-pointer"></i></p>
         </div>
     </div>
-        <!-- Display desired component fields to display
-            - ID
-            - Description
-            - Stock
-            - Supplier(s)
-            - Unit Price
-            - Feed
-            - Desired (based off product stock)
-            - Shortage (current stock - desired)
-            - Current stock
-            - Amount to order (possibly based off packaging style)
-            - Total order price
-            - Total current stock price (amount of components in stock * unit price)
-        -->
 @endforeach

@@ -48,11 +48,11 @@
 
                 <x-delete-button hx-delete="{{route('vendors.delete', $vendor->id)}}" hx-confirm="Weet je het zeker?" 
                     class="w-min">
-                    Verwijderen
+                    <i class="fa-solid fa-trash"></i>
                 </x-delete-button>
                 <div class="flex col-span-3 justify-end">
+                    <x-back-button></x-back-button>
                     <x-primary-button type="submit" class="mr-3 justify-center">Opslaan</x-primary-button>
-                    <x-primary-button hx-get="{{route('vendors.details', $vendor->id)}}" >Annuleren </x-primary-button>
                 </div>
             </div>
         </form>

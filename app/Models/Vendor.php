@@ -21,4 +21,10 @@ class Vendor extends Model
     public function components(): BelongsToMany {
         return $this->belongsToMany(Component::class, 'vendors_components', 'vendor_id', 'component_id')->withPivot('component_unit_price');
     }
+
+    protected static function booted () {
+        static::deleting(function(Vendor $vendor) {
+            $vendor->components()->detach();
+        });
+    }
 }

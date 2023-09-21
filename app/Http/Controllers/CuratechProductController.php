@@ -31,7 +31,7 @@ class CuratechProductController extends Controller
         }
 
         $curatech_product = CuratechProduct::find($id);
-        return view('curatech_products.Details', [
+        return view('curatech_products.details', [
             'curatech_product' => $curatech_product,
             'components' => $curatech_product->components()->get(),
         ]);
@@ -46,7 +46,7 @@ class CuratechProductController extends Controller
         $components = $curatech_product->components()->get();
         // Return only components that are NOT connected to $curatech_product
         $all_components = Component::all();
-        return view('curatech_products.Update', [
+        return view('curatech_products.update', [
             'curatech_product' => $curatech_product,
             'components' => $components,
             'all_components' => $all_components,

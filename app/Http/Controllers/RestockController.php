@@ -51,9 +51,23 @@ class RestockController extends Controller
     public function store(string $id, HtmxRequest $rq) {
         $component = Component::find($id);
         $component_id = $component->id;
+        $invoice = $rq->invoice ?? '';
         $vendor_id = $rq->vendor_id;
         $amount = $rq->amount;
-        $invoice = $rq->invoice ?? '';
+
+        $valid = $this->validateRequest($id, $rq);
+
+        if (!empty($valid)) {
+                return view('curatech_components.partials.restock-form', [
+                    'id' => $id,
+                    'vendors' => $component->vendors()->get(),
+                    'amount_error' => $valid['amount_error'],
+                    'vendor_error' => $valid['vendor_error'],
+                    'amount' => $amount,
+                    'vendor_id' => $vendor_id,
+                ]);
+        }
+
 
         Restock::create([
             'component_id' => $component_id,
@@ -66,6 +80,35 @@ class RestockController extends Controller
             'stock' => $component->stock + (int) $rq->amount,
         ]);
 
-        return 'success';
+        return view('curatech_components.partials.restock-form', [
+            'id' => $id,
+            'vendors' => $component->vendors()->get(),
+            'success' => true,
+        ]);
+    }
+
+    public function validateRequest($id, HtmxRequest $rq) {
+        $returnVal = [];
+        $vendor_id = $rq->vendor_id;
+        $amount = $rq->amount;
+
+        if (!isset($vendor_id)) {
+            $returnVal['vendor_error'] = '*Verplicht veld';
+        }
+
+        if($amount == 0) {
+            $returnVal['amount_error'] = '*Aantal moet groter zijn dan 0';
+        }
+
+        if (!isset($amount)) {
+            $returnVal['amount_error'] = '*Verplicht veld';
+        }
+
+        $components_vendors = Component::find($id)->vendors()->pluck('vendor_id')->toArray();
+        if (!in_array($vendor_id, $components_vendors)) {
+            $returnVal['vendor_id'] = '*Leverancier moet aan component gekoppeld zijn';
+        }
+
+        return $returnVal;
     }
 }

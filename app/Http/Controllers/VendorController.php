@@ -36,7 +36,7 @@ class VendorController extends Controller
             return new HtmxResponseClientRedirect(route('vendors.details', $id));
         }
 
-        return view('vendors.Details', [
+        return view('vendors.details', [
             'vendor' => Vendor::find($id),
             // 'comps' => Vendor::find($id)->components()->get(),
             'comps' => Vendor::find($id)->components()->get(),
@@ -61,6 +61,7 @@ class VendorController extends Controller
     }
 
     public function update($id, UpdateVendorRequest $request) {
+        $request->validated();
         Vendor::find($id)->update($request->except('_token'));
         
         return redirect()->back()->with('success', 'Succesvol opgeslagen!');
