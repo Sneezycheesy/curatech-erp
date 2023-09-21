@@ -55,42 +55,43 @@ class RestockController extends Controller
         $vendor_id = $rq->vendor_id;
         $amount = $rq->amount;
 
-        $valid = $this->validateRequest($id, $rq);
+        $valid = $this->validateRequest($id, $component, $vendor_id, $amount);
 
         if (!empty($valid)) {
                 return view('curatech_components.partials.restock-form', [
                     'id' => $id,
                     'vendors' => $component->vendors()->get(),
-                    'amount_error' => $valid['amount_error'],
-                    'vendor_error' => $valid['vendor_error'],
+                    'amount_error' => $valid['amount_error'] ?? null,
+                    'vendor_error' => $valid['vendor_error'] ?? null,
                     'amount' => $amount,
                     'vendor_id' => $vendor_id,
                 ]);
         }
 
-
-        Restock::create([
-            'component_id' => $component_id,
-            'vendor_id' => $vendor_id,
-            'amount' => $amount,
-            'invoice' => $invoice,
-        ]);
-
-        $component->update([
-            'stock' => $component->stock + (int) $rq->amount,
-        ]);
-
-        return view('curatech_components.partials.restock-form', [
-            'id' => $id,
-            'vendors' => $component->vendors()->get(),
-            'success' => true,
-        ]);
+        try {
+            Restock::create([
+                'component_id' => $component_id,
+                'vendor_id' => $vendor_id,
+                'amount' => $amount,
+                'invoice' => $invoice,
+            ]);
+    
+            $component->update([
+                'stock' => $component->stock + (int) $rq->amount,
+            ]);
+    
+            return view('curatech_components.partials.restock-form', [
+                'id' => $id,
+                'vendors' => $component->vendors()->get(),
+                'success' => true,
+            ]);
+        } catch (Exception $e) {
+            return "Something went horribly wrong!!! Use this error code to explain to a dev what you managed to break: $e";
+        }
     }
 
-    public function validateRequest($id, HtmxRequest $rq) {
+    public function validateRequest(&$id, &$component, &$vendor_id, &$amount) {
         $returnVal = [];
-        $vendor_id = $rq->vendor_id;
-        $amount = $rq->amount;
 
         if (!isset($vendor_id)) {
             $returnVal['vendor_error'] = '*Verplicht veld';
@@ -104,7 +105,7 @@ class RestockController extends Controller
             $returnVal['amount_error'] = '*Verplicht veld';
         }
 
-        $components_vendors = Component::find($id)->vendors()->pluck('vendor_id')->toArray();
+        $components_vendors = $component->vendors()->pluck('vendor_id')->toArray();
         if (!in_array($vendor_id, $components_vendors)) {
             $returnVal['vendor_id'] = '*Leverancier moet aan component gekoppeld zijn';
         }
