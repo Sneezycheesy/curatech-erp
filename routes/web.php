@@ -7,6 +7,7 @@ use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\RestockController;
+use App\Http\Controllers\StockroomController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,11 @@ Route::post('/curatech_products/create', [CuratechProductController::class, 'cre
 // Purchases
 Route::get('/purchases', [RestockController::class, 'index'])->middleware(['auth', 'verified'])->name('purchases');
 Route::post('/purchases', [RestockController::class, 'updateDesiredStock'])->middleware(['auth', 'verified'])->name('purchases_update_stock');
+
+// Stockrooms
+Route::get('stockrooms', [StockroomController::class, 'index'])->middleware(['auth', 'verified'])->name('stockrooms');
+Route::get('stockrooms/create', [StockroomController::class, 'create'])->middleware(['auth', 'verified'])->name('stockrooms.create');
+Route::post('stockrooms/create', [StockroomController::class, 'store'])->middleware(['auth', 'verified'])->name('stockrooms.store');
 
 // Components
 Route::get('components', [ComponentController::class, 'get'])->middleware(['auth', 'verified'])->name('components');

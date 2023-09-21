@@ -83,6 +83,7 @@ class Component extends Model
         static::deleting(function(Component $comp) {
             $comp->vendors()->detach();
             $comp->curatech_products()->detach();
+            $comp->shelves()->detach();
         });
     }
 }
