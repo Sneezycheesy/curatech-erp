@@ -71,6 +71,10 @@ class Component extends Model
         return $this->hasMany(Restock::class);
     }
 
+    public function shelves() {
+        return $this->belongsToMany(Shelf::class, 'components_shelves', 'component_id', 'shelf_id');
+    }
+
     public static function find($id) {
         return Component::where('component_id', $id)->first();
     }
