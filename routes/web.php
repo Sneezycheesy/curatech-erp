@@ -57,6 +57,9 @@ Route::get('stockrooms/rack/new/close', [RackController::class, 'closeCreate'])-
 // Racks
 Route::get('racks/{id}', [RackController::class, 'details'])->middleware(['auth', 'verified'])->name('racks.details');
 Route::post('racks/{id}', [ShelfController::class, 'store'])->middleware(['auth', 'verified'])->name('planks.store');
+Route::get('racks/stockroom/{id}', [RackController::class, 'options'])->middleware(['auth', 'verified'])->name('racks.options');
+
+Route::get('shelves/rack/{id}', [ShelfController::class, 'options'])->middleware(['auth', 'verified'])->name('shelves.options');
 
 // Components
 Route::get('components', [ComponentController::class, 'get'])->middleware(['auth', 'verified'])->name('components');
@@ -68,6 +71,7 @@ Route::delete('components/edit/{id}', [ComponentController::class, 'removeVendor
 Route::post('/components/upload', [FileUploadController::class, 'uploadComponentsCSV'])->name('components_upload');
 Route::get('/components/create', [ComponentController::class, 'createPage'])->name('components_create');
 Route::post('/components/create', [ComponentController::class, 'create'])->name('components_create');
+Route::post('components/{id}/add_shelf', [ComponentController::class, 'addShelf'])->middleware(['auth', 'verified'])->name('components.shelf.add');
 
 // Restocking
 Route::get('/components/{id}/restock', [ComponentController::class, 'restock'])->middleware(['auth', 'verified'])->name('components.restock');

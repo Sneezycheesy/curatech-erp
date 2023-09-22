@@ -29,6 +29,6 @@ x-transition:leave-end="opacity-0 scale-95">
     {{ $slot }}
     <div class="flex justify-end">
         <x-primary-button type="submit" class="mr-2" hx-post="{{$submit_post}}" hx-include="{{$submit_include}}" hx-target="{{$target}}">OK</x-primary-button>
-        <x-primary-button type="button" @click="modal_open = false" hx-get="{{route('stockrooms.racks.new.close')}}" hx-target="{{$target}}" >X</x-primary-button>
+        <x-primary-button type="button" @click="modal_open = false" >X</x-primary-button>
     </div>
 </form>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Component;
 use App\Models\Rack;
 use App\Models\Shelf;
 
@@ -12,6 +13,12 @@ use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
 
 class ShelfController extends Controller
 {
+    public function options($id, HtmxRequest $rq) {
+        return view('shelves.partials.options', [
+            'shelves' => Shelf::where('rack_id', $id)
+            ->get(),
+        ]);
+    }
     //
     public function store($id, HtmxRequest $rq) {
         if (!isset($rq->name)) {

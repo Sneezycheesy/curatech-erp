@@ -12,6 +12,11 @@ use App\Models\Stockroom;
 
 class RackController extends Controller
 {
+    public function options($id) {
+        return view('racks.partials.options', [
+            'racks' => Stockroom::find($id)->racks()->get(),
+        ]);
+    }
     //
     public function details($id, HtmxRequest $rq) {
         if ($rq->isHtmxRequest()) {

@@ -15,7 +15,7 @@ class Rack extends Model
     ];
 
     public function stockroom() {
-        return $this->hasOne(Stockroom::class);
+        return $this->belongsTo(Stockroom::class);
     }
 
     public function shelves() {

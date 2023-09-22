@@ -18,6 +18,10 @@ class Shelf extends Model
         return $this->belongsToMany(Component::class, 'components_shelves', 'shelf_id', 'component_id');
     }
 
+    public function rack() {
+        return $this->belongsTo(Rack::class);
+    }
+
     protected static function booted() {
         static::deleting(function ($shelf) {
             $shelf->components()->detach();
