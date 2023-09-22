@@ -8,6 +8,7 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\StockroomController;
+use App\Http\Controllers\RackController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,12 @@ Route::post('/purchases', [RestockController::class, 'updateDesiredStock'])->mid
 Route::get('stockrooms', [StockroomController::class, 'index'])->middleware(['auth', 'verified'])->name('stockrooms');
 Route::get('stockrooms/create', [StockroomController::class, 'create'])->middleware(['auth', 'verified'])->name('stockrooms.create');
 Route::post('stockrooms/create', [StockroomController::class, 'store'])->middleware(['auth', 'verified'])->name('stockrooms.store');
+Route::get('stockrooms/{id}', [StockroomController::class, 'details'])->middleware(['auth', 'verified'])->name('stockrooms.details');
+Route::post('stockrooms/{id}', [RackController::class, 'store'])->middleware(['auth', 'verified'])->name('racks.store');
+Route::get('stockrooms/{id}/rack/new', [RackController::class, 'create'])->middleware(['auth', 'verified'])->name('stockrooms.racks.new');
+
+// Racks
+Route::get('racks/{id}', [RackController::class, 'details'])->middleware(['auth', 'verified'])->name('racks.details');
 
 // Components
 Route::get('components', [ComponentController::class, 'get'])->middleware(['auth', 'verified'])->name('components');

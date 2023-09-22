@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Stockroom;
+use App\Models\Rack;
 
 use Mauricius\LaravelHtmx\Http\HtmxRequest;
 use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
@@ -22,6 +23,24 @@ class StockroomController extends Controller
 
         return view('stockrooms.index', [
             'stockrooms' => Stockroom::all(),
+        ]);
+    }
+
+    public function details($id, HtmxRequest $rq) {
+        if (isset($rq->search)) {
+            return view('stockrooms.partials.racks', [
+                'racks' => Rack::where('name', 'like', "%$rq->search%")
+                    ->get(),
+            ]);
+        }
+
+        if ($rq->isHtmxRequest()) {
+            return new HtmxResponseClientRedirect(route('stockrooms.details', $id));
+        }
+
+        return view('stockrooms.details', [
+            'id' => $id,
+            'racks' => Stockroom::find($id)->racks()->get(),
         ]);
     }
 
@@ -71,6 +90,5 @@ class StockroomController extends Controller
         catch(Exception $e) {
             return 'Something went terribly wrong, share this error with a developer to tell them what you broke: ' . $e;
         }
-
     } 
 }
