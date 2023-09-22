@@ -19,7 +19,7 @@
             
             <div class="flex justify-between w-full mt-6">
                 <x-title>Stellingen</x-title>
-                <x-new-button class="w-max" @click="modal_open = true" /> <!-- hx-get="{{route('stockrooms.racks.new', $id)}}" hx-target="#new_modal" -->
+                <x-new-button class="w-max" @click="modal_open = true" />
             </div>
             <div id="racks_container" class="grid grid-cols-1 auto-rows-max gap-3 mt-6 overflow-y-scroll max-h-[20rem]">
                 @include('stockrooms.partials.racks')
