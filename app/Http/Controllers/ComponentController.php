@@ -118,13 +118,15 @@ class ComponentController extends Controller
             return '*Verplicht';
         }
 
-        $shelves = Component::find($id)->shelves()->pluck('id')->toArray();
+        $shelves = Component::find($id)->shelves()->pluck('shelf_id')->toArray();
 
         if(in_array($rq->shelf_id, $shelves)) {
             return '*Dit component ligt al op deze plank';
         }
 
         Component::find($id)->shelves()->attach($rq->shelf_id);
+
+        return new HtmxResponseClientRedirect(route('components.edit', $id));
     }
 
     public function restock($id, HtmxRequest $rq) {

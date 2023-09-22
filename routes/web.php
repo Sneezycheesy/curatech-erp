@@ -47,26 +47,26 @@ Route::get('/purchases', [RestockController::class, 'index'])->middleware(['auth
 Route::post('/purchases', [RestockController::class, 'updateDesiredStock'])->middleware(['auth', 'verified'])->name('purchases_update_stock');
 
 // Stockrooms
-Route::get('stockrooms', [StockroomController::class, 'index'])->middleware(['auth', 'verified'])->name('stockrooms');
-Route::get('stockrooms/create', [StockroomController::class, 'create'])->middleware(['auth', 'verified'])->name('stockrooms.create');
-Route::post('stockrooms/create', [StockroomController::class, 'store'])->middleware(['auth', 'verified'])->name('stockrooms.store');
-Route::get('stockrooms/{id}', [StockroomController::class, 'details'])->middleware(['auth', 'verified'])->name('stockrooms.details');
-Route::post('stockrooms/{id}', [RackController::class, 'store'])->middleware(['auth', 'verified'])->name('racks.store');
-Route::get('stockrooms/rack/new/close', [RackController::class, 'closeCreate'])->middleware(['auth', 'verified'])->name('stockrooms.racks.new.close');
+Route::get('/stockrooms', [StockroomController::class, 'index'])->middleware(['auth', 'verified'])->name('stockrooms');
+Route::get('/stockrooms/create', [StockroomController::class, 'create'])->middleware(['auth', 'verified'])->name('stockrooms.create');
+Route::post('/stockrooms/create', [StockroomController::class, 'store'])->middleware(['auth', 'verified'])->name('stockrooms.store');
+Route::get('/stockrooms/{id}', [StockroomController::class, 'details'])->middleware(['auth', 'verified'])->name('stockrooms.details');
+Route::post('/stockrooms/{id}', [RackController::class, 'store'])->middleware(['auth', 'verified'])->name('racks.store');
+Route::get('/stockrooms/rack/new/close', [RackController::class, 'closeCreate'])->middleware(['auth', 'verified'])->name('stockrooms.racks.new.close');
 
 // Racks
-Route::get('racks/{id}', [RackController::class, 'details'])->middleware(['auth', 'verified'])->name('racks.details');
-Route::post('racks/{id}', [ShelfController::class, 'store'])->middleware(['auth', 'verified'])->name('planks.store');
-Route::get('racks/stockroom/{id}', [RackController::class, 'options'])->middleware(['auth', 'verified'])->name('racks.options');
+Route::get('/racks/{id}', [RackController::class, 'details'])->middleware(['auth', 'verified'])->name('racks.details');
+Route::post('/racks/{id}', [ShelfController::class, 'store'])->middleware(['auth', 'verified'])->name('planks.store');
+Route::get('/racks/stockroom/{id}', [RackController::class, 'options'])->middleware(['auth', 'verified'])->name('racks.options');
 
-Route::get('shelves/rack/{id}', [ShelfController::class, 'options'])->middleware(['auth', 'verified'])->name('shelves.options');
+Route::get('/shelves/rack/{id}', [ShelfController::class, 'options'])->middleware(['auth', 'verified'])->name('shelves.options');
 
 // Components
-Route::get('components', [ComponentController::class, 'get'])->middleware(['auth', 'verified'])->name('components');
-Route::post('components/details/{id}/add_vendor', [ComponentController::class, 'addVendor'])->middleware(['auth', 'verified'])->name('components.vendor.add');
-Route::get('components/details/{id}', [ComponentController::class, 'details'])->middleware(['auth', 'verified'])->name('components.details');
-Route::get('components/edit/{id}', [ComponentController::class, 'editPage'])->middleware(['auth', 'verified'])->name('components.edit');
-Route::post('components/edit/{id}', [ComponentController::class, 'update'])->middleware(['auth', 'verified'])->name('components.update');
+Route::get('/components', [ComponentController::class, 'get'])->middleware(['auth', 'verified'])->name('components');
+Route::post('/components/details/{id}/add_vendor', [ComponentController::class, 'addVendor'])->middleware(['auth', 'verified'])->name('components.vendor.add');
+Route::get('/components/details/{id}', [ComponentController::class, 'details'])->middleware(['auth', 'verified'])->name('components.details');
+Route::get('/components/edit/{id}', [ComponentController::class, 'editPage'])->middleware(['auth', 'verified'])->name('components.edit');
+Route::post('/components/edit/{id}', [ComponentController::class, 'update'])->middleware(['auth', 'verified'])->name('components.update');
 Route::delete('components/edit/{id}', [ComponentController::class, 'removeVendor'])->middleware(['auth', 'verified'])->name('components.removeVendor');
 Route::post('/components/upload', [FileUploadController::class, 'uploadComponentsCSV'])->name('components_upload');
 Route::get('/components/create', [ComponentController::class, 'createPage'])->name('components_create');
@@ -78,13 +78,13 @@ Route::get('/components/{id}/restock', [ComponentController::class, 'restock'])-
 Route::post('/components/{id}/restock', [RestockController::class, 'store'])->middleware(['auth', 'verified'])->name('restock');
 
 // Vendors
-Route::get('vendors', [VendorController::class, 'index'])->middleware(['auth', 'verified'])->name('vendors');
-Route::get('vendors/create', [VendorController::class, 'createPage'])->middleware(['auth', 'verified'])->name('vendors.create');
-Route::post('vendors/create', [VendorController::class, 'create'])->middleware(['auth', 'verified'])->name('vendors.createVendor');
-Route::get('vendors/{id}', [VendorController::class, 'details'])->middleware(['auth', 'verified'])->name('vendors.details');
-Route::get('vendors/{id}/edit', [VendorController::class, 'edit'])->middleware(['auth', 'verified'])->name('vendors.edit');
-Route::post('vendors/{id}/update', [VendorController::class, 'update'])->middleware(['auth', 'verified'])->name('vendors.update');
-Route::delete('vendors/{id}', [VendorController::class, 'delete'])->middleware(['auth', 'verified'])->name('vendors.delete');
+Route::get('/vendors', [VendorController::class, 'index'])->middleware(['auth', 'verified'])->name('vendors');
+Route::get('/vendors/create', [VendorController::class, 'createPage'])->middleware(['auth', 'verified'])->name('vendors.create');
+Route::post('/vendors/create', [VendorController::class, 'create'])->middleware(['auth', 'verified'])->name('vendors.createVendor');
+Route::get('/vendors/{id}', [VendorController::class, 'details'])->middleware(['auth', 'verified'])->name('vendors.details');
+Route::get('/vendors/{id}/edit', [VendorController::class, 'edit'])->middleware(['auth', 'verified'])->name('vendors.edit');
+Route::post('/vendors/{id}/update', [VendorController::class, 'update'])->middleware(['auth', 'verified'])->name('vendors.update');
+Route::delete('/vendors/{id}', [VendorController::class, 'delete'])->middleware(['auth', 'verified'])->name('vendors.delete');
 
 // Authentication
 Route::middleware('auth')->group(function () {
