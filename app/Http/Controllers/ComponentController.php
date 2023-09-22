@@ -10,6 +10,7 @@ use App\Http\Requests\StoreComponentRequest;
 use App\Http\Requests\ConnectVendorToComponentRequest;
 use App\Models\Component;
 use App\Models\Vendor;
+use App\Models\Stockroom;
 
 class ComponentController extends Controller
 {
@@ -40,6 +41,8 @@ class ComponentController extends Controller
             'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
             'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
             'disabled' => false,
+            'all_stockrooms' => Stockroom::all(),
+            'shelves' => Component::find($id)->shelves()->get(),
         ]);
     }
 
@@ -108,6 +111,22 @@ class ComponentController extends Controller
         } catch (Exeption $e) {
             return redirect()->back()->with(['error' => $e]);
         }
+    }
+
+    public function addShelf($id, HtmxRequest $rq) {
+        if (!isset($rq->shelf_id)) {
+            return '*Verplicht';
+        }
+
+        $shelves = Component::find($id)->shelves()->pluck('shelf_id')->toArray();
+
+        if(in_array($rq->shelf_id, $shelves)) {
+            return '*Dit component ligt al op deze plank';
+        }
+
+        Component::find($id)->shelves()->attach($rq->shelf_id);
+
+        return new HtmxResponseClientRedirect(route('components.edit', $id));
     }
 
     public function restock($id, HtmxRequest $rq) {
