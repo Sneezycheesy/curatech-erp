@@ -1,7 +1,8 @@
 <x-app-layout>
     <div x-data="{modal_open: false, name: ''}" class="w-full max-w-6xl mx-auto mt-3 p-5">
+        <x-title>{{$rack->name}}</x-title>
         <div class="flex justify-between w-full">
-            <x-title>{{$rack->name}}</x-title>
+            <x-title>Bijbehorende Planken</x-title>
             <x-new-button @click="modal_open = true"/>
         </div>
 
