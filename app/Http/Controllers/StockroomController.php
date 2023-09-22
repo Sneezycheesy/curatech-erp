@@ -40,6 +40,7 @@ class StockroomController extends Controller
 
         return view('stockrooms.details', [
             'id' => $id,
+            'stockroom' => Stockroom::find($id),
             'racks' => Stockroom::find($id)->racks()->get(),
         ]);
     }

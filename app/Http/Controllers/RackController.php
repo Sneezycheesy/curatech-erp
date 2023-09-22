@@ -43,4 +43,8 @@ class RackController extends Controller
             'id' => $id,
         ]);
     }
+
+    public function closeCreate() {
+        return '';
+    }
 }

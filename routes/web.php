@@ -52,6 +52,7 @@ Route::post('stockrooms/create', [StockroomController::class, 'store'])->middlew
 Route::get('stockrooms/{id}', [StockroomController::class, 'details'])->middleware(['auth', 'verified'])->name('stockrooms.details');
 Route::post('stockrooms/{id}', [RackController::class, 'store'])->middleware(['auth', 'verified'])->name('racks.store');
 Route::get('stockrooms/{id}/rack/new', [RackController::class, 'create'])->middleware(['auth', 'verified'])->name('stockrooms.racks.new');
+Route::get('stockrooms/rack/new/close', [RackController::class, 'closeCreate'])->middleware(['auth', 'verified'])->name('stockrooms.racks.new.close');
 
 // Racks
 Route::get('racks/{id}', [RackController::class, 'details'])->middleware(['auth', 'verified'])->name('racks.details');
