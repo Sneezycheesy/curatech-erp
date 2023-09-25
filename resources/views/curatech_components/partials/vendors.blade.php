@@ -41,7 +41,7 @@
     @endif
 
     <!-- Display TABLE of linked COMPONENTS-->
-    <div class="grid {{$disabled ? 'grid-cols-3' : 'grid-cols-4 mt-3'}} border-b-2 border-gray-700 col-span-7">
+    <div class="grid {{$disabled ? 'grid-cols-3' : 'grid-cols-4 mt-3'}} border-b-2 border-cbg-600 col-span-7">
         <x-input-label>Naam</x-input-label>
         <x-input-label>Productnummer</x-input-label>
         <x-input-label>stukprijs</x-input-label>
@@ -52,18 +52,17 @@
     </div>
 
     @foreach ( $vendors as $vendor )
-    <div class="grid col-span-7 {{$disabled ? 'grid-cols-3' : 'grid-cols-4'}} hover:bg-red-700rounded overflow-y-scroll">
+    <div id="vendor_listitem_{{$vendor->id}}" class="grid col-span-7 {{$disabled ? 'grid-cols-3' : 'grid-cols-4'}} hover:bg-red-700rounded overflow-y-scroll"
+        x-data="{confirm_delete_modal_open: false}">
         <div>{{$vendor->name}}</div>
         <div>{{$vendor->pivot->vendor_product_nr}}</div>
         <div>€{{$vendor->pivot->component_unit_price}}</div>
 
         @if(!$disabled)
-        <form>
-            @csrf
-            <div hx-delete="{{route('components.removeVendor', $comp->component_id)}}" hx-include="[name='vendor_id_{{$vendor->id}}']"><i class="fa-solid fa-trash hover:cursor-pointer hover:text-red-400"></i></div>
-            <input type="hidden" name="vendor_id_{{$vendor->id}}" value="{{$vendor->id}}" />
-        </form>
+            <div @click="confirm_delete_modal_open = true"><i class="fa-solid fa-trash hover:cursor-pointer hover:text-red-400"></i></div>
         @endif
+
+        @include('curatech_components.partials.vendor-delete-confirm')
     </div>
     @endforeach
 </div>

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="grid grid-cols-1 auto-grid-rows w-full max-w-5xl text-center items-center mx-auto mt-5 py-3 dark:bg-gray-700 rounded">
+    <div class="grid grid-cols-1 auto-grid-rows w-full max-w-5xl text-center items-center mx-auto mt-5 py-3 dark:bg-cbg-700 rounded">
         <form id="vendor_edit_form" method="post" action="{{route('vendors.update', $vendor->id)}}">
         @csrf
             <div class="grid grid-cols-4 auto-rows-max max-w-3xl mx-auto justify-center align-middle gap-x-3 gap-y-4">

@@ -42,7 +42,7 @@ class ComponentController extends Controller
             'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
             'disabled' => false,
             'all_stockrooms' => Stockroom::all(),
-            'shelves' => Component::find($id)->shelves()->get(),
+            'linked_shelves' => Component::find($id)->shelves()->get(),
         ]);
     }
 
@@ -68,6 +68,7 @@ class ComponentController extends Controller
             'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
             'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
             'disabled' => true,
+            'linked_shelves' => Component::find($id)->shelves()->get(),
         ]);
     }
 
@@ -104,10 +105,10 @@ class ComponentController extends Controller
         return redirect()->back();
     }
 
-    public function removeVendor($id, HtmxRequest $rq) {
+    public function removeVendor($id, $vendor_id, HtmxRequest $rq) {
         try {
-            Component::find($id)->vendors()->detach($rq->except('_token'));
-            return new HtmxResponseClientRedirect(route('components.edit', $id));
+            Component::find($id)->vendors()->detach($vendor_id);
+            return '';
         } catch (Exeption $e) {
             return redirect()->back()->with(['error' => $e]);
         }
@@ -127,6 +128,11 @@ class ComponentController extends Controller
         Component::find($id)->shelves()->attach($rq->shelf_id);
 
         return new HtmxResponseClientRedirect(route('components.edit', $id));
+    }
+
+    public function removeShelf($id, $shelf_id, HtmxRequest $rq) {
+        Component::find($id)->shelves()->detach($shelf_id);
+        return '';
     }
 
     public function restock($id, HtmxRequest $rq) {

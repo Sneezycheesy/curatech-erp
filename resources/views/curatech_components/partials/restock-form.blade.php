@@ -1,16 +1,16 @@
 @props(['vendor_id' => isset($vendor_id) ? $vendor_id : null, 'amount' => isset($amount) ? $amount : null, 'success' => isset($success) ? $success : false])
 <form id="restock_form">
     @csrf
-    <div class="grid grid-cols-1 w-full max-w-6xl bg-gray-200 dark:bg-gray-700 mx-auto p-5 mt-6 gap-y-3">
+    <div class="grid grid-cols-1 w-full max-w-6xl bg-cbg-200 dark:bg-cbg-700 mx-auto p-5 mt-6 gap-y-3">
         <x-input-label>Aantal</x-input-label>
         @if(isset($amount_error))
-            <p class="text-red-500">{{$amount_error}}</p>
+            <x-error-message class="text-red-500">{{$amount_error}}</x-error-message>
         @endif
         <x-text-input name="amount" value="{{$amount}}">{{$amount}}</x-text-input>
     
         <x-input-label>Leverancier</x-input-label>
         @if (isset($vendor_error))
-            <p class="text-red-500">{{$vendor_error}}</p>
+            <x-error-message class="text-red-500">{{$vendor_error}}</x-error-message>
         @endif
         <x-select-box name="vendor_id">
             <!-- option for each available vendor/supplier -->
