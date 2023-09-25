@@ -83,7 +83,15 @@ export default {
                     dark: custom_gray['800'],
                 },
                 confirm: {
-
+                    100: '#e5ffe5',
+                    200: '#b3ffb3',
+                    300: '#80ff80',
+                    400: '#4dff4d',
+                    500: '#1aff1a',
+                    600: '#00e600',
+                    700: '#00b300',
+                    800: '#008000',
+                    900: '#004d00',
                 },
                 deny_or_cancel: {
 

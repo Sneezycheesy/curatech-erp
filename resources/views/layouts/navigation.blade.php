@@ -37,7 +37,7 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-paragraph-light dark:text-paragraph-dark bg-cbg-200 dark:bg-cbg-900 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-paragraph-light dark:text-paragraph-dark bg-cbg-100 dark:bg-cbg-900 hover:text-cbg-700 dark:hover:text-cbg-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">

@@ -1,3 +1,3 @@
-<p {{ $attibutes->merge(['class' => "text-paragraph-light dark:text-paragraph-dark"]) }}>
+<p {{ $attributes->merge(['class' => "text-paragraph-light dark:text-paragraph-dark"]) }}>
     {{ $slot }}
 </p>

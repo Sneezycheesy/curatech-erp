@@ -20,6 +20,18 @@
                     @foreach($shelf->components()->get() as $component)
                     @endforeach
                 </div>
+                <!-- collapsable for viewing all components located on this shelf -->
+                <div x-show="!collapsed"
+                    x-transition:enter="transition linear duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition linear duration-250"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0">
+                    @foreach($shelf->components()->get() as $comp)
+                    <x-paragraph>{{$comp->component_id}} | {{$comp->description}}</x-paragraph>
+                    @endforeach
+                </div>
             </x-details-container>
             @endforeach
         </div>
