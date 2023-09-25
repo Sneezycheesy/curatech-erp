@@ -6,8 +6,7 @@
             
             <div class="grid grid-cols-1 auto-rows-max w-full gap-y-3 mt-4">
                 <div class="grid grid-cols-1 gap-y-1">
-                    <x-title>Naam</x-title>
-                    <p>{{$stockroom->name}}</p>
+                    <x-title class="text-3xl border-b-2 border-cbg-400">Magazijn {{$stockroom->name}}</x-title>
                 </div>
                 
                 <div class="grid grid-cols-1 gap-y-1">
@@ -24,7 +23,7 @@
         <x-searchbar class="w-full max-w-7xl" :route="route('stockrooms.details', $id)" target="#racks_container" > 
             <x-new-button class="w-full h-full" @click="modal_open = true" />
         </x-searchbar>
-        <div id="racks_container" class="grid grid-cols-1 auto-rows-max gap-3 mt-6 overflow-y-scroll max-h-[20rem] max-w-7xl mx-auto">
+        <div id="racks_container" class="grid grid-cols-1 auto-rows-max gap-3 mt-6 overflow-y-scroll max-h-[15rem] max-w-7xl mx-auto">
             @include('stockrooms.partials.racks')
         </div>
     

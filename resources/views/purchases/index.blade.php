@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto mt-10 bg-gray-300 text-black pt-6 pb-4 dark:bg-gray-700 dark:text-white">
+    <div class="max-w-7xl mx-auto mt-10 bg-cbg-300 text-black p-3 dark:bg-cbg-700 dark:text-white rounded">
 
     <!-- Display curatech device stock supplies -->
             <div class="text-center align-middle w-full">

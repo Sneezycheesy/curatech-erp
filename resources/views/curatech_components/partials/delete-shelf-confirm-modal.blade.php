@@ -8,7 +8,7 @@
     <div class="absolute w-full h-full top-0 left-0 bg-white opacity-25">
     </div>
     <div class="bg-cbg-200 dark:bg-cbg-900 p-4 absolute w-1/4 rounded h-max place-self-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" @click.outside="delete_modal_open = false">
-        Weet je zeker dat je plank {{$shelf->name}} wilt ontkoppelen?
+        <x-paragraph>Weet je zeker dat je plank {{$shelf->name}} wilt ontkoppelen?</x-paragraph>
         <div class="flex w-full justify-end mt-3">
             <form method="post" action="">
                 @csrf

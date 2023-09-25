@@ -105,10 +105,10 @@ class ComponentController extends Controller
         return redirect()->back();
     }
 
-    public function removeVendor($id, HtmxRequest $rq) {
+    public function removeVendor($id, $vendor_id, HtmxRequest $rq) {
         try {
-            Component::find($id)->vendors()->detach($rq->except('_token'));
-            return new HtmxResponseClientRedirect(route('components.edit', $id));
+            Component::find($id)->vendors()->detach($vendor_id);
+            return '';
         } catch (Exeption $e) {
             return redirect()->back()->with(['error' => $e]);
         }
