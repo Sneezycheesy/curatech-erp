@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class=" dark:text-white py-6 mx-6 my-6 grid grid-cols-5 px-4 dark:bg-cbg-600 max-w-7xl mx-auto rounded-xl">
+    <div class=" dark:text-white py-6 mx-6 my-6 grid grid-cols-5 px-4 dark:bg-cbg-700 max-w-7xl mx-auto rounded-xl">
         <!-- Life is available only in the present moment. - Thich Nhat Hanh -->
         <div class="col-span-2">
             <form method="post" id="update_curatech_product_form">
