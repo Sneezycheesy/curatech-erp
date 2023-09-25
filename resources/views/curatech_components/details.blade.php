@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="grid grid-cols-2 w-full sm:max-w-sm md:max-w-7xl mx-auto dark:bg-gray-700 bg-gray-200 dark:text-white p-5 rounded mt-5">
+    <div class="grid grid-cols-2 w-full sm:max-w-sm md:max-w-7xl mx-auto dark:bg-cbg-700 bg-cbg-200 dark:text-white p-5 rounded mt-5">
         @include('curatech_components.partials.edit-form', ['disabled' => $disabled])
         
         @include('curatech_components.partials.vendors', ['disabled' => $disabled])

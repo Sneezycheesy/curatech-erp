@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class=" dark:text-white py-6 max-w-7xl mx-auto">
         
-        <div class="grid grid-cols-2 w-full max-w-7xl gap-x-4 bg-gray-200 dark:bg-gray-600 p-5 rounded-xl">
+        <div class="grid grid-cols-2 w-full max-w-7xl gap-x-4 bg-cbg-200 dark:bg-cbg-600 p-5 rounded-xl">
             <div class="grid grid-cols-2 auto-rows-max gap-y-3 py-6 w-3/4 mx-auto">
                 <div class="col-span-2 grid grid-cols-1 px-3">
                     <x-input-label class="text-2xl">Naam</x-input-label>

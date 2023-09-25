@@ -41,7 +41,7 @@
     @endif
 
     <!-- Display TABLE of linked COMPONENTS-->
-    <div class="grid {{$disabled ? 'grid-cols-3' : 'grid-cols-4 mt-3'}} border-b-2 border-gray-700 col-span-7">
+    <div class="grid {{$disabled ? 'grid-cols-3' : 'grid-cols-4 mt-3'}} border-b-2 border-cbg-600 col-span-7">
         <x-input-label>Naam</x-input-label>
         <x-input-label>Productnummer</x-input-label>
         <x-input-label>stukprijs</x-input-label>

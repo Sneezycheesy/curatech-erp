@@ -1,6 +1,6 @@
 <x-app-layout>
     <div x-data="{modal_open: false}">
-        <div class="grid grid-cols-4 dark:text-white mt-9 py-5 px-5 dark:bg-gray-700 h-max max-w-7xl mx-auto overflow-y-scroll rounded">
+        <div class="grid grid-cols-4 dark:text-white mt-9 py-5 px-5 dark:bg-cbg-700 h-max max-w-7xl mx-auto overflow-y-scroll rounded">
             <div class="col-span-2">
                 @include('curatech_components.partials.edit-form')
             </div>
@@ -23,7 +23,7 @@
         @endif
 
         <div class="w-full max-w-7xl max-h-[50rem] mx-auto mt-5 p-2">
-            <div class="flex justify-between w-full">
+            <div class="flex justify-between w-full pr-3 align-middle">
                 <x-title>Te vinden in</x-title>
                 <x-new-button @click="modal_open = true" />
             </div>
@@ -51,21 +51,27 @@
         <x-new-modal title="Locatie toevoegen" :submit_post="route('components.shelf.add', $comp->component_id)" submit_include="[name='shelf_id']" target="#shelf_error">
             <x-text-input type="hidden" name="component_id" value="{{$comp->component_id}}" />
             <x-input-label for="stockroom_name">Magazijn</x-input-label>
-            <select id="stockroom_name" name="stockroom_name">
-                <option value="" selected>Selecteer een magazijn</option>
-                @foreach($all_stockrooms as $stockroom)
-                <option value="{{$stockroom->id}}" hx-get="{{route('racks.options', $stockroom->id)}}" hx-trigger="click"  hx-target="#rack_name">{{$stockroom->name}}</option>
-                @endforeach
-            </select>
+            <x-select-box id="stockroom_name" name="stockroom_name">
+                <x-slot name="options">
+                    <option value="" selected>Selecteer een magazijn</option>
+                    @foreach($all_stockrooms as $stockroom)
+                    <option value="{{$stockroom->id}}" hx-get="{{route('racks.options', $stockroom->id)}}" hx-trigger="click"  hx-target="#rack_name">{{$stockroom->name}}</option>
+                    @endforeach
+                </x-slot>
+            </x-select-box>
             <x-input-label for="rack_name">Stelling</x-input-label>
-            <select id="rack_name" name="rack_name">
-                @include('racks.partials.options')
-            </select>
+            <x-select-box id="rack_name" name="rack_name">
+                <x-slot name="options">
+                    @include('racks.partials.options')
+                </x-slot>
+            </x-select-box>
             <x-input-label for="shelf_name">Plank</x-input-label>
             <x-error-message id="shelf_error"></x-error-message>
-            <select id="shelf_name" name="shelf_id">
-                @include('shelves.partials.options')
-            </select>
+            <x-select-box id="shelf_name" name="shelf_id">
+                <x-slot name="options">
+                    @include('shelves.partials.options')
+                </x-slot>
+            </x-select-box>
         </x-new-modal>
     </div>
 </x-app-layout>
