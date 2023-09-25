@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-7xl w-7xl p-5 mt-3 text-center mx-auto bg-gray-300 dark:bg-gray-700 dark:text-white rounded">
+    <div class="max-w-7xl w-7xl p-5 mt-3 text-center mx-auto bg-cbg-200 dark:bg-cbg-700 dark:text-white rounded">
         <h1 class="text-2xl mx-auto text-center mb-3">
             Leverancier toevoegen
         </h1>
@@ -41,9 +41,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="w-full max-w-xl mx-auto rounded-xl hover:bg-red-700 dark:bg-gray-900 bg-gray-400 hover:cursor-pointer mt-5 py-4">
+            <x-primary-button type="submit" class="w-full max-w-xl mx-auto rounded-xl mt-5 py-4">
                 Opslaan
-            </button>
+            </x-primary-button>
             <p class="mx-auto w-full max-w-xl text-green-500 no-select text-center mt-2">{{session()->get('success')}}</p>
         </form>
     </div>

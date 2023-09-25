@@ -1,5 +1,5 @@
 <x-app-layout>
-    <form id="component_form" method='POST' class="mt-4 text-center dark:text-white py-5 px-5 dark:bg-gray-700 h-[500px] max-w-7xl mx-auto overflow-y-scroll rounded">
+    <form id="component_form" method='POST' class="mt-4 text-center dark:text-white py-5 px-5 bg-cbg-200 dark:bg-cbg-700 h-[500px] max-w-7xl mx-auto overflow-y-scroll rounded">
         @csrf
         <div class="grid grid-cols-2 gap-x-20 gap-y-8 auto-rows-max grid-flow-rows max-w-5xl mx-auto w-full h-min overflow-y-scroll">
             <div class="col-span-2 text-3xl">
@@ -56,17 +56,17 @@
                 <x-text-input type="text" name="stock" id="stock" placeholder="Voorraad" class="w-full text-center text-black">{{old('stock')}}</x-text-input>
             </div>
         </div>
+        <div class="grid grid-cols-1 grid-rows grid-flow-rows max-w-7xl text-center mx-auto mt-5">
+            <x-primary-button type="submit" form="component_form" value="Aanmaken" class="w-1/2 mx-auto">Aanmaken</x-primary-button>
+            @if(session('success'))
+                <p class="text-green-400">{{session('success')}}</p>
+            @endif
+        </div>
     </form>
     
-    <div class="grid grid-cols-1 grid-rows grid-flow-rows max-w-7xl text-center mx-auto mt-5">
-        <x-primary-button type="submit" form="component_form" value="Aanmaken" class="w-1/2 mx-auto">Aanmaken</x-primary-button>
-        @if(session('success'))
-            <p class="text-green-400">{{session('success')}}</p>
-        @endif
-    </div>
 
     <!-- Upload csv files to import components -->
-    <form class="grid grid-cols-1 auto-rows-max max-w-7xl mt-5 mx-auto text-center dark:bg-gray-700 dark:text-white py-4 rounded" action="{{route('components_upload')}}" method="post" enctype="multipart/form-data">
+    <form class="grid grid-cols-1 auto-rows-max max-w-7xl mt-5 mx-auto text-center bg-cbg-200 dark:bg-cbg-700 dark:text-white py-4 rounded" action="{{route('components_upload')}}" method="post" enctype="multipart/form-data">
         @csrf
         @error('file')
             <p class="w-full mx-auto text-red-700">{{$message}}</p>

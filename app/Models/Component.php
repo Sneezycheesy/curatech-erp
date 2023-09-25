@@ -45,6 +45,12 @@ class Component extends Model
         ];
     }
 
+    public $min_unit_price;
+
+    public function __constructor() {
+        
+    }
+
     # Return the amount of components required to be able to produce the DESIRED
     # amount of Curatech Products that use this component
     public function required_stock() {
@@ -53,6 +59,14 @@ class Component extends Model
            $stock_required += $cp->stock_desired;
         } 
         return $stock_required;
+    }
+
+    public function maxUnitPrice() {
+        $min_price_array = $this->vendors()->pluck('component_unit_price')->toArray();
+        if (!count($min_price_array)) {
+            return '';
+        }
+        return '€' . max($min_price_array);
     }
 
     public function curatech_products(): BelongsToMany { 
@@ -79,6 +93,7 @@ class Component extends Model
         return Component::where('component_id', $id)->first();
     }
 
+
     protected static function booted() {
         static::deleting(function(Component $comp) {
             $comp->vendors()->detach();
@@ -86,4 +101,5 @@ class Component extends Model
             $comp->shelves()->detach();
         });
     }
+
 }

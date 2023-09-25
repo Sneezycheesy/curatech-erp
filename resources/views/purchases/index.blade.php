@@ -22,23 +22,8 @@
         </div>
 
     <!-- Display all needed components and their required stock based on curatech product stock supplies -->
-        <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-6 h-max-h-400 mx-auto text-center">
+        <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-7 h-max-h-400 mx-auto text-center">
             <!-- First row aka. header -->
-    
-                <!-- Display desired component fields to display
-                    - ID
-                    - Description
-                    - Stock
-                    - Supplier(s)
-                    - Unit Price
-                    - Feed
-                    - Desired (based off product stock)
-                    - Shortage (current stock - desired)
-                    - Current stock
-                    - Amount to order (possibly based off packaging style)
-                    - Total order price
-                    - Total current stock price (amount of components in stock * unit price)
-                -->
                 <div class="">
                     <p>ID</p>
                 </div>
@@ -53,6 +38,9 @@
                 </div>
                 <div class="">
                     <p>Suppliers</p>
+                </div>
+                <div>
+                    <x-paragraph>Stukprijs</x-paragraph>
                 </div>
                 <div>
                     <p>Actions</p>

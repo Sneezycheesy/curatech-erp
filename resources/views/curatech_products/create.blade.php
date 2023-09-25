@@ -1,6 +1,6 @@
 <x-app-layout>
         
-    <div class="dark:bg-gray-700 mt-5 py-6 text-center max-w-6xl mx-auto px-6 gap-x-4 dark:text-white">
+    <div class="bg-cbg-200 dark:bg-cbg-700 mt-5 py-6 text-center max-w-6xl mx-auto px-6 gap-x-4 dark:text-white">
         <form method="post" id="update_curatech_product_form">
             @csrf
             <div class="grid grid-cols-1 grid-flow-cols gap-2 px-7">
@@ -26,9 +26,9 @@
                     {{$message}}
                 </div>
                 @enderror
-                <textarea name="description" id="description" class="text-black h-[120px]">{{old('description')}}</textarea>
+                <x-text-area-input name="description" id="description" class="text-black h-[120px]">{{old('description')}}</x-text-area-input>
 
-                <input type="submit" class="mt-3 p-5 w-full dark:bg-gray-800 rounded hover:bg-red-700" value="Opslaan"/>
+                <x-primary-button type="submit" class="mt-3 p-5 w-full rounded" >Opslaan</x-primary-button>
                 <div class="mt-2 p-2 w-full text-green-500 text-2xl">
                     {{session('success')}}
                 </div>
