@@ -62,6 +62,12 @@ class ComponentController extends Controller
         if($rq->isHtmxRequest()) {
             return new HtmxResponseClientRedirect(route('components.details', $id));
         }
+        $comp = Component::find($id);
+        $restocks = $comp->restocks()->get()->keyBy('created_at')->toArray();
+        $writeoffs = $comp->writeoffs()->get()->keyBy('created_at')->toArray();
+
+        $purchase_history = array_merge($restocks, $writeoffs);
+        krsort($purchase_history);
 
         return view('curatech_components.details', [
             'comp' => Component::find($id),
@@ -69,6 +75,7 @@ class ComponentController extends Controller
             'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
             'disabled' => true,
             'linked_shelves' => Component::find($id)->shelves()->get(),
+            'purchase_history' => $purchase_history,
         ]);
     }
 

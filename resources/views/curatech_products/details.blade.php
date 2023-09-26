@@ -26,7 +26,7 @@
         <!-- Show purchases history -->
         <div class="max-w-7xl w-full bg-cbg-200 dark:bg-cbg-600 mt-3 rounded p-3">
             <x-title>Gebruiksgeschiedenis</x-title>
-            <div class="grid grid-cols-3 gap-2">
+            <div class="grid grid-cols-3 gap-2 auto-rows-max overflow-y-scroll max-h-[15rem]">
                 @foreach($writeoffs as $writeoff)
                 <x-details-container>
                     <x-title>Afgeboekt</x-title>

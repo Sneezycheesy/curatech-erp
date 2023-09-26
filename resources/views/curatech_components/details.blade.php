@@ -11,23 +11,40 @@
         <x-edit-button hx-get="{{route('components.edit', $comp->component_id)}}" class="w-max"></x-edit-button>
     </div>
 
-    @if (count($linked_shelves))
-    <div class="w-full max-w-7xl max-h-[50rem] mx-auto mt-5 p-2">
-        <div class="flex justify-between w-full">
-            <x-title>Te vinden in</x-title>
+    <div class="grid grid-cols-2 w-full max-w-7xl mx-auto">
+        @if (count($linked_shelves))
+        <div class="w-full max-w-7xl max-h-[50rem] mx-auto mt-5 p-2">
+            <div class="flex justify-between w-full">
+                <x-title>Te vinden in</x-title>
+            </div>
+    
+            <div class="grid grid-cols-3 gap-3">
+                @foreach ($linked_shelves as $shelf)
+                    <x-details-container class="mt-2 grid grid-cols-1">
+                        <p>Magazijn: {{$shelf->rack()->first()->stockroom()->first()->name}}</p>
+                        <p>Stelling: {{$shelf->rack()->first()->name}}</p>
+                        <p>Plank: {{$shelf->name}}</p>
+                    </x-details-container>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
+        <div class="grid grid-cols-3 gap-2 max-h-[50rem] overflow-y-scroll">
+        @if(count($purchase_history))
+        <x-title class="col-span-3">Aankoopgeschiedenis</x-title>
+        @foreach($purchase_history as $purchase)
+            <x-details-container>
+                <x-paragraph>{{$purchase['type'] == 'write_off' ? 'Afgeboekt' : 'Ingekocht'}}</x-paragraph>
+                <x-paragraph>Aantal: {{$purchase['amount']}}</x-paragraph>
+                <x-paragraph>Voorraad: {{$purchase['new_stock']}}</x-paragraph>
+                <x-paragraph>{{date('Y-m-d', strtotime($purchase['created_at']))}}</x-paragraph>
+            </x-details-container>
+        @endforeach
+        @endif
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-            @foreach ($linked_shelves as $shelf)
-                <x-details-container class="mt-2 grid grid-cols-1">
-                    <p>Magazijn: {{$shelf->rack()->first()->stockroom()->first()->name}}</p>
-                    <p>Stelling: {{$shelf->rack()->first()->name}}</p>
-                    <p>Plank: {{$shelf->name}}</p>
-                </x-details-container>
-            @endforeach
-        </div>
     </div>
-    @endif
 
     <!-- show purchase history? -->
 </x-app-layout>

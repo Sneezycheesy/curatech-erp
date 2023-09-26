@@ -69,17 +69,19 @@ class RestockController extends Controller
         }
 
         try {
+            
+            $component->update([
+                'stock' => $component->stock + (int) $rq->amount,
+            ]);
+            
             Restock::create([
                 'component_id' => $component_id,
                 'vendor_id' => $vendor_id,
                 'amount' => $amount,
                 'invoice' => $invoice,
+                'new_stock' => $component->stock,
             ]);
-    
-            $component->update([
-                'stock' => $component->stock + (int) $rq->amount,
-            ]);
-    
+            
             return view('curatech_components.partials.restock-form', [
                 'id' => $id,
                 'vendors' => $component->vendors()->get(),
