@@ -26,7 +26,7 @@ class PurchasesController extends Controller
                 ->get()
                 ->filter(function($comp) {
                     return $comp->required_stock() > 0;
-                })
+                })->chunk(100),
         ]);
     }
 

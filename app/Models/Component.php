@@ -78,7 +78,10 @@ class Component extends Model
     }
 
     public function vendors(): BelongsToMany {
-        return $this->belongsToMany(Vendor::class, 'vendors_components', 'component_id', 'vendor_id')->withPivot(['component_unit_price', 'vendor_product_nr']);
+        return $this->belongsToMany(Vendor::class, 'vendors_components', 'component_id', 'vendor_id')
+        ->withPivot(['component_unit_price', 'vendor_product_nr'])
+        ->orderBy('vendors_components.component_unit_price', 'ASC')
+        ->orderBy('vendors.name', 'ASC');
     }
 
     public function restocks(): HasMany {

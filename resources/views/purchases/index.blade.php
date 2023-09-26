@@ -22,28 +22,31 @@
         </div>
 
     <!-- Display all needed components and their required stock based on curatech product stock supplies -->
-        <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-7 h-max-h-400 mx-auto text-center">
+        <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-8 h-max-h-400 mx-auto text-center">
             <!-- First row aka. header -->
                 <div class="">
-                    <p>ID</p>
+                    <x-paragraph>ID</x-paragraph>
                 </div>
                 <div class="">
-                    <p>Description</p>
+                    <x-paragraph>Beschrijving</x-paragraph>
                 </div>
                 <div class="">
-                    <p>Stock</p>
+                    <x-paragraph>Voorraad</x-paragraph>
                 </div>
                 <div class="">
-                    <p>Needed</p>
+                    <x-paragraph>Nodig</x-paragraph>
                 </div>
                 <div class="">
-                    <p>Suppliers</p>
+                    <x-paragraph>Leveranciers</x-paragraph>
+                </div>
+                <div class="">
+                    <x-paragraph>Productnummer</x-paragraph>
                 </div>
                 <div>
                     <x-paragraph>Stukprijs</x-paragraph>
                 </div>
                 <div>
-                    <p>Actions</p>
+                    <x-paragraph>Acties</x-paragraph>
                 </div>
             </div>
 
