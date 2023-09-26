@@ -76,4 +76,10 @@ class User extends Authenticatable
             'ROLE_DIRECTOR',
         ]);
     }
+
+    protected static function booted() {
+        static::deleting(function (User $user) {
+            $user->roles()->detach();
+        });
+    }
 }
