@@ -33,15 +33,21 @@ class WriteOffController extends Controller
     {
         if (is_numeric($request->amount)){
             $curatech_product = CuratechProduct::find($request->curatech_product_id);
+
+            $writeoff = WriteOff::create([
+                'curatech_product_id' => $curatech_product->id,
+                'amount' => $request->amount,
+            ]);
+
             foreach($curatech_product->components()->get() as $component) {
+                if ($request->amount > $component->stock) {
+                    return "Kan geen negatieve voorraad aanmaken";
+                }
+
                 $component->update([
                     'stock' => $component->stock - $request->amount,
                 ]);
-
-                WriteOff::create([
-                    'curatech_product_id' => $curatech_product->id,
-                    'component_id' => $component->id,
-                    'amount' => $request->amount,
+                $component->writeoffs()->attach($writeoff->id, [
                     'new_stock' => $component->stock,
                 ]);
             }

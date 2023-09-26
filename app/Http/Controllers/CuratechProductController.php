@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CuratechProduct;
 use App\Models\Component;
+use App\Models\writeOff;
+use App\Models\Restock;
 
 use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
 use Mauricius\LaravelHtmx\Http\HtmxRequest;
@@ -39,10 +41,14 @@ class CuratechProductController extends Controller
             return new HtmxResponseClientRedirect(route('curatech_product_details', $id));
         }
 
+        
         $curatech_product = CuratechProduct::find($id);
+        $writeoffs = $curatech_product->writeoffs()->orderBy('created_at', 'DESC')->distinct('created_at')->get();
+
         return view('curatech_products.details', [
             'curatech_product' => $curatech_product,
             'components' => $curatech_product->components()->get(),
+            'writeoffs' => $writeoffs,
         ]);
     }
 
@@ -116,17 +122,5 @@ class CuratechProductController extends Controller
     public function createProduct(StoreCuratechProductRequest $request) {
         CuratechProduct::create($request->validated());
         return redirect()->back()->with('success', 'Product aangemaakt');
-    }
-
-    public function writeOff(HtmxRequest $request) {
-        if (!is_numeric($request->amount)) {
-            return 'Vul alstublieft een geldig aantal in';
-        }
-        $cp = CuratechProduct::find($request->curatech_product_id);
-        foreach ($cp->components()->get() as $comp) {
-            $comp->update(['stock' => $comp->stock - $request->amount]);
-        }
-
-        return new HtmxResponseClientRedirect(route('purchases'));
     }
 }

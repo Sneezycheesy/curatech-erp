@@ -22,5 +22,18 @@
                 @include('curatech_products.partials.components-table', ['disabled' => true])
             </div>
         </div>
+
+        <!-- Show purchases history -->
+        <div class="max-w-7xl w-full bg-cbg-200 dark:bg-cbg-600 mt-3 rounded p-3">
+            <x-title>Gebruiksgeschiedenis</x-title>
+            <div class="grid grid-cols-3 gap-2">
+                @foreach($writeoffs as $writeoff)
+                <x-details-container>
+                    <x-title>Afgeboekt</x-title>
+                    <x-paragraph>Aantal: {{$writeoff->amount}} | {{$writeoff->created_at->format('Y-m-d')}}</x-paragraph>
+                </x-details-container>
+                @endforeach
+            </div>
+        </div>
     </div>
 </x-app-layout>

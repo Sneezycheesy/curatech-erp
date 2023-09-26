@@ -92,8 +92,8 @@ class Component extends Model
         return $this->belongsToMany(Shelf::class, 'components_shelves', 'component_id', 'shelf_id');
     }
 
-    public function writeoffs() : hasMany {
-        return $this->hasMany(WriteOff::class);
+    public function writeoffs() : belongsToMany {
+        return $this->belongsToMany(WriteOff::class, 'components_write_offs', 'component_id', 'write_off_id');
     }
 
     public static function find($id) {
