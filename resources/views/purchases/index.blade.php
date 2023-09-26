@@ -1,25 +1,32 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto mt-10 bg-cbg-300 text-black p-3 dark:bg-cbg-700 dark:text-white rounded">
+    <div class="max-w-7xl mx-auto mt-10 bg-cbg-300 text-black p-3 dark:bg-cbg-700 dark:text-white rounded" x-data="{open_writeoff_modal: false, curatech_product_id: null}">
 
     <!-- Display curatech device stock supplies -->
-            <div class="text-center align-middle w-full">
-                <form>
-                    @csrf
-                    @if (count($curatech_products) > 4)
-                    <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense grid-rows-2 overflow-scroll h-full">
-                    @else
-                    <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense overflow-scroll h-full">
-                    @endif
-                        @foreach ( $curatech_products as $curatech_product )
-                        <div class="grid gap-y-1 grid-cols-1 px-2">
-                            <x-input-label class="" for="product-name">Product: {{$curatech_product->name}}</x-input-label>
+        <div class="text-center align-middle w-full">
+            <form>
+                @csrf
+                @if (count($curatech_products) > 4)
+                <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense grid-rows-2 overflow-scroll h-full">
+                @else
+                <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense overflow-scroll h-full">
+                @endif
+                    @foreach ( $curatech_products as $curatech_product )
+                    <div class="grid gap-y-1 grid-cols-1 px-2">
+                        <x-input-label class="" for="product-name">Product: {{$curatech_product->name}}</x-input-label>
+                        <div class="relative">
                             <x-text-input class="text-center" name="{{$curatech_product->curatech_product_id}}" value="{{$curatech_product->stock_desired}}" />
+                            <div class="absolute right-0 top-1/2 w-min -translate-y-1/2 pr-3">
+                                <x-paragraph @click="open_writeoff_modal = true; curatech_product_id = {{$curatech_product->curatech_product_id}}" class="fa-solid fa-arrow-down hover:cursor-pointer hover:text-primary-600"></x-paragraph>
+                            </div>
                         </div>
-                        @endforeach
                     </div>
-                    <x-primary-button hx-post="{{route('purchases_update_stock')}}" hx-target='#components_table' class="w-1/6 my-3">Update</x-primary-button>
-                </form>
+                    @endforeach
+                </div>
+                <x-primary-button hx-post="{{route('purchases_update_stock')}}" hx-target='#components_table' class="w-1/6 my-3">Update</x-primary-button>
+            </form>
         </div>
+
+        @include('purchases.partials.write-off-modal')
 
     <!-- Display all needed components and their required stock based on curatech product stock supplies -->
         <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-8 h-max-h-400 mx-auto text-center">

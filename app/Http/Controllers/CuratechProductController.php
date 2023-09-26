@@ -117,4 +117,16 @@ class CuratechProductController extends Controller
         CuratechProduct::create($request->validated());
         return redirect()->back()->with('success', 'Product aangemaakt');
     }
+
+    public function writeOff(HtmxRequest $request) {
+        if (!is_numeric($request->amount)) {
+            return 'Vul alstublieft een geldig aantal in';
+        }
+        $cp = CuratechProduct::find($request->curatech_product_id);
+        foreach ($cp->components()->get() as $comp) {
+            $comp->update(['stock' => $comp->stock - $request->amount]);
+        }
+
+        return new HtmxResponseClientRedirect(route('purchases'));
+    }
 }

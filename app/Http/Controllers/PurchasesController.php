@@ -12,7 +12,7 @@ use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
 class PurchasesController extends Controller
 {
     // Return view only with products and components linked to one another
-    public function get(HtmxRequest $rq) {
+    public function index(HtmxRequest $rq) {
         if ($rq->isHtmxRequest()) {
             return new HtmxResponseClientRedirect(route('purchases'));
         }
@@ -30,7 +30,7 @@ class PurchasesController extends Controller
         ]);
     }
 
-    public function updateStock(HtmxRequest $request) {
+    public function update(HtmxRequest $request) {
         foreach ($request->except('_token') as $curatech_product_id=>$stock) {
             CuratechProduct::find(str_replace('_', '.', $curatech_product_id))->update(['stock_desired' => $stock ?? 0]);
         }
