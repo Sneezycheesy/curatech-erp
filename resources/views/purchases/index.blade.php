@@ -25,7 +25,7 @@
         <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-8 h-max-h-400 mx-auto text-center">
             <!-- First row aka. header -->
                 <div class="">
-                    <x-paragraph>ID</x-paragraph>
+                    <x-paragraph>Artikelnr</x-paragraph>
                 </div>
                 <div class="">
                     <x-paragraph>Beschrijving</x-paragraph>
