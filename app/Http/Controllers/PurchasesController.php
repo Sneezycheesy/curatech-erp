@@ -11,6 +11,7 @@ use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
 
 class PurchasesController extends Controller
 {
+
     // Return view only with products and components linked to one another
     public function get(HtmxRequest $rq) {
         if ($rq->isHtmxRequest()) {
