@@ -92,6 +92,10 @@ class Component extends Model
         return $this->belongsToMany(Shelf::class, 'components_shelves', 'component_id', 'shelf_id');
     }
 
+    public function writeoffs() : hasMany {
+        return $this->hasMany(WriteOff::class);
+    }
+
     public static function find($id) {
         return Component::where('component_id', $id)->first();
     }

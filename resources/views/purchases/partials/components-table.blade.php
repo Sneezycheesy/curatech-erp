@@ -12,7 +12,7 @@
             <x-paragraph class="whitespace-nowrap overflow-hidden text-ellipsis" aria-label="{{$comp->description}}">{{$comp->description}}</x-paragraph>
         </div>
         <div>
-            <x-paragraph class="{{$comp->stock < $comp->required_stock() || $comp->stock == '' ? 'dark:text-red-400' : 'text-paragraph-200'}}">{{$comp->stock}} {{$comp->stock < $comp->required_stock() ? '(' . $comp->required_stock() - $comp->stock . ')' : ''}}</x-paragraph>
+            <x-paragraph class="{{$comp->stock < $comp->required_stock() || $comp->stock == '' ? 'text-red-600 dark:text-red-600' : 'text-paragraph-200'}}">{{$comp->stock}} {{$comp->stock < $comp->required_stock() ? '(' . $comp->required_stock() - $comp->stock . ')' : ''}}</x-paragraph>
         </div>
         <div class="">
             <x-paragraph>{{$comp->required_stock()}}</x-paragraph>
