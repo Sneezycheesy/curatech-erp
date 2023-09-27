@@ -1,3 +1,8 @@
+@php
+    use \App\Models\CuratechProduct;
+    $curatech_products = CuratechProduct::all();
+@endphp
+
 <div x-show="open_writeoff_modal"
     x-transition:enter="transition ease-in duration-250"
     x-transition:enter-start="opacity-0"
@@ -22,7 +27,7 @@
             <x-error-message id="amount_error"></x-error-message>
             <x-text-input class="w-full" name="amount"/>
             <div class="flex w-full justify-end mt-3">
-                <x-primary-button hx-post="{{route('writeoffs.store')}}" hx-target="#amount_error" class="mr-2">OK</x-primary-button>
+                <x-primary-button hx-post="{{route('writeoffs.store')}}" hx-target="#amount_error" hx-refresh="true" class="mr-2">OK</x-primary-button>
                 <x-primary-button type="button" @click="open_writeoff_modal = false">X</x-primary-button>
             </div>
         </form>
