@@ -4,7 +4,7 @@
 
 @foreach ($components as $comp)
     @php $i = !$i @endphp
-    <div class="grid py-3 gap-x-1 grid-flow-col grid-cols-8 mx-auto text-center max-h-[400px] hover:bg-cbg-400 dark:hover:bg-cbg-500 {{$i ? 'bg-cbg-200 dark:bg-cbg-800' : 'bg-cbg-300 dark:bg-cbg-700'}}">
+    <div class="grid py-3 gap-x-1 grid-flow-col grid-cols-8 mx-auto text-center max-h-[400px] hover:bg-cbg-500 dark:hover:bg-cbg-500 {{$i ? 'bg-cbg-300 dark:bg-cbg-800' : 'bg-cbg-400 dark:bg-cbg-700'}}">
         <div class="items-end">
             <x-paragraph class="hover:cursor-pointer hover:text-primary-600" hx-get="{{route('components.details', $comp->component_id)}}">{{$comp->component_id}}</x-paragraph>
         </div>
@@ -12,7 +12,9 @@
             <x-paragraph class="whitespace-nowrap overflow-hidden text-ellipsis" aria-label="{{$comp->description}}">{{$comp->description}}</x-paragraph>
         </div>
         <div>
-            <x-paragraph class="{{$comp->stock < $comp->required_stock() || $comp->stock == '' ? 'text-red-600 dark:text-red-600' : 'text-paragraph-200'}}">{{$comp->stock}} {{$comp->stock < $comp->required_stock() ? '(' . $comp->required_stock() - $comp->stock . ')' : ''}}</x-paragraph>
+            <x-paragraph class="{{$comp->stock < $comp->required_stock() || $comp->stock == '' ? 'text-red-600 dark:text-red-600' : 'text-paragraph-200'}}">
+                {{$comp->stock}} {{$comp->stock < $comp->required_stock() ? '(' . $comp->required_stock() - $comp->stock . ')' : ''}}
+            </x-paragraph>
         </div>
         <div class="">
             <x-paragraph>{{$comp->required_stock()}}</x-paragraph>
@@ -38,7 +40,7 @@
         </div>
         <div>
             <x-paragraph>
-                <i hx-get="{{route('components.restock', $comp->component_id)}}" class="fa-solid fa-hand-holding-dollar hover:text-primary-600 hover:cursor-pointer mr-2"></i>
+                <i hx-get="{{route('restocks.create', $comp->component_id)}}" class="fa-solid fa-hand-holding-dollar hover:text-primary-600 hover:cursor-pointer mr-2"></i>
             </x-paragraph>
         </div>
     </div>

@@ -94,7 +94,9 @@ class Component extends Model
     }
 
     public function writeoffs() : belongsToMany {
-        return $this->belongsToMany(WriteOff::class, 'components_write_offs', 'component_id', 'write_off_id');
+        return $this->belongsToMany(WriteOff::class, 'components_write_offs', 'component_id', 'write_off_id')
+            ->withPivot('new_stock')
+            ->withPivot('amount');
     }
 
     public static function find($id) {

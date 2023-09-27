@@ -65,7 +65,6 @@ class ComponentController extends Controller
         $comp = Component::find($id);
         $restocks = $comp->restocks()->get()->keyBy('created_at')->toArray();
         $writeoffs = $comp->writeoffs()->get()->keyBy('created_at')->toArray();
-
         $purchase_history = array_merge($restocks, $writeoffs);
         krsort($purchase_history);
 
@@ -140,17 +139,6 @@ class ComponentController extends Controller
     public function removeShelf($id, $shelf_id, HtmxRequest $rq) {
         Component::find($id)->shelves()->detach($shelf_id);
         return '';
-    }
-
-    public function restock($id, HtmxRequest $rq) {
-        if ($rq->isHtmxRequest()) {
-            return new HtmxresponseClientRedirect(route('components.restock', $id));
-        }
-
-        return view('curatech_components.restock', [
-            'id' => $id,
-            'vendors' => Component::find($id)->vendors()->get(),
-        ]);
     }
 }
 

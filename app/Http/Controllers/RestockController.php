@@ -47,6 +47,17 @@ class RestockController extends Controller
         ]);
     }
 
+    public function create($id, HtmxRequest $rq) {
+        if ($rq->isHtmxRequest()) {
+            return new HtmxresponseClientRedirect(route('restocks.create', $id));
+        }
+
+        return view('restocks.create', [
+            'id' => $id,
+            'vendors' => Component::find($id)->vendors()->get(),
+        ]);
+    }
+
     //
     public function store(string $id, HtmxRequest $rq) {
         $component = Component::find($id);

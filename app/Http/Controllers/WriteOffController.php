@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\WriteOff;
 use App\Models\CuratechProduct;
+use App\Models\Component;
 use Illuminate\Http\Request;
 
 use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
@@ -31,6 +32,7 @@ class WriteOffController extends Controller
      */
     public function store(Request $request)
     {
+        $components_to_update = [];
         if (is_numeric($request->amount)){
             $curatech_product = CuratechProduct::find($request->curatech_product_id);
 
@@ -39,18 +41,32 @@ class WriteOffController extends Controller
                 'amount' => $request->amount,
             ]);
 
+            /* #TODO: find a way to optimize these loops 
+                Reduce the amount of loops needed to one if possible
+                Updates to the database will NOT be correctly done in loops
+                therefore we use 2 loops here, to update the stock on a component
+                in one database query
+            */
             foreach($curatech_product->components()->get() as $component) {
-                if ($request->amount > $component->stock) {
-                    return "Kan geen negatieve voorraad aanmaken";
+                if(array_key_exists($component->component_id, $components_to_update)) {
+                    $components_to_update[$component->component_id] += 1;
+                } else {
+                    $components_to_update[$component->component_id] = 1;
                 }
+            }
 
-                $component->update([
-                    'stock' => $component->stock - $request->amount,
-                ]);
-                $component->writeoffs()->attach($writeoff->id, [
+            foreach($components_to_update as $key=>$value) {
+                $component = Component::find($key);
+                $component->update(['stock' => $component->stock - ($value * $request->amount)]);
+                $component->writeoffs()->attach($writeoff, [
                     'new_stock' => $component->stock,
+                    'amount' => $value * $request->amount,
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
             }
+            
+
             return new HtmxResponseClientRedirect(route('purchases'));
         }
     }

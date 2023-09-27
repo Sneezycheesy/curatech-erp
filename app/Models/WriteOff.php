@@ -16,6 +16,8 @@ class WriteOff extends Model
         'component_id',
         'amount',
         'new_stock',
+        'created_at',
+        'updated_at',
     ];
 
     public function curatech_product() : BelongsTo {

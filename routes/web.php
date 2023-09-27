@@ -77,8 +77,8 @@ Route::post('components/{id}/add_shelf', [ComponentController::class, 'addShelf'
 Route::delete('/components/{id}/remove_shelf/{shelf_id}', [ComponentController::class, 'removeShelf'])->middleware(['auth', 'verified'])->name('components.shelf.remove');
 
 // Restocking
-Route::get('/components/{id}/restock', [ComponentController::class, 'restock'])->middleware(['auth', 'verified'])->name('components.restock');
-Route::post('/components/{id}/restock', [RestockController::class, 'store'])->middleware(['auth', 'verified'])->name('restock');
+Route::get('/restock/{id}/create', [RestockController::class, 'create'])->middleware(['auth', 'verified'])->name('restocks.create');
+Route::post('/restock/{id}/store', [RestockController::class, 'store'])->middleware(['auth', 'verified'])->name('restocks.store');
 
 // Vendors
 Route::get('/vendors', [VendorController::class, 'index'])->middleware(['auth', 'verified'])->name('vendors');

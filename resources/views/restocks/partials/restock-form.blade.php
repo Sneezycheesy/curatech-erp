@@ -1,7 +1,7 @@
 @props(['vendor_id' => isset($vendor_id) ? $vendor_id : null, 'amount' => isset($amount) ? $amount : null, 'success' => isset($success) ? $success : false])
 <form id="restock_form">
     @csrf
-    <div class="grid grid-cols-1 w-full max-w-6xl bg-cbg-200 dark:bg-cbg-700 mx-auto p-5 mt-6 gap-y-3">
+    <div class="grid grid-cols-1 w-full max-w-6xl bg-cbg-200 dark:bg-cbg-700 mx-auto mt-6 gap-y-3">
         <x-input-label>Aantal</x-input-label>
         @if(isset($amount_error))
             <x-error-message class="text-red-500">{{$amount_error}}</x-error-message>
@@ -24,8 +24,9 @@
         <x-input-label>Factuurnummer (optioneel)</x-input-label>
         <x-text-input name="invoice"></x-text-input>
         <div class="flex w-full max-w-6xl justify-end">
-            <x-back-button :url="url()->previous() == route('components.restock', $id) ? route('components.details', $id) : url()->previous()"></x-back-button>
-            <x-primary-button hx-target="#restock_form" hx-post="{{route('restock', $id)}}" class="{{$success ? 'dark:bg-green-500' : ''}}">Opslaan</x-primary-button>
+            <x-primary-button class="mr-2" hx-get="{{route('purchases')}}"><i class="fa-solid fa-money-check-dollar"></i></x-primary-button>
+            <x-primary-button class="mr-2" hx-get="{{route('components.details', $id)}}"><i class="fa-solid fa-list"></i></x-primary-button>
+            <x-primary-button hx-target="#restock_form" hx-post="{{route('restocks.store', $id)}}" class="{{$success ? 'dark:bg-green-500' : ''}}">Opslaan</x-primary-button>
         </div>
     </div>
 </form>

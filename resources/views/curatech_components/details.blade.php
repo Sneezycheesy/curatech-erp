@@ -7,13 +7,13 @@
 
     <div class="flex justify-end w-full max-w-7xl py-5 mx-auto">
         <x-back-button :url="route('components')" />
-        <x-primary-button class="mr-2" hx-get="{{route('components.restock', $comp->component_id)}}"><i class="fa-solid fa-wallet"></i></x-primary-button>
+        <x-primary-button class="mr-2" hx-get="{{route('restocks.create', $comp->component_id)}}"><i class="fa-solid fa-wallet"></i></x-primary-button>
         <x-edit-button hx-get="{{route('components.edit', $comp->component_id)}}" class="w-max"></x-edit-button>
     </div>
 
     <div class="grid grid-cols-2 w-full max-w-7xl mx-auto">
         @if (count($linked_shelves))
-        <div class="w-full max-w-7xl max-h-[50rem] mx-auto mt-5 p-2">
+        <div class="w-full max-w-7xl max-h-[50rem] mx-auto">
             <div class="flex justify-between w-full">
                 <x-title>Te vinden in</x-title>
             </div>
@@ -36,15 +36,12 @@
         @foreach($purchase_history as $purchase)
             <x-details-container>
                 <x-paragraph>{{$purchase['type'] == 'write_off' ? 'Afgeboekt' : 'Ingekocht'}}</x-paragraph>
-                <x-paragraph>Aantal: {{$purchase['amount']}}</x-paragraph>
-                <x-paragraph>Voorraad: {{$purchase['new_stock']}}</x-paragraph>
+                <x-paragraph>Aantal: {{$purchase['pivot']['amount'] ?? $purchase['amount']}}</x-paragraph>
+                <x-paragraph>Voorraad: {{$purchase['pivot']['new_stock'] ?? $purchase['new_stock']}}</x-paragraph>
                 <x-paragraph>{{date('Y-m-d', strtotime($purchase['created_at']))}}</x-paragraph>
             </x-details-container>
         @endforeach
         @endif
         </div>
-
     </div>
-
-    <!-- show purchase history? -->
 </x-app-layout>
