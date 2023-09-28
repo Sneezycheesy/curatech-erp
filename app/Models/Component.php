@@ -52,6 +52,14 @@ class Component extends Model
         
     }
 
+    public function priceRequiredStock() {
+        if (!$this->required_stock()) {
+            return 0;
+        }
+
+        return ($this->required_stock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
+    }
+
     # Return the amount of components required to be able to produce the DESIRED
     # amount of Curatech Products that use this component
     public function required_stock() {

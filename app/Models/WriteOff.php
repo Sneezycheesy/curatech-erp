@@ -24,7 +24,11 @@ class WriteOff extends Model
         return $this->belongsTo(CuratechProduct::class, 'curatech_product_id');
     }
 
-    public function component() : BelongsToMany {
+    public function component() : BelongsTo {
+        return $this->belongsTo(Component::class, 'component_id');
+    }
+
+    public function components() : BelongsToMany {
         return $this->belongsToMany(Component::class, 'components_write_offs', 'write_off_id', 'component_id');
     }
 }

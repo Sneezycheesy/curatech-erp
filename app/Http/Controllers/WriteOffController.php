@@ -18,6 +18,7 @@ class WriteOffController extends Controller
     public function index()
     {
         //
+        $witeoffs = WriteOff::with('component')->with('curatech_product')->all();
     }
 
     /**
@@ -36,6 +37,10 @@ class WriteOffController extends Controller
         $error = null;
         if (!is_numeric($request->amount) || $request->amount < 0){
             return "Vul geldig getal in";
+        }
+
+        if(!is_integer($request->amount)) {
+            return "Vul een heel getal in";
         }
 
         if (isset($request->component_id)) {

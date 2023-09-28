@@ -19,15 +19,26 @@ class RestockController extends Controller
         }
 
 
+        $components = Component::orderBy('component_id', 'ASC')
+        ->get()
+        ->filter(function($comp) {
+            return $comp->required_stock() > 0;
+        });
+        $curatech_products = CuratechProduct::whereHas('components')->orderBy('name', 'ASC')->get();
+
+        $total_price = 0;
+        $components->each(function ($comp) use (&$total_price) {
+            $total_price += $comp->priceRequiredStock();
+        });
+
         return view('purchases.index', [
-            'curatech_products' => CuratechProduct::with('components')->whereHas('components')->orderBy('name', 'ASC')->get(),
-            'components' => Component::with('curatech_products')
-                ->whereHas('curatech_products')
-                ->orderBy('component_id', 'ASC')
+            'curatech_products' => CuratechProduct::whereHas('components')->orderBy('name', 'ASC')->get(),
+            'components' => Component::orderBy('component_id', 'ASC')
                 ->get()
                 ->filter(function($comp) {
                     return $comp->required_stock() > 0;
-                })
+                }),
+            'total_price' => $total_price,
         ]);
     }
 

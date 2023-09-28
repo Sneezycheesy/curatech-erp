@@ -24,7 +24,7 @@
                 </x-slot>
             </x-select-box>
             <x-input-label>Aantal af te boeken</x-input-label>
-            <x-error-message id="amount_error"></x-error-message>
+            <x-error-message id="amount_error" class="my-2"></x-error-message>
             <x-text-input class="w-full" name="amount"/>
             <div class="flex w-full justify-end mt-3">
                 <x-primary-button hx-post="{{route('writeoffs.store')}}" hx-target="#amount_error" hx-refresh="true" class="mr-2">OK</x-primary-button>
