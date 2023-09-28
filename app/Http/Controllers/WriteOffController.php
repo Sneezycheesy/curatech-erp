@@ -38,42 +38,55 @@ class WriteOffController extends Controller
             return "Vul geldig getal in";
         }
 
-        $curatech_product = CuratechProduct::find($request->curatech_product_id);
-        
-        $components = $curatech_product->components()->pluck('components.component_id')->toArray();
-        $components_to_update = array_count_values($components);
-        
-        /* #TODO: find a way to optimize these loops 
-        Reduce the amount of loops needed to one if possible
-        Updates to the database will NOT be correctly done in loops
-            therefore we use 2 loops here, to update the stock on a component
-            in one database query
-        */
+        if (isset($request->component_id)) {
+            $component = Component::find($request->component_id);
 
-        foreach($components_to_update as $key=>$value) {
-            $component = Component::find($key);
-            if($component->stock - ($value * $request->amount) < 0) {
-                return 'Kan niet zoveel componenten afschrijven';
-            }
+            $component->update(['stock' => $component->stock - $request->amount]);
+            WriteOff::create([
+                'component_id' => $component->id,
+                'amount' => $request->amount,
+                'new_stock' => $component->stock,
+            ]);
         }
 
-        $writeoff = WriteOff::create([
-            'curatech_product_id' => $curatech_product->id,
-            'amount' => $request->amount,
-        ]);
-
-        $curatech_product->update(['stock_desired' => $curatech_product->stock_desired - $request->amount]);
-
-        $curatech_product->components()->get()->each(function ($comp) use ($request, $components_to_update, $writeoff) {
-            $comp->update(['stock' => $comp->stock - ($components_to_update[$comp->component_id] * $request->amount)]);
-            $comp->writeoffs()->attach($writeoff, [
-                'new_stock' => $comp->stock,
-                'amount' => $components_to_update[$comp->component_id] * $request->amount,
-                'created_at' => now(),
-                'updated_at' => now()
+        if(isset($request->curatech_product_id)) {
+            $curatech_product = CuratechProduct::find($request->curatech_product_id);
+            
+            $components = $curatech_product->components()->pluck('components.component_id')->toArray();
+            $components_to_update = array_count_values($components);
+            
+            /* #TODO: find a way to optimize these loops 
+            Reduce the amount of loops needed to one if possible
+            Updates to the database will NOT be correctly done in loops
+                therefore we use 2 loops here, to update the stock on a component
+                in one database query
+            */
+    
+            foreach($components_to_update as $key=>$value) {
+                $component = Component::find($key);
+                if($component->stock - ($value * $request->amount) < 0) {
+                    return 'Kan niet zoveel componenten afschrijven';
+                }
+            }
+    
+            $writeoff = WriteOff::create([
+                'curatech_product_id' => $curatech_product->id,
+                'amount' => $request->amount,
             ]);
-        });
-        
+    
+            $curatech_product->update(['stock_desired' => $curatech_product->stock_desired - $request->amount]);
+    
+            $curatech_product->components()->get()->each(function ($comp) use ($request, $components_to_update, $writeoff) {
+                $comp->update(['stock' => $comp->stock - ($components_to_update[$comp->component_id] * $request->amount)]);
+                $comp->writeoffs()->attach($writeoff, [
+                    'new_stock' => $comp->stock,
+                    'amount' => $components_to_update[$comp->component_id] * $request->amount,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            });
+        }
+
         return new HtmxResponseClientRefresh();
     }
 

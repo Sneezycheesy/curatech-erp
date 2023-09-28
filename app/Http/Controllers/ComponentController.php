@@ -65,8 +65,11 @@ class ComponentController extends Controller
         $comp = Component::find($id);
         $restocks = $comp->restocks()->get()->keyBy('created_at')->toArray();
         $writeoffs = $comp->writeoffs()->get()->keyBy('created_at')->toArray();
+        $ownWriteoffs = $comp->ownWriteoffs()->get()->keyBy('created_at')->toArray();
         $purchase_history = array_merge($restocks, $writeoffs);
+        $purchase_history = array_merge($purchase_history, $ownWriteoffs);
         krsort($purchase_history);
+
 
         return view('curatech_components.details', [
             'comp' => Component::find($id),
