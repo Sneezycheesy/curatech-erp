@@ -46,6 +46,16 @@ class RestockController extends Controller
         foreach ($request->except('_token') as $curatech_product_id=>$stock) {
             CuratechProduct::find(str_replace('_', '.', $curatech_product_id))->update(['stock_desired' => $stock ?? 0]);
         }
+        $components = Component::orderBy('component_id', 'ASC')
+        ->get()
+        ->filter(function($comp) {
+            return $comp->required_stock() > 0;
+        });
+
+        $total_price = 0;
+        $components->each(function ($comp) use (&$total_price) {
+            $total_price += $comp->priceRequiredStock();
+        });
 
         return view('purchases.partials.components-table', [
             'components' => Component::with('curatech_products')
@@ -55,6 +65,7 @@ class RestockController extends Controller
             ->filter(function($comp) {
                 return $comp->required_stock() > 0;
             }),
+            'total_price' => $total_price,
         ]);
     }
 

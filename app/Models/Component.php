@@ -53,7 +53,7 @@ class Component extends Model
     }
 
     public function priceRequiredStock() {
-        if (!$this->required_stock()) {
+        if (!$this->required_stock() || $this->required_stock() <= $this->stock) {
             return 0;
         }
 
