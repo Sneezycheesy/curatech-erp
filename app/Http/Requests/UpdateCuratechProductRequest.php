@@ -22,7 +22,7 @@ class UpdateCuratechProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'curatech_product_id' => 'required|max:10|unique:curatech_products,curatech_product_id,'.$this->route('id').',curatech_product_id',
+            'curatech_product_id' => 'required|max:20|unique:curatech_products,curatech_product_id,'.$this->route('id').',curatech_product_id',
             'description' => 'required',
             'name' => 'required|max:255',
         ]; 

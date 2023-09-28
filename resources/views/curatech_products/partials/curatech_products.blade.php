@@ -1,10 +1,8 @@
-<div id="curatech_products_container">
-@foreach ( $curatech_products as $curatech_product )
-    <a href="/curatech_product/{{$curatech_product->curatech_product_id}}">
-        <div class="mt-6 bg-cbg-200 dark:bg-cbg-700 dark:text-paragraph-dark text-paragraph-light sm:rounded-lg px-6 max-w-6xl mx-auto py-4 hover:bg-cbg-800 hover:dark:bg-cbg-800 hover:text-white">
-            <p class="text-lg"> {{ $curatech_product->name }}</p>
-            <p>{{$curatech_product->description}}</p>
-        </div>
-    </a>
-@endforeach
+<div id="curatech_products_container" class="max-w-6xl mx-auto grid sm:grid-cols-1 px-3 md:px-0 md:grid-cols-3 gap-2 mt-3">
+    @foreach ( $curatech_products as $curatech_product )
+    <x-details-container class="relative" hx-get="{{route('curatech_products.details', $curatech_product->curatech_product_id)}}">
+        <p class="text-lg">{{$curatech_product->curatech_product_id}} | {{ $curatech_product->name }}</p>
+        <p class="whitespace-nowrap overflow-hidden text-ellipsis">{{$curatech_product->description}}</p>
+    </x-details-container>
+    @endforeach
 </div>

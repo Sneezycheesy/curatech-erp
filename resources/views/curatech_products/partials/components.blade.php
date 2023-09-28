@@ -11,7 +11,7 @@
             @csrf
             <input type="hidden" value="{{$components[$i]->id}}" name="component_id" />
             <input type="hidden" value="{{$components[$i]->pivot->curatech_product_component_position}}" name="curatech_product_component_position" />
-            <i hx-delete="{{route('curatech_product_remove_component', $curatech_product->curatech_product_id)}}" hx-target="#components_table" class="fa-solid fa-trash hover:cursor-pointer"></i>
+            <i hx-delete="{{route('curatech_product_remove_component', $curatech_product->curatech_product_id)}}" hx-target="#components_table" class="fa-solid fa-trash hover:cursor-pointer hover:text-primary-200"></i>
         </form>
         @endif
     </div>

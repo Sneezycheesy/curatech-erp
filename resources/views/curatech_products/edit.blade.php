@@ -32,7 +32,6 @@
                     <x-text-area-input name="description" id="description" class="text-black h-[120px]">{{$curatech_product->description}}</x-text-area-input>
 
                     <div class="flex justify-end mt-3">
-                        <x-back-button />
                         <x-primary-button type="submit" class="ml-1 {{session('success') ? 'dark:bg-green-400 bg-green-400' : ''}}">Opslaan @if(session('success')) <i class="fa-solid fa-check ml-2"></i>  @endif</x-primary-button>
                     </div>
                 </div>

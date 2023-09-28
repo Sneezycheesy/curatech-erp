@@ -14,8 +14,11 @@
 
                 
                 <div class="flex justify-end col-span-2 w-full px-3 pt-3">
-                    <x-back-button :url="route('curatech_products')"></x-back-button>
-                    <x-edit-button hx-get="{{route('curatech_product_update', $curatech_product->curatech_product_id)}}" class="w-max" type="button">Wijzigen</x-edit-button>
+                    <form>
+                        @csrf
+                        <x-primary-button type="button" hx-post="{{route('curatech_products.duplicate', $curatech_product->curatech_product_id)}}"><i class="fa-solid fa-copy"></i></x-primary-button>
+                        <x-edit-button type="button" hx-get="{{route('curatech_products.edit', $curatech_product->curatech_product_id)}}" class="w-max" type="button">Wijzigen</x-edit-button>
+                    </form>
                 </div>
             </div>
             <div class="grid w-full grid-cols-3 auto-grid-rows overflow-y-scroll text-center h-max">

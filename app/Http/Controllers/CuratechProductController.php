@@ -36,7 +36,7 @@ class CuratechProductController extends Controller
 
     public function details(string $id, HtmxRequest $request) {
         if($request->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('curatech_product_details', $id));
+            return new HtmxResponseClientRedirect(route('curatech_products.details', $id));
         }
 
         $curatech_product = CuratechProduct::find($id);
@@ -48,18 +48,39 @@ class CuratechProductController extends Controller
 
     public function updatePage(string $id, HtmxRequest $request) {
         if($request->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('curatech_product_update', $id));
+            return new HtmxResponseClientRedirect(route('curatech_products.edit', $id));
         }
 
         $curatech_product = CuratechProduct::find($id);
         $components = $curatech_product->components()->get();
         // Return only components that are NOT connected to $curatech_product
         $all_components = Component::all();
-        return view('curatech_products.update', [
+        return view('curatech_products.edit', [
             'curatech_product' => $curatech_product,
             'components' => $components,
             'all_components' => $all_components,
         ]);
+    }
+
+    public function duplicate($id, HtmxRequest $request) {
+        $curatech_product_original = CuratechProduct::find($id);
+        $amount_of_ids = count(CuratechProduct::where('curatech_product_id', 'like', "%$id%")->get()->toArray()) + 1;
+
+        $curatech_product = CuratechProduct::find($id)->replicate();
+        $curatech_product->curatech_product_id = "$id($amount_of_ids)";
+        $curatech_product->created_at = now();
+        $curatech_product->updated_at = now();
+
+        $curatech_product->save();
+        
+        $curatech_product_original->components()->get()->each(function($comp) use ($curatech_product) {
+            $curatech_product->components()->attach($comp, [
+                'curatech_product_id' => $curatech_product->id,
+                'curatech_product_component_position' => $comp->pivot->curatech_product_component_position,
+            ]);
+        });
+
+        return new HtmxResponseClientRedirect(route('curatech_products.edit', $curatech_product->curatech_product_id));
     }
 
     public function update(UpdateCuratechProductRequest $request) {
@@ -70,7 +91,7 @@ class CuratechProductController extends Controller
 
         // If curatech_product_id was updated we need to reroute to the new details page
         // Always do this, regardsless of new id
-        return redirect(route('curatech_product_update', $cp->curatech_product_id))->withSuccess('Product opgeslagen');
+        return redirect(route('curatech_products.edit', $cp->curatech_product_id))->withSuccess('Product opgeslagen');
     }
 
     public function addComponent(AddComponentToCuratechProductRequest $request) {

@@ -27,9 +27,9 @@
 
 <!-- Display TABLE of linked COMPONENTS-->
 <div class="grid grid-cols-7 border-b-2 border-gray-700 col-span-7">
-    <div>ID</div>
-    <div class="col-span-4">Description</div>
-    <div class="{{$disabled ? 'col-span-2' : ''}}">Position</div>
+    <div>Artikelnr</div>
+    <div class="col-span-4">Beschrijving</div>
+    <div class="{{$disabled ? 'col-span-2' : ''}}">Positie</div>
     @if(!$disabled)
     <div>Acties</div>
     @endif
