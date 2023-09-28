@@ -11,7 +11,7 @@
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0">
     <x-backdrop />
-    <div class="absolute top-[4rem] left-1/2 -translate-y-1/2 -translate-x-1/2 w-1/4 bg-cbg-200 dark:bg-cbg-900 p-5"  @click.outside="open_writeoff_modal = false">
+    <div class="fixed top-[8rem] left-1/2 -translate-x-1/2 w-1/4 bg-cbg-300 dark:bg-cbg-900 p-5 rounded"  @click.outside="open_writeoff_modal = false">
         <form method="PUT" action="">
             @csrf
             <x-title>Afboeken</x-title>
