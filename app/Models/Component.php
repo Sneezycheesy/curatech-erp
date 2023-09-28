@@ -57,7 +57,7 @@ class Component extends Model
     public function required_stock() {
         $stock_required = 0;
         foreach ($this->curatech_products()->get() as $cp) {
-           $stock_required += $cp->stock_desired;
+           $stock_required += $cp->stock_desired > 0 ? $cp->stock_desired : 0;
         } 
         return $stock_required;
     }
