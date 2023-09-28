@@ -62,6 +62,8 @@ class WriteOffController extends Controller
             'amount' => $request->amount,
         ]);
 
+        $curatech_product->update(['stock_desired' => $curatech_product->stock_desired - $request->amount]);
+
         $curatech_product->components()->get()->each(function ($comp) use ($request, $components_to_update, $writeoff) {
             $comp->update(['stock' => $comp->stock - ($components_to_update[$comp->component_id] * $request->amount)]);
             $comp->writeoffs()->attach($writeoff, [
@@ -72,7 +74,6 @@ class WriteOffController extends Controller
             ]);
         });
         
-
         return new HtmxResponseClientRefresh();
     }
 
