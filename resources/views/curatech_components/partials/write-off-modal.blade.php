@@ -16,7 +16,7 @@
             @csrf
             <x-title>Afboeken</x-title>
             <x-input-label>Component</x-input-label>
-            <x-select-box class="w-full" name="component_id">
+            <x-select-box class="w-full" name="component_id" disabled>
                 <x-slot name="options">
                 @foreach($components as $component)
                     <option value="{{$component->component_id}}" :selected="component_id == '{{$component->component_id}}'">{{$component->component_id}}</option>
