@@ -94,6 +94,11 @@ class CuratechProductController extends Controller
         return redirect(route('curatech_products.edit', $cp->curatech_product_id))->withSuccess('Product opgeslagen');
     }
 
+    public function destroy($id) {
+        $curatech_product = CuratechProduct::find($id);
+        $curatech_product->delete();
+    }
+
     public function addComponent(AddComponentToCuratechProductRequest $request) {
         $comp = CuratechProduct::find($request->route('id'))->components()->wherePivot('curatech_product_component_position', strtoupper($request->curatech_product_component_position))->get();
         

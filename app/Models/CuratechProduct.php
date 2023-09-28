@@ -16,6 +16,7 @@ class CuratechProduct extends Model
         'description',
         'stock',
         'stock_desired',
+        'deleted',
     ];
 
     public function get_components() {
@@ -28,6 +29,17 @@ class CuratechProduct extends Model
 
     public static function find($id) {
         return CuratechProduct::where('curatech_product_id', $id)->first();
+    }
+
+    public static function all($columns = []) {
+        return CuratechProduct::where('deleted', false)->get();
+    }
+
+    public function delete() {
+        $this->components()->detach();
+        $this->update([
+            'deleted' => true,
+        ]);
     }
 
     protected static function booted() {
