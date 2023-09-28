@@ -12,15 +12,13 @@
     x-transition:leave-end="opacity-0">
     <x-backdrop />
     <div class="fixed top-[8rem] left-1/2 -translate-x-1/2 w-1/4 bg-cbg-300 dark:bg-cbg-900 p-5 rounded"  @click.outside="open_writeoff_modal = false">
-        <form method="PUT" action="">
+        <form method="POST" action="">
             @csrf
             <x-title>Afboeken</x-title>
             <x-input-label>Component</x-input-label>
-            <x-select-box class="w-full" name="component_id" disabled>
+            <x-select-box class="w-full" name="component_id">
                 <x-slot name="options">
-                @foreach($components as $component)
-                    <option value="{{$component->component_id}}" :selected="component_id == '{{$component->component_id}}'">{{$component->component_id}}</option>
-                    @endforeach
+                    <option :value="component_id" x-text="component_id"></option>
                 </x-slot>
             </x-select-box>
             <x-input-label>Aantal af te boeken</x-input-label>

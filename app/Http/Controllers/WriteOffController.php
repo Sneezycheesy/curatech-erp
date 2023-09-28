@@ -39,7 +39,7 @@ class WriteOffController extends Controller
             return "Vul geldig getal in";
         }
 
-        if(!is_integer($request->amount)) {
+        if(!is_integer(intval($request->amount))) {
             return "Vul een heel getal in";
         }
 
