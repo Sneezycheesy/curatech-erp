@@ -18,19 +18,6 @@ class RestockController extends Controller
             return new HtmxResponseClientRedirect(route('purchases'));
         }
 
-
-        $components = Component::orderBy('component_id', 'ASC')
-        ->get()
-        ->filter(function($comp) {
-            return $comp->required_stock() > 0;
-        });
-        $curatech_products = CuratechProduct::whereHas('components')->orderBy('name', 'ASC')->get();
-
-        $total_price = 0;
-        $components->each(function ($comp) use (&$total_price) {
-            $total_price += $comp->priceRequiredStock();
-        });
-
         return view('purchases.index', [
             'curatech_products' => CuratechProduct::whereHas('components')->orderBy('name', 'ASC')->get(),
             'components' => Component::orderBy('component_id', 'ASC')
@@ -38,7 +25,7 @@ class RestockController extends Controller
                 ->filter(function($comp) {
                     return $comp->required_stock() > 0;
                 }),
-            'total_price' => $total_price,
+            'total_price' => $this->totalPrice(),
         ]);
     }
 
@@ -46,26 +33,14 @@ class RestockController extends Controller
         foreach ($request->except('_token') as $curatech_product_id=>$stock) {
             CuratechProduct::find(str_replace('_', '.', $curatech_product_id))->update(['stock_desired' => $stock ?? 0]);
         }
-        $components = Component::orderBy('component_id', 'ASC')
-        ->get()
-        ->filter(function($comp) {
-            return $comp->required_stock() > 0;
-        });
-
-        $total_price = 0;
-        $components->each(function ($comp) use (&$total_price) {
-            $total_price += $comp->priceRequiredStock();
-        });
 
         return view('purchases.partials.components-table', [
-            'components' => Component::with('curatech_products')
-            ->whereHas('curatech_products')
-            ->orderBy('component_id', 'ASC')
+            'components' => Component::orderBy('component_id', 'ASC')
             ->get()
             ->filter(function($comp) {
                 return $comp->required_stock() > 0;
             }),
-            'total_price' => $total_price,
+            'total_price' => $this->totalPrice(),
         ]);
     }
 
@@ -146,5 +121,21 @@ class RestockController extends Controller
         }
 
         return $returnVal;
+    }
+
+    private function totalPrice() {
+        
+        $components = Component::orderBy('component_id', 'ASC')
+        ->get()
+        ->filter(function($comp) {
+            return $comp->required_stock() > 0;
+        });
+
+        $total_price = 0;
+        $components->each(function ($comp) use (&$total_price) {
+            $total_price += $comp->priceRequiredStock();
+        });
+
+        return $total_price;
     }
 }

@@ -29,7 +29,7 @@
         @include('purchases.partials.write-off-modal')
 
     <!-- Display all needed components and their required stock based on curatech product stock supplies -->
-        <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-9 h-max-h-400 mx-auto text-center">
+        <div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-10 h-max-h-400 mx-auto text-center">
             <!-- First row aka. header -->
             <div class="">
                 <x-paragraph>Artikelnr</x-paragraph>
@@ -38,16 +38,19 @@
                 <x-paragraph>Beschrijving</x-paragraph>
             </div>
             <div class="">
+                <x-paragraph>Leveranciers</x-paragraph>
+            </div>
+            <div class="">
+                <x-paragraph>Productnummer</x-paragraph>
+            </div>
+            <div class="">
                 <x-paragraph>Voorraad</x-paragraph>
             </div>
             <div class="">
                 <x-paragraph>Nodig</x-paragraph>
             </div>
             <div class="">
-                <x-paragraph>Leveranciers</x-paragraph>
-            </div>
-            <div class="">
-                <x-paragraph>Productnummer</x-paragraph>
+                <x-paragraph>Tekort</x-paragraph>
             </div>
             <div>
                 <x-paragraph>Stukprijs</x-paragraph>

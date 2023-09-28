@@ -115,7 +115,6 @@ class Component extends Model
         return Component::where('component_id', $id)->first();
     }
 
-
     protected static function booted() {
         static::deleting(function(Component $comp) {
             $comp->vendors()->detach();
@@ -123,5 +122,4 @@ class Component extends Model
             $comp->shelves()->detach();
         });
     }
-
 }
