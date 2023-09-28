@@ -15,11 +15,11 @@
         <form method="PUT" action="">
             @csrf
             <x-title>Afboeken</x-title>
-            <x-input-label>Curatech product</x-input-label>
+            <x-input-label>Component</x-input-label>
             <x-select-box class="w-full" name="component_id">
                 <x-slot name="options">
                 @foreach($components as $component)
-                    <option value="{{$component->component_id}}" :selected="component_id == {{$component->component_id}}">{{$component->component_id}}</option>
+                    <option value="{{$component->component_id}}" :selected="component_id == '{{$component->component_id}}'">{{$component->component_id}}</option>
                     @endforeach
                 </x-slot>
             </x-select-box>

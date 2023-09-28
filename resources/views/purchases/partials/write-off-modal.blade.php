@@ -19,7 +19,7 @@
             <x-select-box class="w-full" name="curatech_product_id">
                 <x-slot name="options">
                 @foreach($curatech_products as $curatech_product)
-                    <option value="{{$curatech_product->curatech_product_id}}" :selected="curatech_product_id == {{$curatech_product->curatech_product_id}}">{{$curatech_product->name}}</option>
+                    <option value="{{$curatech_product->curatech_product_id}}" :selected="curatech_product_id == '{{$curatech_product->curatech_product_id}}'">{{$curatech_product->name}}</option>
                     @endforeach
                 </x-slot>
             </x-select-box>

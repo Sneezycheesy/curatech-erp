@@ -16,7 +16,7 @@
                         <div class="relative">
                             <x-text-input class="text-center" name="{{$curatech_product->curatech_product_id}}" value="{{$curatech_product->stock_desired}}" />
                             <div class="absolute right-0 top-1/2 w-min -translate-y-1/2 pr-3">
-                                <x-paragraph @click="open_writeoff_modal = true; curatech_product_id = {{$curatech_product->curatech_product_id}}" class="fa-solid fa-arrow-down hover:cursor-pointer hover:text-primary-600"></x-paragraph>
+                                <x-paragraph @click="open_writeoff_modal = true; curatech_product_id = '{{$curatech_product->curatech_product_id}}'" class="fa-solid fa-arrow-down hover:cursor-pointer hover:text-primary-600"></x-paragraph>
                             </div>
                         </div>
                     </div>
