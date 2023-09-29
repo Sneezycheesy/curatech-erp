@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CuratechComponents;
 
 use Livewire\Component;
 use App\Models\Component as CuratechComponent;
 
-class Components extends Component
+class Index extends Component
 {
     public $components;
     public $search;
@@ -16,7 +16,7 @@ class Components extends Component
 
     public function render()
     {
-        return view('livewire.components', [
+        return view('livewire.curatech-components.index', [
         ]);
     }
 

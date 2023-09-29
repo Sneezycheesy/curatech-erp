@@ -64,9 +64,9 @@ Route::get('/racks/stockroom/{id}', [RackController::class, 'options'])->middlew
 Route::get('/shelves/rack/{id}', [ShelfController::class, 'options'])->middleware(['auth', 'verified'])->name('shelves.options');
 
 // Components
-Route::get('/components', App\Livewire\Components::class)->middleware(['auth', 'verified'])->name('components');
+Route::get('/components', App\Livewire\CuratechComponents\Index::class)->middleware(['auth', 'verified'])->name('components');
 Route::post('/components/details/{id}/add_vendor', [ComponentController::class, 'addVendor'])->middleware(['auth', 'verified'])->name('components.vendor.add');
-Route::get('/components/details/{id}', [ComponentController::class, 'details'])->middleware(['auth', 'verified'])->name('components.details');
+Route::get('/components/details/{id}', \App\Livewire\CuratechComponents\Details::class)->middleware(['auth', 'verified'])->name('components.details');
 Route::get('/components/edit/{id}', [ComponentController::class, 'editPage'])->middleware(['auth', 'verified'])->name('components.edit');
 Route::post('/components/edit/{id}', [ComponentController::class, 'update'])->middleware(['auth', 'verified'])->name('components.update');
 Route::delete('components/edit/{id}/vendor/{vendor_id}', [ComponentController::class, 'removeVendor'])->middleware(['auth', 'verified'])->name('components.removeVendor');
