@@ -7,8 +7,8 @@
 
     <div class="flex justify-end w-full max-w-7xl py-5 mx-auto" x-data="{open_writeoff_modal: false, component_id: 0}">
         <x-primary-button class="mr-2" hx-get="{{route('restocks.create', $comp->component_id)}}"><i class="fa-solid fa-wallet"></i></x-primary-button>
-        <x-primary-button class="mr-2" @click="open_writeoff_modal = true; component_id={{$comp->component_id}}"><i class="fa-solid fa-arrow-down"></i></x-primary-button>
-        <x-edit-button hx-get="{{route('components.edit', $comp->component_id)}}" class="w-max"></x-edit-button>
+        <x-primary-button class="mr-2" x-on:click="open_writeoff_modal = true; component_id='{{$comp->component_id}}'"><i class="fa-solid fa-arrow-down"></i></x-primary-button>
+        <x-edit-button hx-redirect="true" class="w-max" wire:click="goToEdit"></x-edit-button>
         @include('curatech_components.partials.write-off-modal')
     </div>
 

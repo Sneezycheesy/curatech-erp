@@ -32,4 +32,8 @@ class Details extends Component
             'disabled' => true,
         ]);
     }
+
+    public function goToEdit() {
+        return redirect(route('components.edit', $this->comp->component_id));
+    }
 }
