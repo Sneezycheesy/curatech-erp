@@ -1,4 +1,4 @@
-@props(['swap' => isset($swap) ? $swap : 'innerHTML', 'route' => $route, 'target' => $target])
+{{-- @props(['swap' => isset($swap) ? $swap : 'innerHTML', 'route' => $route, 'target' => $target]) --}}
 <!-- Views using this component should pass in:
     $route => The URL used for the get request
     $target => The element (id) which's content to replace
@@ -7,23 +7,20 @@
 <div {{ $attributes->merge(['class' => "grid grid-cols-12 gap-x-2 mt-5 py-7 px-7 bg-cbg-200 dark:text-paragraph-dark dark:bg-cbg-700 w-3/4 mx-auto h-max rounded"]) }}>
     <div class="grid grid-cols-10 gap-x-2 col-span-10">
         <!-- Searchbar -->
-        <x-text-input hx-get="{{$route}}" 
-            hx-target="{{$target}}" 
-            hx-swap="{{$swap}}" 
-            hx-include="[name='search']"
-            hx-trigger="keyup[keyCode==13]"
+        <x-text-input
             type="text"
             name="search" 
             id="search_components" 
             placeholder="Zoekt en gij zult vinden" 
             class="col-span-9 align-center text-primary-800"
+            wire:model="search"
+            wire:keydown.enter="filter"
         />
         
         <!-- Search button -->
-        <x-primary-button hx-get="{{$route}}" 
-            hx-target="{{$target}}" 
-            hx-swap="{{$swap}}" 
-            hx-include="[name='search']" 
+        <x-primary-button 
+            type="button"
+            wire:click="filter" 
             class="w-full">
             <i class="fa-solid fa-magnifying-glass"></i>
         </x-primary-button>
