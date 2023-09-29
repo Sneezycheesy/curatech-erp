@@ -12,7 +12,7 @@
         <p class="mb-3">Weet u zeker dat u leverancier "{{$vendor->name}}" bij dit component wilt verwijderen?</p>
         <form class="flex w-full justify-end">
             @csrf
-            <x-primary-button class="mr-2" hx-delete="{{route('components.removeVendor', [$comp->component_id, $vendor->id])}}" 
+            <x-primary-button class="mr-2" wire:click="detachVendor({{$vendor->id}})" 
             hx-include="[name='vendor_id_{{$vendor->id}}']" hx-target="#vendor_listitem_{{$vendor->id}}" hx-swap="outerHTML">
                 OK
             </x-primary-button>
