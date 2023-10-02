@@ -35,18 +35,20 @@
             </div>
             @endif
 
-            <div class="grid grid-cols-3 gap-2 max-h-[50rem] overflow-y-scroll">
             @if(count($purchase_history))
-            <x-title class="col-span-3">Aankoopgeschiedenis</x-title>
-            @foreach($purchase_history as $purchase)
-                <x-details-container>
-                    <x-paragraph>{{$purchase['type'] == 'write_off' ? 'Afgeboekt' : 'Ingekocht'}}</x-paragraph>
-                    <x-paragraph>Aantal: {{$purchase['pivot']['amount'] ?? $purchase['amount']}}</x-paragraph>
-                    <x-paragraph>Apparaat: {{isset($purchase['curatech_product']) ? $purchase['curatech_product']['name'] : '-' }}</x-paragraph>
-                    <x-paragraph>Voorraad: {{$purchase['pivot']['new_stock'] ?? $purchase['new_stock']}}</x-paragraph>
-                    <x-paragraph>{{date('Y-m-d', strtotime($purchase['created_at']))}}</x-paragraph>
-                </x-details-container>
-            @endforeach
+            <div class="grid grid-cols-1 gap-2 max-h-[50rem] overflow-y-scroll">
+                <x-title class="col-span-3 sticky">Aankoopgeschiedenis</x-title>
+                <div class="grid grid-cols-3 gap-2 max-h-[50rem] overflow-y-scroll p-2">
+                @foreach($purchase_history as $purchase)
+                    <x-details-container>
+                        <x-paragraph>{{$purchase['type'] == 'write_off' ? 'Afgeboekt' : 'Ingekocht'}}</x-paragraph>
+                        <x-paragraph>Aantal: {{$purchase['pivot']['amount'] ?? $purchase['amount']}}</x-paragraph>
+                        <x-paragraph>Apparaat: {{isset($purchase['curatech_product']) ? $purchase['curatech_product']['name'] : '-' }}</x-paragraph>
+                        <x-paragraph>Voorraad: {{$purchase['pivot']['new_stock'] ?? $purchase['new_stock']}}</x-paragraph>
+                        <x-paragraph>{{date('Y-m-d', strtotime($purchase['created_at']))}}</x-paragraph>
+                    </x-details-container>
+                @endforeach
+                </div>
             @endif
             </div>
         </div>
