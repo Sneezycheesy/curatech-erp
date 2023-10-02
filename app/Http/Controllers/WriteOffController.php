@@ -56,6 +56,10 @@ class WriteOffController extends Controller
 
         if(isset($request->curatech_product_id)) {
             $curatech_product = CuratechProduct::find($request->curatech_product_id);
+
+            if($request->amount > $curatech_product->stock_desired) {
+                return 'Kan niet meer componenten afschrijven dan gewenst';
+            }
             
             $components = $curatech_product->components()->pluck('components.component_id')->toArray();
             $components_to_update = array_count_values($components);
