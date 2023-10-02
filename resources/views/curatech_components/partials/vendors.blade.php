@@ -29,7 +29,7 @@
             <x-slot name="options">
                 <option value="" selected>Kies een leverancier</option>
                 @foreach($all_vendors as $vendor)
-                    <option value="{{$vendor->id}}" @if($vendor->id == old('vendor_id')) selected @endif>{{$vendor->name}}</option>
+                    <option wire:key="$loop->index" value="{{$vendor->id}}" @if($vendor->id == old('vendor_id')) selected @endif>{{$vendor->name}}</option>
                 @endforeach
             </x-slot>
         </x-select-box>

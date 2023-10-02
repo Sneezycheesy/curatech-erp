@@ -16,7 +16,6 @@
                 OK
             </x-primary-button>
             <x-primary-button @click="confirm_delete_modal_open = false">X</x-primary-button>
-            </div>
         </form>
     </div>
 </div>
