@@ -57,7 +57,8 @@ class Component extends Model
             return 0;
         }
 
-        return ($this->required_stock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
+        return number_format(($this->required_stock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first(),
+            4);
     }
 
     # Return the amount of components required to be able to produce the DESIRED
@@ -68,6 +69,14 @@ class Component extends Model
            $stock_required += $cp->stock_desired > 0 ? $cp->stock_desired : 0;
         } 
         return $stock_required;
+    }
+
+    public function stock_shortage() {
+        if($this->stock - $this->required_stock() > 0) {
+            return '';
+        }
+
+        return $this->required_stock() - $this->stock;
     }
 
     public function maxUnitPrice() {

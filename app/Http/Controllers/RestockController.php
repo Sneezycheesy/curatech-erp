@@ -136,6 +136,6 @@ class RestockController extends Controller
             $total_price += $comp->priceRequiredStock();
         });
 
-        return $total_price;
+        return number_format($total_price, 4);
     }
 }
