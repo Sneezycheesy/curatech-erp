@@ -38,7 +38,7 @@
             @if(count($purchase_history))
             <div class="grid grid-cols-1 gap-2 max-h-[50rem] overflow-y-scroll">
                 <x-title class="col-span-3 sticky">Aankoopgeschiedenis</x-title>
-                <div class="grid grid-cols-3 gap-2 max-h-[50rem] overflow-y-scroll p-2">
+                <div class="grid grid-cols-3 gap-2 max-h-[50rem] overflow-y-scroll p-2 scrollbar-hide">
                 @foreach($purchase_history as $purchase)
                     <x-details-container>
                         <x-paragraph>{{$purchase['type'] == 'write_off' ? 'Afgeboekt' : 'Ingekocht'}}</x-paragraph>
