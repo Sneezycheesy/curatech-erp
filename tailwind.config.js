@@ -30,7 +30,7 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                primary: { ...colors.red, default: colors.red[600]
+                primary: { ...colors.red, DEFAULT: colors.red[600]
                 },
                 secondary: {
                     100: '#f7eef6',

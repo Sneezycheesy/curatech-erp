@@ -7,15 +7,15 @@
         <div class="text-center align-middle w-full">
             <form>
                 @csrf
-                @if (count($curatech_products) > 4)
-                <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense grid-rows-2 overflow-scroll h-full">
+                @if (count($curatech_products) > 5)
+                <div class="grid gap-y-4 auto-cols-fr grid-flow-col grid-rows-2 overflow-scroll h-full p-3">
                 @else
-                <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense overflow-scroll h-full">
+                <div class="grid gap-y-4 auto-cols-fr grid-rows-1 grid-flow-col overflow-scroll h-full p-3">
                 @endif
                     @foreach ( $curatech_products as $curatech_product )
                     <div class="grid gap-y-1 grid-cols-1 px-2">
                         <x-input-label class="" for="product-name">{{$curatech_product->curatech_product_id}} | {{$curatech_product->name}}</x-input-label>
-                        <div class="relative">
+                        <div class="relative w-max mx-auto">
                             <x-text-input class="text-center" name="{{$curatech_product->curatech_product_id}}" value="{{$curatech_product->stock_desired}}" />
                             <div class="absolute right-0 top-1/2 w-min -translate-y-1/2 pr-3">
                                 <x-paragraph @click="open_writeoff_modal = true; curatech_product_id = '{{$curatech_product->curatech_product_id}}'" class="fa-solid fa-arrow-down hover:cursor-pointer hover:text-primary-600"></x-paragraph>
@@ -45,13 +45,13 @@
                 <x-paragraph>Acties</x-paragraph>
         </x-header-row>
 
-            <!-- FOREACH component
-                FOREACH curatech_device add column
-                    Display number of component required if device is linked to component
-                Add column with component data for each column described above
-            -->
-            <div id="components_table">
-                @include('purchases.partials.components-table')
-            </div>
+        <!-- FOREACH component
+            FOREACH curatech_device add row
+                Display number of component required if device is linked to component
+            Add column with component data for each column described above
+        -->
+        <div id="components_table">
+            @include('purchases.partials.components-table')
         </div>
+    </div>
 </x-app-layout>
