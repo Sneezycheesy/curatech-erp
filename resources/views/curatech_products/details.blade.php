@@ -32,7 +32,7 @@
                 <x-title>Gebruiksgeschiedenis</x-title>
                 <x-new-button @click="open_writeoff_modal = true; curatech_product_id = {{$curatech_product->curatech_product_id}}" />
             </div>
-            <div class="grid grid-cols-3 gap-2 auto-rows-max overflow-y-scroll max-h-[15rem] mt-2">
+            <div class="grid grid-cols-3 gap-2 auto-rows-max overflow-y-scroll max-h-[15rem] mt-2 p-2">
                 @foreach($writeoffs as $writeoff)
                 <x-details-container>
                     <x-title>Afgeboekt</x-title>
