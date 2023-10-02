@@ -1,8 +1,7 @@
-<x-app-layout>
-    <div class="flex max-w-7xl mx-auto">
-        <h1 class="text-4xl mt-4 text-primary-600">I</h1>
-        <h1 class="text-4xl mt-4 text-black dark:text-white">nkoop</h1>
-    </div>
+<x-app-layout>    
+    <x-slot name="header">
+            {{ __('Inkoop') }}
+    </x-slot>
     <div class="max-w-7xl mx-auto mt-3 bg-cbg-200 text-black p-3 dark:bg-cbg-700 dark:text-white rounded" x-data="{open_writeoff_modal: false, curatech_product_id: null}">
     <!-- Display curatech device stock supplies -->
         <div class="text-center align-middle w-full">

@@ -23,7 +23,9 @@
             @if (isset($header))
                 <header class="bg-cbg-200 dark:bg-cbg-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-3xl text-dark dark:text-white">
                         {{ $header }}
+                        </h1>
                     </div>
                 </header>
             @endif
