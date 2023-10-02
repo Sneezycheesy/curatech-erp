@@ -55,7 +55,7 @@ export default {
                     dark: custom_gray['200'],
                 },
                 paragraph: {
-                    light: custom_gray['600'],
+                    light: custom_gray['800'],
                     dark: custom_gray['200'],
                     100: '#f2f2f2',
                     200: '#d9d9d9',

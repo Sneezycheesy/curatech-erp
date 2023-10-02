@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Component extends Model
 {
@@ -51,14 +52,31 @@ class Component extends Model
         
     }
 
+    public function priceRequiredStock() {
+        if (!$this->required_stock() || $this->required_stock() <= $this->stock) {
+            return 0;
+        }
+
+        return number_format(($this->required_stock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first(),
+            4, '.', ',');
+    }
+
     # Return the amount of components required to be able to produce the DESIRED
     # amount of Curatech Products that use this component
     public function required_stock() {
         $stock_required = 0;
         foreach ($this->curatech_products()->get() as $cp) {
-           $stock_required += $cp->stock_desired;
+           $stock_required += $cp->stock_desired > 0 ? $cp->stock_desired : 0;
         } 
         return $stock_required;
+    }
+
+    public function stock_shortage() {
+        if($this->stock - $this->required_stock() > 0) {
+            return '';
+        }
+
+        return $this->required_stock() - $this->stock;
     }
 
     public function maxUnitPrice() {
@@ -92,10 +110,19 @@ class Component extends Model
         return $this->belongsToMany(Shelf::class, 'components_shelves', 'component_id', 'shelf_id');
     }
 
+    public function ownWriteoffs() : HasMany {
+        return $this->hasMany(WriteOff::class);
+    }
+
+    public function writeoffs() : belongsToMany {
+        return $this->belongsToMany(WriteOff::class, 'components_write_offs', 'component_id', 'write_off_id')
+            ->withPivot('new_stock')
+            ->withPivot('amount');
+    }
+
     public static function find($id) {
         return Component::where('component_id', $id)->first();
     }
-
 
     protected static function booted() {
         static::deleting(function(Component $comp) {
@@ -104,5 +131,4 @@ class Component extends Model
             $comp->shelves()->detach();
         });
     }
-
 }

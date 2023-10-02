@@ -18,16 +18,14 @@ class RestockController extends Controller
             return new HtmxResponseClientRedirect(route('purchases'));
         }
 
-
         return view('purchases.index', [
-            'curatech_products' => CuratechProduct::with('components')->whereHas('components')->orderBy('name', 'ASC')->get(),
-            'components' => Component::with('curatech_products')
-                ->whereHas('curatech_products')
-                ->orderBy('component_id', 'ASC')
+            'curatech_products' => CuratechProduct::whereHas('components')->orderBy('name', 'ASC')->get(),
+            'components' => Component::orderBy('component_id', 'ASC')
                 ->get()
                 ->filter(function($comp) {
                     return $comp->required_stock() > 0;
-                })
+                }),
+            'total_price' => $this->totalPrice(),
         ]);
     }
 
@@ -37,13 +35,23 @@ class RestockController extends Controller
         }
 
         return view('purchases.partials.components-table', [
-            'components' => Component::with('curatech_products')
-            ->whereHas('curatech_products')
-            ->orderBy('component_id', 'ASC')
+            'components' => Component::orderBy('component_id', 'ASC')
             ->get()
             ->filter(function($comp) {
                 return $comp->required_stock() > 0;
             }),
+            'total_price' => $this->totalPrice(),
+        ]);
+    }
+
+    public function create($id, HtmxRequest $rq) {
+        if ($rq->isHtmxRequest()) {
+            return new HtmxresponseClientRedirect(route('restocks.create', $id));
+        }
+
+        return view('restocks.create', [
+            'id' => $id,
+            'vendors' => Component::find($id)->vendors()->get(),
         ]);
     }
 
@@ -69,17 +77,19 @@ class RestockController extends Controller
         }
 
         try {
+            
+            $component->update([
+                'stock' => $component->stock + (int) $rq->amount,
+            ]);
+            
             Restock::create([
                 'component_id' => $component_id,
                 'vendor_id' => $vendor_id,
                 'amount' => $amount,
                 'invoice' => $invoice,
+                'new_stock' => $component->stock,
             ]);
-    
-            $component->update([
-                'stock' => $component->stock + (int) $rq->amount,
-            ]);
-    
+            
             return view('curatech_components.partials.restock-form', [
                 'id' => $id,
                 'vendors' => $component->vendors()->get(),
@@ -111,5 +121,21 @@ class RestockController extends Controller
         }
 
         return $returnVal;
+    }
+
+    private function totalPrice() {
+        
+        $components = Component::orderBy('component_id', 'ASC')
+        ->get()
+        ->filter(function($comp) {
+            return $comp->required_stock() > 0;
+        });
+
+        $total_price = 0.0;
+        $components->each(function ($comp) use (&$total_price) {
+            $total_price += doubleval($comp->priceRequiredStock());
+        });
+
+        return number_format($total_price, 4);
     }
 }

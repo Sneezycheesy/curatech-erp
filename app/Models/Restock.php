@@ -13,7 +13,8 @@ class Restock extends Model
         'component_id',
         'amount',
         'vendor_id',
-        'invoice'
+        'invoice',
+        'new_stock',
     ];
 
     public function component() {

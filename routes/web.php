@@ -10,6 +10,7 @@ use App\Http\Controllers\RestockController;
 use App\Http\Controllers\StockroomController;
 use App\Http\Controllers\RackController;
 use App\Http\Controllers\ShelfController;
+use App\Http\Controllers\WriteOffController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,7 @@ Route::post('/curatech_products/create', [CuratechProductController::class, 'cre
 
 // Purchases
 Route::get('/purchases', [RestockController::class, 'index'])->middleware(['auth', 'verified'])->name('purchases');
+Route::post('/writeoffs/store', [WriteOffController::class, 'store'])->middleware(['auth', 'verified'])->name('writeoffs.store');
 Route::post('/purchases', [RestockController::class, 'updateDesiredStock'])->middleware(['auth', 'verified'])->name('purchases_update_stock');
 
 // Stockrooms
@@ -75,8 +77,8 @@ Route::post('components/{id}/add_shelf', [ComponentController::class, 'addShelf'
 Route::delete('/components/{id}/remove_shelf/{shelf_id}', [ComponentController::class, 'removeShelf'])->middleware(['auth', 'verified'])->name('components.shelf.remove');
 
 // Restocking
-Route::get('/components/{id}/restock', [ComponentController::class, 'restock'])->middleware(['auth', 'verified'])->name('components.restock');
-Route::post('/components/{id}/restock', [RestockController::class, 'store'])->middleware(['auth', 'verified'])->name('restock');
+Route::get('/restock/{id}/create', [RestockController::class, 'create'])->middleware(['auth', 'verified'])->name('restocks.create');
+Route::post('/restock/{id}/store', [RestockController::class, 'store'])->middleware(['auth', 'verified'])->name('restocks.store');
 
 // Vendors
 Route::get('/vendors', [VendorController::class, 'index'])->middleware(['auth', 'verified'])->name('vendors');
