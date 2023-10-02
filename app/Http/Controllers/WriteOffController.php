@@ -91,7 +91,7 @@ class WriteOffController extends Controller
                     'new_stock' => $comp->stock,
                     'amount' => $components_to_update[$comp->component_id] * $request->amount,
                     'created_at' => now(),
-                    'updated_at' => now()
+                    'updated_at' => now(),
                 ]);
             });
         }

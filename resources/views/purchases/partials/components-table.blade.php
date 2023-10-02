@@ -53,7 +53,9 @@
         </div>
         <div>
             <x-paragraph>
-                <i hx-get="{{route('restocks.create', $comp->component_id)}}" class="fa-solid fa-hand-holding-dollar hover:text-primary-600 hover:cursor-pointer mr-2"></i>
+                <i hx-get="{{route('restocks.create', $comp->component_id)}}" 
+                    class="fa-solid fa-hand-holding-dollar hover:text-primary-600 hover:cursor-pointer mr-2">
+                </i>
             </x-paragraph>
         </div>
     </x-table-row>

@@ -58,7 +58,7 @@ class Component extends Model
         }
 
         return number_format(($this->required_stock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first(),
-            4);
+            4, '.', ',');
     }
 
     # Return the amount of components required to be able to produce the DESIRED
