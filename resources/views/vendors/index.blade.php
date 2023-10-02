@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Leveranciers') }}
+    </x-slot>
     <x-searchbar route="{{route('vendors')}}"
         target="#vendors_container"
         swap="outerHTML">    

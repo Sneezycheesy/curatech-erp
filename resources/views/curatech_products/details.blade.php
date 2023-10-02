@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Product: ' . $curatech_product->name . ' (' . $curatech_product->curatech_product_id . ')')}}
+    </x-slot>
     <div class="relative dark:text-white py-6 max-w-7xl mx-auto">
         
         <div class="grid grid-cols-2 w-full max-w-7xl gap-x-4 bg-cbg-200 dark:bg-cbg-600 p-5 rounded-xl">

@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Component: ' . $comp->component_id . ' (' . $comp->description . ')')}}
+    </x-slot>
     <div class="relative">
         <div class="grid grid-cols-2 w-full sm:max-w-sm md:max-w-7xl mx-auto dark:bg-cbg-700 bg-cbg-200 dark:text-white p-5 rounded mt-5">
             @include('curatech_components.partials.edit-form', ['disabled' => $disabled])

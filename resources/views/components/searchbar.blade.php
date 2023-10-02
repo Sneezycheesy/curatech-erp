@@ -4,7 +4,7 @@
     $target => The element (id) which's content to replace
     $swap => "Which content to replace (innerHTML, outerHTML, etc => See HTMX documentation for valid hx-swap values)
 -->
-<div {{ $attributes->merge(['class' => "grid grid-cols-12 gap-x-2 mt-5 py-7 px-7 bg-cbg-200 dark:text-paragraph-dark dark:bg-cbg-700 w-3/4 mx-auto h-max rounded"]) }}>
+<div {{ $attributes->merge(['class' => "grid grid-cols-12 gap-x-2 mt-5 py-7 px-7 bg-cbg-200 dark:text-paragraph-dark dark:bg-cbg-700 max-w-7xl mx-auto h-max rounded"]) }}>
     <div class="grid grid-cols-10 gap-x-2 col-span-10">
         <!-- Searchbar -->
         <x-text-input hx-get="{{$route}}" 
