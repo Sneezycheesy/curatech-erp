@@ -38,7 +38,7 @@ class CuratechProductController extends Controller
 
     public function details(string $id, HtmxRequest $request) {
         if($request->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('curatech_product_details', $id));
+            return new HtmxResponseClientRedirect(route('curatech_products.details', $id));
         }
 
         
@@ -54,7 +54,7 @@ class CuratechProductController extends Controller
 
     public function updatePage(string $id, HtmxRequest $request) {
         if($request->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('curatech_product_update', $id));
+            return new HtmxResponseClientRedirect(route('curatech_products.update', $id));
         }
 
         $curatech_product = CuratechProduct::find($id);
@@ -76,7 +76,7 @@ class CuratechProductController extends Controller
 
         // If curatech_product_id was updated we need to reroute to the new details page
         // Always do this, regardsless of new id
-        return redirect(route('curatech_product_update', $cp->curatech_product_id))->withSuccess('Product opgeslagen');
+        return redirect(route('curatech_products.update', $cp->curatech_product_id))->withSuccess('Product opgeslagen');
     }
 
     public function addComponent(AddComponentToCuratechProductRequest $request) {

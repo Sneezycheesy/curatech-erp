@@ -1,7 +1,7 @@
 @props(['disabled' => isset($disabled) ? true : false])
 
 @if (!$disabled)
-<form method="post" action="{{route('curatech_product_add_component', $curatech_product->curatech_product_id)}}" class="grid grid-cols-7 gap-x-2 w-full h-max">
+<form method="post" action="{{route('curatech_products.add_component', $curatech_product->curatech_product_id)}}" class="grid grid-cols-7 gap-x-2 w-full h-max">
     @csrf
     <label for="component_add_id_selector" class="col-span-4">Component</label>
     <label for="curatech_product_component_position" class="col-span-2">Positie</label>

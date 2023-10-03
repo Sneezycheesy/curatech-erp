@@ -7,11 +7,11 @@
         <div class="{{$disabled ? 'col-span-2' : ''}}">{{$components[$i]->pivot->curatech_product_component_position}}</div>
 
         @if(!$disabled)
-        <form action="{{route('curatech_product_remove_component', $curatech_product->curatech_product_id)}}" method="post">
+        <form action="{{route('curatech_products.remove_component', $curatech_product->curatech_product_id)}}" method="post">
             @csrf
             <input type="hidden" value="{{$components[$i]->id}}" name="component_id" />
             <input type="hidden" value="{{$components[$i]->pivot->curatech_product_component_position}}" name="curatech_product_component_position" />
-            <i hx-delete="{{route('curatech_product_remove_component', $curatech_product->curatech_product_id)}}" hx-target="#components_table" class="fa-solid fa-trash hover:cursor-pointer"></i>
+            <i hx-delete="{{route('curatech_products.remove_component', $curatech_product->curatech_product_id)}}" hx-target="#components_table" class="fa-solid fa-trash hover:cursor-pointer"></i>
         </form>
         @endif
     </div>
