@@ -21,7 +21,7 @@
                     @endforeach
                 </div>
                 <!-- collapsable for viewing all components located on this shelf -->
-                <div x-show="!collapsed"
+                <div x-show="collapsed"
                     x-transition:enter="transition linear duration-300"
                     x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100"

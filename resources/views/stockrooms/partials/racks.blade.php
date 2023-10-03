@@ -3,6 +3,6 @@
 @foreach ($racks as $rack)
     <x-details-container hx-get="{{route('racks.details', $rack->id)}}">
         <p>{{$rack->name}}</p>
-        <p>Aantal planken</p>
+        <p>{{$rack->shelves()->count()}} planken</p>
     </x-details-container>
 @endforeach

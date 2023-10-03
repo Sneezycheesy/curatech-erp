@@ -23,7 +23,7 @@
         <x-searchbar class="w-full max-w-7xl" :route="route('stockrooms.details', $id)" target="#racks_container" > 
             <x-new-button class="w-full h-full" @click="modal_open = true" />
         </x-searchbar>
-        <div id="racks_container" class="grid grid-cols-1 auto-rows-max gap-3 mt-6 overflow-y-scroll max-h-[15rem] max-w-7xl mx-auto">
+        <div id="racks_container" class="grid grid-cols-1 auto-rows-max gap-3 mt-6 overflow-y-scroll max-h-[15rem] max-w-7xl mx-auto p-3">
             @include('stockrooms.partials.racks')
         </div>
     
