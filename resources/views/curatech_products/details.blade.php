@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Product: ' . $curatech_product->name . ' (' . $curatech_product->curatech_product_id . ')')}}
+    </x-slot>
     <div class="relative dark:text-white py-6 max-w-7xl mx-auto">
         
         <div class="grid grid-cols-2 w-full max-w-7xl gap-x-4 bg-cbg-200 dark:bg-cbg-600 p-5 rounded-xl">
@@ -29,7 +32,7 @@
                 <x-title>Gebruiksgeschiedenis</x-title>
                 <x-new-button @click="open_writeoff_modal = true; curatech_product_id = {{$curatech_product->curatech_product_id}}" />
             </div>
-            <div class="grid grid-cols-3 gap-2 auto-rows-max overflow-y-scroll max-h-[15rem] mt-2">
+            <div class="grid grid-cols-3 gap-2 auto-rows-max overflow-y-scroll max-h-[15rem] mt-2 p-2">
                 @foreach($writeoffs as $writeoff)
                 <x-details-container>
                     <x-title>Afgeboekt</x-title>

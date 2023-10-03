@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Producten')}}
+    </x-slot>
     <div class="py-6">        
         <x-searchbar route="{{route('curatech_products')}}"
             target="#curatech_products_container"

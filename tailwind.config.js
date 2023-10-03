@@ -2,6 +2,8 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 import { DefaultColors } from 'tailwindcss/types/generated/colors';
 
+const colors = require('tailwindcss/colors');
+
 const custom_gray = {
     100: '#f2f2f2',
     200: '#d9d9d9',
@@ -28,16 +30,7 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                primary: {
-                    100: '#ffe5e5',
-                    200: '#ffb3b3',
-                    300: '#ff8080',
-                    400: '#ff4d4d',
-                    500: '#ff1a1a',
-                    600: '#e60000',
-                    700: '#b30000',
-                    800: '#800000',
-                    900: '#4d0000',
+                primary: { ...colors.red, DEFAULT: colors.red[600]
                 },
                 secondary: {
                     100: '#f7eef6',
@@ -107,9 +100,15 @@ export default {
                     light: custom_gray['400'],
                     dark: custom_gray['600'],
                 }
+            },            
+            boxShadow: {
+                hover: "0 0 5px theme('colors.red.200'), 0 0 20px theme('colors.red.700')"
             }
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        forms,
+        require('tailwind-scrollbar-hide'),
+    ],
 };
