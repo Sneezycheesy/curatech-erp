@@ -11,7 +11,7 @@
         <x-new-button type="button"
             hx-get="{{route('components_create')}}"
             value="Creëer" 
-            class="col-span-2 w-full h-full hover:bg-green-900 hover:cursor-pointer" />
+            class="col-span-2 w-full h-full hover:cursor-pointer" />
     </x-searchbar>
 
     <!-- Components overview -->

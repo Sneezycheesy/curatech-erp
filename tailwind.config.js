@@ -95,6 +95,20 @@ export default {
             },            
             boxShadow: {
                 hover: "0 0 5px theme('colors.red.200'), 0 0 20px theme('colors.red.700')"
+            },
+            outlineOffset: {
+                hover: 2,
+                add: 2,
+                DEFAULT: 2,
+            },
+            outlineWidth: {
+                hover: 2,
+                add: 2,
+                DEFAULT: 0,
+            },
+            outlineColor: {
+                add: colors.green[200],
+                DEFAULT: colors.red[600]
             }
         },
     },

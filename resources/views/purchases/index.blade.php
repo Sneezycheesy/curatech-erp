@@ -8,9 +8,9 @@
         <form>
             @csrf
             @if (count($curatech_products) > 4)
-            <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense grid-rows-2 overflow-x-scroll h-full scrollbar-hide">
+            <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense grid-rows-2 py-2 overflow-x-scroll h-full scrollbar-hide">
             @else
-            <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense overflow-x-scroll h-full scrollbar-hide">
+            <div class="grid gap-y-4 auto-cols-max grid-flow-col-dense overflow-x-scroll py-2 h-full scrollbar-hide">
             @endif
                 @foreach ( $curatech_products as $curatech_product )
                 <div class="grid gap-y-1 grid-cols-1 px-2">
