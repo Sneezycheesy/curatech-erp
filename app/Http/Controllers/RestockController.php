@@ -131,11 +131,11 @@ class RestockController extends Controller
             return $comp->required_stock() > 0;
         });
 
-        $total_price = 0.0;
+        $total_price = 0;
         $components->each(function ($comp) use (&$total_price) {
-            $total_price += doubleval($comp->priceRequiredStock());
+            $total_price += doubleval($comp->priceRequiredStock(true));
         });
 
-        return number_format($total_price, 4);
+        return number_format($total_price, 2, ',', '.');
     }
 }
