@@ -27,6 +27,8 @@
         <!-- Voorraad -->
         <x-paragraph>
             {{$comp->stock}}
+            <br />
+            ({{$comp->stockValue()}})
         </x-paragraph>
 
         <!-- minimaal nodige voorraad -->

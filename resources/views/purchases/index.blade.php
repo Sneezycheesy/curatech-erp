@@ -39,7 +39,11 @@
             <x-paragraph>Beschrijving</x-paragraph>
             <x-paragraph>Leveranciers</x-paragraph>
             <x-paragraph>Productnummer</x-paragraph>
-            <x-paragraph>Voorraad</x-paragraph>
+            <x-paragraph>
+                Voorraad
+                <br />
+                {{$stock_value}}
+            </x-paragraph>
             <x-paragraph>Nodig</x-paragraph>
             <x-paragraph>Tekort</x-paragraph>
             <x-paragraph>Stukprijs</x-paragraph>

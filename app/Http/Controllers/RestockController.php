@@ -26,6 +26,7 @@ class RestockController extends Controller
                     return $comp->required_stock() > 0;
                 }),
             'total_price' => $this->totalPrice(),
+            'stock_value' => $this->totalStockValue(),
         ]);
     }
 
@@ -41,6 +42,7 @@ class RestockController extends Controller
                 return $comp->required_stock() > 0;
             }),
             'total_price' => $this->totalPrice(),
+            'stock_value' => $this->totalStockValue(),
         ]);
     }
 
@@ -137,5 +139,21 @@ class RestockController extends Controller
         });
 
         return number_format($total_price, 2, ',', '.');
+    }
+
+    private function totalStockValue() {
+        $total_value = 0;
+        $components = Component::where('stock', '>', 0)
+            ->get()
+            ->filter(function ($comp) {
+                return $comp->required_stock() > 0;
+            });
+        foreach($components as $component) {
+            $total_value += $component->vendors()
+                ->orderBy('component_unit_price', 'ASC')
+                ->pluck('component_unit_price')
+                ->first() * $component->stock;
+        }
+        return '€' . number_format($total_value, 2, ',', '.');
     }
 }
