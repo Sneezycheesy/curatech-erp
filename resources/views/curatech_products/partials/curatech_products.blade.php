@@ -1,10 +1,10 @@
-<div id="curatech_products_container">
+<div id="curatech_products_container" class="grid grid-cols-1 gap-y-2 max-w-7xl mx-auto mt-3">
 @foreach ( $curatech_products as $curatech_product )
     <a href="/curatech_product/{{$curatech_product->curatech_product_id}}">
-        <div class="mt-6 bg-cbg-200 dark:bg-cbg-700 dark:text-paragraph-dark text-paragraph-light sm:rounded-lg px-6 max-w-6xl mx-auto py-4 hover:bg-cbg-800 hover:dark:bg-cbg-800 hover:text-white">
+        <x-details-container>
             <p class="text-lg"> {{ $curatech_product->name }}</p>
             <p>{{$curatech_product->description}}</p>
-        </div>
+        </x-details-container>
     </a>
 @endforeach
 </div>
