@@ -23,7 +23,6 @@
                     <x-paragraph class="text-lg">Gewenste voorraad</x-paragraph>
                     <x-paragraph class="text-xl">{{ $curatech_product->stock_desired }}</x-paragraph>
                 </div>
-
             </div>
                 <div class="flex justify-end col-span-2 w-full px-3">
                     <x-back-button :url="route('curatech_products')"></x-back-button>

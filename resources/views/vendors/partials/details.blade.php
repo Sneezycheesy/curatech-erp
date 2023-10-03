@@ -28,7 +28,7 @@
     <!-- components linked to this vendor -->
     <div class="grid grid-cols-1 auto-rows-max col-span-2 px-2">
         <p class="text-2xl dark:text-cbg-200">Componenten</p>
-        <ul class="grid grid-cols-3 text-center dark:bg-cbg-900 py-2 dark:text-white rounded-t">
+        <ul class="grid grid-cols-3 text-center py-2 border-b-2 border-primary dark:text-white rounded-t">
             <li>Artikelnummer</li>
             <li>Beschrijving</li>
             <li>Stukprijs</li>
