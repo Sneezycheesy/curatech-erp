@@ -3,7 +3,7 @@
     $curatech_products = CuratechProduct::all();
 @endphp
 
-<div x-show="open_writeoff_modal"
+<div x-cloak x-show="open_writeoff_modal"
     x-transition:enter="transition ease-in duration-250"
     x-transition:enter-start="opacity-0"
     x-transition:enter-end="opacity-100"
