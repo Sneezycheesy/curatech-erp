@@ -4,8 +4,8 @@
     </x-slot>
     <div class="relative dark:text-white py-6 max-w-7xl mx-auto">
         
-        <div class="grid grid-cols-2 w-full max-w-7xl gap-x-4 bg-cbg-200 dark:bg-cbg-600 p-5 rounded-xl">
-            <div class="grid auto-rows-max gap-y-3 py-6 w-3/4 mx-auto">
+        <div class="grid grid-cols-2 w-full max-w-7xl gap-x-4 bg-cbg-200 dark:bg-cbg-600 p-4 rounded-xl">
+            <div class="grid auto-rows-max gap-y-3 pt-6 w-3/4 mx-auto">
                 <div class="grid grid-cols-1 gap-y-3">
                 <div class="grid grid-cols-1 px-3">
                     <x-paragraph class="text-lg">Productnummer</x-paragraph>
@@ -17,15 +17,15 @@
                 </div>
                 <div class="grid grid-cols-1 px-3 items-top">
                     <x-paragraph class="text-lg">Beschrijving</x-paragraph>
-                    <x-paragraph class="text-xl">{{ $curatech_product->description }}</x-paragraph>
+                    <x-paragraph class="text- max-h-[8rem] overflow-y-auto scrollbar-hide">{{ $curatech_product->description }}</x-paragraph>
                 </div>
                 <div class="grid grid-cols-1 px-3 items-top">
                     <x-paragraph class="text-lg">Gewenste voorraad</x-paragraph>
-                    <x-paragraph class="text-xl h-[5rem] overflow-y-auto scrollbar-hide">{{ $curatech_product->stock_desired }}</x-paragraph>
+                    <x-paragraph class="text-xl">{{ $curatech_product->stock_desired }}</x-paragraph>
                 </div>
 
-                </div>
-                <div class="flex justify-end col-span-2 w-full px-3 pt-3">
+            </div>
+                <div class="flex justify-end col-span-2 w-full px-3">
                     <x-back-button :url="route('curatech_products')"></x-back-button>
                     <x-edit-button hx-get="{{route('curatech_product_update', $curatech_product->curatech_product_id)}}" class="w-max" type="button">Wijzigen</x-edit-button>
                 </div>
