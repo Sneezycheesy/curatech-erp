@@ -61,15 +61,7 @@ export default {
                     900: '#262626',
                 },
                 cbg: {
-                    100: '#f2f2f2',
-                    200: '#d9d9d9',
-                    300: '#bfbfbf',
-                    400: '#a6a6a6',
-                    500: '#8c8c8c',
-                    600: '#737373',
-                    700: '#595959',
-                    800: '#404040',
-                    900: '#262626',
+                    ...colors.zinc, DEFAULT: colors.zinc[500]
                 },
                 container: {
                     light: custom_gray['200'],
