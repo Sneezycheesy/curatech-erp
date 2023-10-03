@@ -3,9 +3,30 @@
         {{ __('Component: ' . $comp->component_id . ' (' . $comp->description . ')')}}
     </x-slot>
     <div class="relative">
-        <div class="grid grid-cols-2 w-full sm:max-w-sm md:max-w-7xl mx-auto dark:bg-cbg-700 bg-cbg-200 dark:text-white p-5 rounded mt-5">
-            @include('curatech_components.partials.edit-form', ['disabled' => $disabled])
-            
+        <div class="grid grid-cols-2 w-full sm:max-w-sm md:max-w-7xl mx-auto dark:bg-cbg-800 bg-cbg-200 dark:text-white p-5 rounded mt-5">
+            <div class="grid grid-cols-1 text-center gap-y-3">
+                <div>
+                    <x-paragraph class="text-lg">Artikelnummer</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->component_id}}</x-paragraph>
+                </div>
+                <div>
+                    <x-paragraph class="text-lg">Voorraad</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->stock}}</x-paragraph>
+                </div>
+                <div>
+                    <x-paragraph class="text-lg">Courant</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->courant ? 'Ja' : 'Neen'}}</x-paragraph>
+                </div>
+                <div>
+                    <x-paragraph class="text-lg">LT</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->lt}}</x-paragraph>
+                </div>
+                <div>
+                    <x-paragraph class="text-lg">Beschrijving</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->description}}</x-paragraph>
+                </div>
+            </div>
+
             @include('curatech_components.partials.vendors', ['disabled' => $disabled])
         </div>
 
