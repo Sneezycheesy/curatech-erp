@@ -27,6 +27,8 @@
         <!-- Voorraad -->
         <x-paragraph>
             {{$comp->stock}}
+            <br />
+            ({{$comp->stockValue()}})
         </x-paragraph>
 
         <!-- minimaal nodige voorraad -->
@@ -60,10 +62,3 @@
         </div>
     </x-table-row>
 @endforeach
-
-<!-- Display total price of all the required components -->
-<div class="grid mt-5 gap-x-1 grid-flow-col grid-cols-10 h-max-h-400 mx-auto text-center">
-    <div class="col-start-9">
-        € {{$total_price}}
-    </div>
-</div>

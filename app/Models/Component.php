@@ -52,13 +52,17 @@ class Component extends Model
         
     }
 
-    public function priceRequiredStock() {
+    public function stockValue() {
+        return '€' . number_format($this->vendors()->orderBy('component_unit_price')->pluck('component_unit_price')->first() * $this->stock, 2, ',', '.');
+    }
+
+    public function priceRequiredStock($calculation = false) {
         if (!$this->required_stock() || $this->required_stock() <= $this->stock) {
             return 0;
         }
 
-        return number_format(($this->required_stock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first(),
-            4, '.', ',');
+        $price = ($this->required_stock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
+        return $calculation ? $price : number_format($price, 2, ',', '.');
     }
 
     # Return the amount of components required to be able to produce the DESIRED
