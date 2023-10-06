@@ -6,18 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\CuratechProduct;
 use App\Models\Component;
 
-use Mauricius\LaravelHtmx\Http\HtmxRequest;
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
-
 class PurchasesController extends Controller
 {
     // Return view only with products and components linked to one another
-    public function index(HtmxRequest $rq) {
-        if ($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('purchases'));
-        }
-
-
+    public function index(Request $rq) {
         return view('purchases.index', [
             'curatech_products' => CuratechProduct::with('components')->whereHas('components')->orderBy('name', 'ASC')->get(),
             'components' => Component::with('curatech_products')
@@ -30,7 +22,7 @@ class PurchasesController extends Controller
         ]);
     }
 
-    public function update(HtmxRequest $request) {
+    public function update(Request $request) {
         foreach ($request->except('_token') as $curatech_product_id=>$stock) {
             CuratechProduct::find(str_replace('_', '.', $curatech_product_id))->update(['stock_desired' => $stock ?? 0]);
         }

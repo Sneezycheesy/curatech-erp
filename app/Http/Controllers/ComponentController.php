@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Mauricius\LaravelHtmx\Http\HtmxRequest;
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
-
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdateComponentRequest;
 use App\Http\Requests\StoreComponentRequest;
 use App\Http\Requests\ConnectVendorToComponentRequest;
@@ -14,16 +12,7 @@ use App\Models\Stockroom;
 
 class ComponentController extends Controller
 {
-    public function get(HtmxRequest $request) {
-
-        if($request->isHtmxRequest()) {
-            return view('curatech_components.partials.components', [
-                'components' => Component::where('component_id', 'like', "%$request->search%")
-                ->orWhere('description', 'like', "%$request->search%")
-                ->get()
-            ]);
-        }
-
+    public function get(Request $request) {
         return view('curatech_components.index', [
             'components' => Component::all(),
         ]);
@@ -31,11 +20,7 @@ class ComponentController extends Controller
 
     // Request to the edit page for a specific component
     // Edit page displays a form to enter how much new stock there is and which vendor is was purchased from
-    public function editPage($id, HtmxRequest $rq) {
-        if ($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('components.edit', $id));
-        }
-
+    public function editPage($id, Request $rq) {
         return view('curatech_components.edit', [
             'comp' => Component::where('component_id', $id)->First(),
             'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
@@ -58,10 +43,7 @@ class ComponentController extends Controller
         return redirect()->back()->with('success', 'Component succesvol opgeslagen!');
     }
 
-    public function details($id, HtmxRequest $rq) {
-        if($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('components.details', $id));
-        }
+    public function details($id, Request $rq) {
         $comp = Component::find($id);
         $restocks = $comp->restocks()->get()->keyBy('created_at')->toArray();
         $writeoffs = $comp->writeoffs()->with('curatech_product')->get()->keyBy('created_at')->toArray();
@@ -79,9 +61,9 @@ class ComponentController extends Controller
         ]);
     }
 
-    public function createPage(HtmxRequest $request) {
+    public function createPage(Request $request) {
 
-        return $request->isHtmxRequest() ? new HtmxResponseClientRedirect(route('components_create')) : view('curatech_components.create', [
+        return view('curatech_components.create', [
             'disabled' => false,
         ]);
     }
@@ -121,7 +103,7 @@ class ComponentController extends Controller
         }
     }
 
-    public function addShelf($id, HtmxRequest $rq) {
+    public function addShelf($id, Request $rq) {
         if (!isset($rq->shelf_id)) {
             return '*Verplicht';
         }
@@ -134,7 +116,7 @@ class ComponentController extends Controller
 
         Component::find($id)->shelves()->attach($rq->shelf_id);
 
-        return new HtmxResponseClientRedirect(route('components.edit', $id));
+        return redirect(route('components.edit', $id));
     }
 
     public function removeShelf($id, $shelf_id, HtmxRequest $rq) {

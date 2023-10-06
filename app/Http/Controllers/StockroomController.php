@@ -6,36 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Stockroom;
 use App\Models\Rack;
 
-use Mauricius\LaravelHtmx\Http\HtmxRequest;
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
-
 class StockroomController extends Controller
 {
     //
-    public function index(HtmxRequest $rq) {
-        if($rq->isHtmxRequest()) {
-            return view('stockrooms.partials.index-stockrooms', [
-                'stockrooms' => Stockroom::where('name', 'like', "%$rq->search%")
-                    ->orWhere('location', 'like', "%$rq->search%")
-                    ->get(),
-            ]);
-        }
-
+    public function index(Request $rq) {
         return view('stockrooms.index', [
             'stockrooms' => Stockroom::all(),
         ]);
     }
 
-    public function details($id, HtmxRequest $rq) {
+    public function details($id, Request $rq) {
         if (isset($rq->search)) {
             return view('stockrooms.partials.racks', [
                 'racks' => Rack::where('name', 'like', "%$rq->search%")
                     ->get(),
             ]);
-        }
-
-        if ($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('stockrooms.details', $id));
         }
 
         return view('stockrooms.details', [
@@ -45,15 +30,12 @@ class StockroomController extends Controller
         ]);
     }
 
-    public function create(HtmxRequest $rq) {
-        if ($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('stockrooms.create'));
-        }
+    public function create(Request $rq) {
 
         return view('stockrooms.create');
     }
 
-    public function store(HtmxRequest $rq) {
+    public function store(Request $rq) {
         $name = $rq->name;
         $location = $rq->location;
         $name_error = null;

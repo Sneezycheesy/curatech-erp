@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Mauricius\LaravelHtmx\Http\HtmxRequest;
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
 use App\Http\Requests\StoreVendorRequest;
 use App\Http\Requests\UpdateVendorRequest;
 use App\Models\Vendor;
@@ -13,29 +11,14 @@ use App\Models\Component;
 class VendorController extends Controller
 {
     //
-    public function index(HtmxRequest $request) {
-        if ($request->isHtmxRequest()) {
-            return view('vendors.partials.Vendors', [
-                'vendors' => Vendor::where('name', 'like', "%$request->search%")
-                    ->orWhere('city', 'like', "%$request->search%")
-                    ->orWhere('address', 'like', "%$request->search%")
-                    ->orWhere('country', 'like', "%$request->search%")
-                    ->get()
-            ]);
-        }
-
+    public function index(Request $request) {
         // Return all vendors
         return view('vendors.index', [
             'vendors' => Vendor::all(),
         ]);
     }
 
-    public function details($id, HtmxRequest $request) {
-        // Return a redirect when requested through htmx
-        if ($request->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('vendors.details', $id));
-        }
-
+    public function details($id, Request $request) {
         return view('vendors.details', [
             'vendor' => Vendor::find($id),
             // 'comps' => Vendor::find($id)->components()->get(),
@@ -43,18 +26,11 @@ class VendorController extends Controller
         ]);
     }
 
-    public function createPage(HtmxRequest $rq) {
-        if($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('vendors.create'));
-        }
+    public function createPage(Request $rq) {
         return view('vendors.create');
     }
 
-    public function edit($id, HtmxRequest $request) {
-        if ($request->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('vendors.edit', $id));
-        }
-
+    public function edit($id, Request $request) {
         return view('vendors.edit', [
             'vendor' => Vendor::find($id),
         ]);
@@ -75,9 +51,9 @@ class VendorController extends Controller
         return redirect()->back()->with('success', 'Leverancier ' . $request->name . ' aangemaakt');
     }
 
-    public function delete($id, HtmxRequest $request) {
+    public function delete($id, Request $request) {
         Vendor::find($id)->delete();
 
-        return new HtmxResponseClientRedirect(route('vendors'));
+        return redirect(route('vendors'));
     }
 }

@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Mauricius\LaravelHtmx\Http\HtmxRequest;
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
-
 use App\Models\Rack;
 use App\Models\Stockroom;
 
@@ -18,17 +15,13 @@ class RackController extends Controller
         ]);
     }
     //
-    public function details($id, HtmxRequest $rq) {
-        if ($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('racks.details', $id));
-        }
-
+    public function details($id, Request $rq) {
         return view('racks.details', [
             'rack' => Rack::find($id),
         ]);
     }
 
-    public function store($id, HtmxRequest $rq) {
+    public function store($id, Request $rq) {
         if (!isset($rq->name)) {
             return '*Verplicht veld';
         }
@@ -40,10 +33,10 @@ class RackController extends Controller
 
         Rack::create(['name' => $rq->name, 'stockroom_id' => $id]);
 
-        return new HtmxResponseClientRedirect(route('stockrooms.details', $id));
+        return redirect(route('stockrooms.details', $id));
     }
 
-    public function create($id, HtmxRequest $rq) {
+    public function create($id, Request $rq) {
         return view('stockrooms.partials.new-modal', [
             'id' => $id,
         ]);

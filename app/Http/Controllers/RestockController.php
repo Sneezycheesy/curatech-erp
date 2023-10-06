@@ -7,17 +7,10 @@ use App\Models\Restock;
 use App\Models\Component;
 use App\Models\CuratechProduct;
 
-use Mauricius\LaravelHtmx\Http\HtmxRequest;
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
-
 class RestockController extends Controller
 {
     // Return view only with products and components linked to one another
-    public function index (HtmxRequest $rq) {
-        if ($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('purchases'));
-        }
-
+    public function index (Request $rq) {
         return view('purchases.index', [
             'curatech_products' => CuratechProduct::whereHas('components')->orderBy('name', 'ASC')->get(),
             'components' => Component::orderBy('component_id', 'ASC')
@@ -30,7 +23,7 @@ class RestockController extends Controller
         ]);
     }
 
-    public function updateDesiredStock(HtmxRequest $request) {
+    public function updateDesiredStock(Request $request) {
         foreach ($request->except('_token') as $curatech_product_id=>$stock) {
             CuratechProduct::find(str_replace('_', '.', $curatech_product_id))->update(['stock_desired' => $stock ?? 0]);
         }
@@ -46,11 +39,7 @@ class RestockController extends Controller
         ]);
     }
 
-    public function create($id, HtmxRequest $rq) {
-        if ($rq->isHtmxRequest()) {
-            return new HtmxresponseClientRedirect(route('restocks.create', $id));
-        }
-
+    public function create($id, Request $rq) {
         return view('restocks.create', [
             'id' => $id,
             'vendors' => Component::find($id)->vendors()->get(),
@@ -58,7 +47,7 @@ class RestockController extends Controller
     }
 
     //
-    public function store(string $id, HtmxRequest $rq) {
+    public function store(string $id, Request $rq) {
         $component = Component::find($id);
         $component_id = $component->id;
         $invoice = $rq->invoice ?? '';

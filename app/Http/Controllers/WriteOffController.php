@@ -7,9 +7,6 @@ use App\Models\CuratechProduct;
 use App\Models\Component;
 use Illuminate\Http\Request;
 
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRefresh;
-
 class WriteOffController extends Controller
 {
     /**

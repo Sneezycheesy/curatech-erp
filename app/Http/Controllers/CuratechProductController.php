@@ -8,9 +8,6 @@ use App\Models\Component;
 use App\Models\writeOff;
 use App\Models\Restock;
 
-use Mauricius\LaravelHtmx\Http\HtmxResponseClientRedirect;
-use Mauricius\LaravelHtmx\Http\HtmxRequest;
-
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -21,26 +18,13 @@ use App\Http\Requests\AddComponentToCuratechProductRequest;
 class CuratechProductController extends Controller
 {
     //
-    public function index(HtmxRequest $rq) {
-        if ($rq->isHtmxRequest()) {
-            return view('curatech_products.partials.curatech_products', [
-                'curatech_products' => CuratechProduct::where('curatech_product_id', 'like', "%$rq->search%")
-                    ->orWhere('name', 'like', "%$rq->search%")
-                    ->orWhere('description', 'like', "%$rq->search%")
-                    ->get(),
-            ]);
-        }
-
+    public function index(Request $rq) {
         return view('curatech_products.index', [
             'curatech_products' => CuratechProduct::all(),
         ]);
     }
 
-    public function details(string $id, HtmxRequest $request) {
-        if($request->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('curatech_products.details', $id));
-        }
-
+    public function details(string $id, Request $request) {
         
         $curatech_product = CuratechProduct::find($id);
         $writeoffs = $curatech_product->writeoffs()->orderBy('created_at', 'DESC')->distinct('created_at')->get();
@@ -52,11 +36,7 @@ class CuratechProductController extends Controller
         ]);
     }
 
-    public function updatePage(string $id, HtmxRequest $request) {
-        if($request->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('curatech_products.update', $id));
-        }
-
+    public function updatePage(string $id, Request $request) {
         $curatech_product = CuratechProduct::find($id);
         $components = $curatech_product->components()->get();
         // Return only components that are NOT connected to $curatech_product
@@ -98,7 +78,7 @@ class CuratechProductController extends Controller
         return redirect()->back();
     }
 
-    public function removeComponent(HtmxRequest $request) {
+    public function removeComponent(Request $request) {
         $curatech_product = CuratechProduct::find($request->route('id'));
         $curatech_product->components()->wherePivot('curatech_product_component_position', $request->curatech_product_component_position)->detach();
         
@@ -108,11 +88,7 @@ class CuratechProductController extends Controller
         ]);
     }
 
-    public function create(HtmxRequest $rq) {
-        if($rq->isHtmxRequest()) {
-            return new HtmxResponseClientRedirect(route('curatech_products.create'));
-        }
-
+    public function create(Request $rq) {
         return view('curatech_products.create', [
             'components' => [],
             'all_components' => Component::all()
