@@ -6,25 +6,25 @@
             <div class="grid grid-cols-1 grid-flow-cols gap-2 px-7">
                 <label for="curatech_product_id">Productnummer</label>
                 @error('curatech_product_id')
-                <div class="text-red-700">
+                <x-error-message>
                     {{$message}}
-                </div>
+                </x-error-message>
                 @enderror
                 <x-text-input type="text" name="curatech_product_id" id="curatech_product_id" class="text-black">{{old('curatech_product_id')}}</x-text-input>
                 
                 <label for="name">Naam</label>
                 @error('name')
-                    <div class="text-red-700">
+                    <x-error-message>
                         {{$message}}
-                    </div>
+                    </x-error-message>
                 @enderror
                 <x-text-input type="text" name="name" id="name" class="text-black">{{old('name')}}</x-text-input>
                 
                 <label for="description">Beschrijving</label>
                 @error('description')
-                <div class="text-red-700">
+                <x-error-message>
                     {{$message}}
-                </div>
+                </x-error-message>
                 @enderror
                 <x-text-area-input name="description" id="description" class="text-black h-[120px]">{{old('description')}}</x-text-area-input>
 
