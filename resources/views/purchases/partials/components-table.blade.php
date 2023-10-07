@@ -5,7 +5,7 @@
 @foreach ($components as $comp)
     <x-table-row :counter="$i = !$i">
         <x-paragraph class="hover:cursor-pointer hover:text-primary-600" 
-            hx-get="{{route('components.details', $comp->component_id)}}">
+            onclick="browseTo('/components/{{$comp->component_id}}')">
             {{$comp->component_id}}
         </x-paragraph>
         <x-paragraph class="whitespace-nowrap overflow-hidden text-ellipsis" 
@@ -55,7 +55,7 @@
         </div>
         <div>
             <x-paragraph>
-                <i hx-get="{{route('restocks.create', $comp->component_id)}}" 
+                <i onclick="browseTo('/restocks/{{$comp->component_id}}/create')" 
                     class="fa-solid fa-hand-holding-dollar hover:text-primary-600 hover:cursor-pointer mr-2">
                 </i>
             </x-paragraph>

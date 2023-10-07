@@ -26,7 +26,7 @@
             </div>
                 <div class="flex justify-end col-span-2 w-full px-3">
                     <x-back-button :url="route('curatech_products')"></x-back-button>
-                    <x-edit-button hx-get="{{route('curatech_products.update', $curatech_product->curatech_product_id)}}" class="w-max" type="button">Wijzigen</x-edit-button>
+                    <x-edit-button onclick="browseTo('/curatech_products/{{$curatech_product->curatech_product_id}}/edit')" class="w-max" type="button">Wijzigen</x-edit-button>
                 </div>
             </div>
             <div class="grid w-full grid-cols-3 auto-grid-rows overflow-y-scroll text-center h-max">

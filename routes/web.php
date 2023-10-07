@@ -35,11 +35,11 @@ Route::get('/dashboard', function () {
 
 // Curatech Products
 Route::get('/curatech_products', [CuratechProductController::class, 'index'])->middleware(['auth', 'verified'])->name('curatech_products');
-Route::get('/curatech_product/{id}', [CuratechProductController::class, 'details'])->middleware(['auth', 'verified'])->name('curatech_products.details');
-Route::get('/curatech_product/{id}/edit', [CuratechProductController::class, 'updatePage'])->middleware(['auth', 'verified'])->name('curatech_products.update');
-Route::post('/curatech_product/{id}/edit', [CuratechProductController::class, 'update'])->middleware(['auth', 'verified'])->name('curatech_products.store');
-Route::post('/curatech_product/{id}/add_component', [CuratechProductController::class, 'addComponent'])->middleware(['auth', 'verified'])->name('curatech_products.add_component');
-Route::delete('/curatech_product/{id}/remove_component', [CuratechProductController::class, 'removeComponent'])->middleware(['auth', 'verified'])->name('curatech_products.remove_component');
+Route::get('/curatech_products/{id}', [CuratechProductController::class, 'details'])->middleware(['auth', 'verified'])->name('curatech_products.details');
+Route::get('/curatech_products/{id}/edit', [CuratechProductController::class, 'updatePage'])->middleware(['auth', 'verified'])->name('curatech_products.update');
+Route::post('/curatech_products/{id}/edit', [CuratechProductController::class, 'update'])->middleware(['auth', 'verified'])->name('curatech_products.store');
+Route::post('/curatech_products/{id}/add_component', [CuratechProductController::class, 'addComponent'])->middleware(['auth', 'verified'])->name('curatech_products.add_component');
+Route::delete('/curatech_products/{id}/remove_component', [CuratechProductController::class, 'removeComponent'])->middleware(['auth', 'verified'])->name('curatech_products.remove_component');
 Route::get('/curatech_products/create', [CuratechProductController::class, 'create'])->middleware(['auth', 'verified'])->name('curatech_products.create');
 Route::post('/curatech_products/create', [CuratechProductController::class, 'createProduct'])->middleware(['auth', 'verified'])->name('curatech_products.create_product');
 
@@ -77,8 +77,8 @@ Route::post('components/{id}/add_shelf', [ComponentController::class, 'addShelf'
 Route::delete('/components/{id}/remove_shelf/{shelf_id}', [ComponentController::class, 'removeShelf'])->middleware(['auth', 'verified'])->name('components.shelf.remove');
 
 // Restocking
-Route::get('/restock/{id}/create', [RestockController::class, 'create'])->middleware(['auth', 'verified'])->name('restocks.create');
-Route::post('/restock/{id}/store', [RestockController::class, 'store'])->middleware(['auth', 'verified'])->name('restocks.store');
+Route::get('/restocks/{id}/create', [RestockController::class, 'create'])->middleware(['auth', 'verified'])->name('restocks.create');
+Route::post('/restocks/{id}/store', [RestockController::class, 'store'])->middleware(['auth', 'verified'])->name('restocks.store');
 
 // Vendors
 Route::get('/vendors', [VendorController::class, 'index'])->middleware(['auth', 'verified'])->name('vendors');

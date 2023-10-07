@@ -31,9 +31,9 @@
         </div>
 
         <div class="flex justify-end w-full max-w-7xl py-5 mx-auto" x-data="{open_writeoff_modal: false, component_id: 0}">
-            <x-primary-button class="mr-2" hx-get="{{route('restocks.create', $comp->component_id)}}"><i class="fa-solid fa-wallet"></i></x-primary-button>
-            <x-primary-button class="mr-2" @click="open_writeoff_modal = true; component_id={{$comp->component_id}}"><i class="fa-solid fa-arrow-down"></i></x-primary-button>
-            <x-edit-button hx-get="{{route('components.edit', $comp->component_id)}}" class="w-max"></x-edit-button>
+            <x-primary-button class="mr-2" onclick="browseTo('/restocks/{{$comp->component_id}}/create')"><i class="fa-solid fa-wallet"></i></x-primary-button>
+            <x-primary-button class="mr-2"><i class="fa-solid fa-arrow-down"></i></x-primary-button>
+            <x-edit-button onclick="browseTo('/components/edit/{{$comp->component_id}}')" class="w-max"></x-edit-button>
             @include('curatech_components.partials.write-off-modal')
         </div>
 

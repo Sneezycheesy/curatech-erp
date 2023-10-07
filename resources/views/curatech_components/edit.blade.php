@@ -14,8 +14,6 @@
         
         <div class="flex justify-end max-w-7xl mx-auto mt-3 w-full">
             <x-primary-button type="submit" form="component_form" value="Opslaan">Opslaan</x-primary-button>
-            <!-- <x-primary-button class="ml-2" type="button" hx-get="{{route('components.details', $comp->component_id)}}" form="component_form" value="Opslaan">Annuleren</x-primary-button> -->
-            <x-back-button class="ml-2" :url="route('components.details', $comp->component_id)" />
         </div>
 
         @if(session()->has('success'))
@@ -25,7 +23,7 @@
         <div class="w-full max-w-7xl max-h-[50rem] mx-auto mt-5 p-2">
             <div class="flex justify-between w-full pr-3 align-middle">
                 <x-title>Te vinden in</x-title>
-                <x-new-button @click="modal_open = true" />
+                <x-new-button onclick="console.log('To be Implemented')" />
             </div>
 
             @foreach ($linked_shelves as $shelf)
@@ -48,6 +46,7 @@
         </div>
 
 
+        <!-- #TODO: Implement SPLADE for modal views -->
         <x-new-modal title="Locatie toevoegen" :submit_post="route('components.shelf.add', $comp->component_id)" submit_include="[name='shelf_id']" target="#shelf_error">
             <x-text-input type="hidden" name="component_id" value="{{$comp->component_id}}" />
             <x-input-label for="stockroom_name">Magazijn</x-input-label>
@@ -55,7 +54,7 @@
                 <x-slot name="options">
                     <option value="" selected>Selecteer een magazijn</option>
                     @foreach($all_stockrooms as $stockroom)
-                    <option value="{{$stockroom->id}}" hx-get="{{route('racks.options', $stockroom->id)}}" hx-trigger="click"  hx-target="#rack_name">{{$stockroom->name}}</option>
+                    <option value="{{$stockroom->id}}">{{$stockroom->name}}</option>
                     @endforeach
                 </x-slot>
             </x-select-box>
