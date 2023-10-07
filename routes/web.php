@@ -11,6 +11,7 @@ use App\Http\Controllers\StockroomController;
 use App\Http\Controllers\RackController;
 use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\WriteOffController;
+use App\Http\Controllers\DesiredStockController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,8 @@ Route::get('/curatech_products/{id}/edit', [CuratechProductController::class, 'u
 Route::post('/curatech_products/{id}/edit', [CuratechProductController::class, 'update'])->middleware(['auth', 'verified'])->name('curatech_products.store');
 Route::post('/curatech_products/{id}/add_component', [CuratechProductController::class, 'addComponent'])->middleware(['auth', 'verified'])->name('curatech_products.add_component');
 Route::delete('/curatech_products/{id}/remove_component', [CuratechProductController::class, 'removeComponent'])->middleware(['auth', 'verified'])->name('curatech_products.remove_component');
+
+Route::get('/desired_stocks', [DesiredStockController::class, 'index'])->middleware(['auth'])->name('desired_stocks.index');
 
 // Purchases
 Route::get('/purchases', [RestockController::class, 'index'])->middleware(['auth', 'verified'])->name('purchases');

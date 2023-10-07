@@ -30,6 +30,10 @@ class CuratechProduct extends Model
         return $this->hasMany(WriteOff::class);
     }
 
+    public function desired_stock(): HasMany {
+        return $this->hasMany(DesiredStock::class);
+    }
+
     public static function find($id) {
         return CuratechProduct::where('curatech_product_id', $id)->first();
     }

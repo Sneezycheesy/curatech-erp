@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Component;
 use App\Models\DesiredStock;
 use Illuminate\Http\Request;
 
-class DesiredStockCntroller extends Controller
+class DesiredStockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +14,15 @@ class DesiredStockCntroller extends Controller
     public function index()
     {
         //
+        $desired_stocks = DesiredStock::where('expiration_date', '>=', now())
+            ->with('curatechProduct')
+            ->paginate(50);
+        $curatech_components = Component::whereHas('desired_stocks')->paginate(50);
+
+        return view('desired_stocks.index', [
+            'desired_stocks' => $desired_stocks,
+            'components' => $curatech_components,
+        ]);
     }
 
     /**

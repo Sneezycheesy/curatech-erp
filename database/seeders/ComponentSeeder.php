@@ -4,10 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Component;
 
-use App\Models\CuratechProduct;
-
-class CuratechProductSeeder extends Seeder
+class ComponentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,6 @@ class CuratechProductSeeder extends Seeder
     public function run(): void
     {
         //
-        CuratechProduct::factory()->count(100)->create();
+        Component::factory(1000)->create();
     }
 }

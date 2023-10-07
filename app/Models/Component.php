@@ -97,6 +97,10 @@ class Component extends Model
         return $this->belongsToMany(CuratechProduct::class, 'curatech_products_components', 'component_id', 'curatech_product_id');
     }
 
+    public function desired_stocks(): BelongsToMany {
+        return $this->belongsToMany(DesiredStock::class, 'curatech_components_desired_stocks', 'curatech_component_id', 'desired_stock_id');
+    }
+
     public function manufacturers(): BelongsToMany {
         return $this->belongsToMany(Manufacturer::class, 'manufacturers_components', 'component_id', 'manufacturer_id');
     }
