@@ -19,12 +19,13 @@ class CuratechProductController extends Controller
 {
     //
     public function index(Request $request) {
-        $curatech_products = CuratechProduct::all();
+        $curatech_products = CuratechProduct::orderBy('name', 'ASC')->paginate(50);
         
         if ($request->search) {
             $curatech_products = CuratechProduct::where('name', 'like', "%$request->search%")
                 ->orWhere('description', 'like', "%$request->search%")
-                ->get();
+                ->orderBy('name', 'ASC')
+                ->paginate(50);
         }
 
         return view('curatech_products.index', [

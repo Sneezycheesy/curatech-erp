@@ -12,15 +12,16 @@ class VendorController extends Controller
 {
     //
     public function index(Request $request) {
-        $vendors = Vendor::all();
+        $vendors = Vendor::orderBy('name', 'ASC')->paginate(50);
 
         if ($request->search) {
-            $vendors = Vendor::where('name', 'like', "%$request->search%")
+            $vendors = Vendor::orderBy('name', 'ASC')
+                ->where('name', 'like', "%$request->search%")
                 ->orWhere('city', 'like', "%$request->search%")
                 ->orWhere('zipcode', 'like', "%$request->search%")
                 ->orWhere('zipcode', 'like', "%$request->search%")
                 ->orWhere('country', 'like', "%$request->search%")
-                ->get();
+                ->paginate(50);
         }
 
         // Return vendors
