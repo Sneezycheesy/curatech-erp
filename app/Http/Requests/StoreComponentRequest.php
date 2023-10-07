@@ -44,8 +44,8 @@ class StoreComponentRequest extends FormRequest
             'courant.required' => 'Courant is verplicht',
             'unit_price.required' => 'De stukprijs is verplicht',
             'unit_price.numeric' => 'De stukprijs moet een geldig getal zijn',
-            'lt.required' => 'Lt is verplicht',
-            'lt.numeric' => 'Lt moet een geldig getal zijn',
+            'lt.required' => 'Levertijd is verplicht',
+            'lt.numeric' => 'Levertijd moet een geldig getal zijn',
             'stock.required' => 'De voorraad is verplicht',
             'stock.numeric' => 'De voorraad moet ene geldig getal zijn',
         ];

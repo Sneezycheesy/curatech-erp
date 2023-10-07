@@ -13,9 +13,17 @@ use App\Models\Stockroom;
 class ComponentController extends Controller
 {
     public function get(Request $request) {
+        $components = Component::all();
+
+        if ($request->search) {
+            $components = Component::where('component_id', 'like', "%$request->search%")
+                ->orWhere('description', 'like', "%$request->search%")
+                ->get();
+        }
+
         return view('curatech_components.index', [
-            'components' => Component::all(),
-        ]);
+            'components' => $components,
+        ])->withInput($request->search);
     }
 
     // Request to the edit page for a specific component

@@ -1,6 +1,6 @@
 <x-app-layout>
-    <x-searchbar :route="route('stockrooms')" swap="innerHTML" target="#stockrooms_container">
-        <x-new-button :hx-get="route('stockrooms.create')" class="w-full h-full"/>
+    <x-searchbar>
+        <x-new-button type="button" onclick="window.location.href = '/stockrooms/create'" class="w-full h-full"/>
     </x-searchbar>
 
     <div class="w-full max-w-6xl mt-3 py-5 mx-auto dark:text-white">

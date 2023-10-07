@@ -38,13 +38,13 @@
                 </x-select-box>
             </div>
             <div class="grid grid-cols-1 grid-rows-2 grid-flow-rows w-full text-center">
-                <x-input-label for="lt" class="w-full text-2xl">LT</x-input-label>
+                <x-input-label for="lt" class="w-full text-2xl">Levertijd</x-input-label>
                 @error('lt')
                     <div class="text-red-900 dark:text-red-500">
                         {{$message}}
                     </div>
                 @enderror
-                <x-text-input type="text" name="lt" id="lt" placeholder="lt(?)" class="w-full text-center text-black">{{old('ly')}}</x-text-input>
+                <x-text-input type="text" name="lt" id="lt" placeholder="Komt voor kerst" class="w-full text-center text-black">{{old('ly')}}</x-text-input>
             </div>
             <div class="grid grid-cols-1 grid-rows-2 grid-flow-rows w-full text-center">
                 <x-input-label for="stock" class="w-full text-2xl">Voorraad</x-input-label>

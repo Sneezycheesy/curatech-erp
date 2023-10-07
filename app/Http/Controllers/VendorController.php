@@ -12,9 +12,20 @@ class VendorController extends Controller
 {
     //
     public function index(Request $request) {
-        // Return all vendors
+        $vendors = Vendor::all();
+
+        if ($request->search) {
+            $vendors = Vendor::where('name', 'like', "%$request->search%")
+                ->orWhere('city', 'like', "%$request->search%")
+                ->orWhere('zipcode', 'like', "%$request->search%")
+                ->orWhere('zipcode', 'like', "%$request->search%")
+                ->orWhere('country', 'like', "%$request->search%")
+                ->get();
+        }
+
+        // Return vendors
         return view('vendors.index', [
-            'vendors' => Vendor::all(),
+            'vendors' => $vendors,
         ]);
     }
 

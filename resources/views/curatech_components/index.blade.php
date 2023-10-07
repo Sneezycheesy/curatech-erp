@@ -3,13 +3,9 @@
     <x-slot name="header">
         {{ __('Componenten') }}
     </x-slot>
-    <x-searchbar
-        route="{{route('components')}}"
-        target="#components_container"
-        swap="outerHTML"
-    >
+    <x-searchbar>
         <x-new-button type="button"
-            hx-get="{{route('components_create')}}"
+            onclick="window.location.href = '/components/create'"
             value="Creëer" 
             class="col-span-2 w-full h-full hover:cursor-pointer" />
     </x-searchbar>

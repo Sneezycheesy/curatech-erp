@@ -7,37 +7,37 @@
             @csrf
             <div class="grid grid-cols-2 grid-rows-1 w-full gap-x-4">
                 <div class="grid grid-cols-1 gap-y-2 h-max">
-                    <label for="vendor_name_input">Naam</label>
+                    <x-input-label for="vendor_name_input">Naam</x-input-label>
                     @error('name')
                         <p class="text-red-700 dark:text-red-400">{{$message}}</p>
                     @enderror
-                    <input type="text" name="name" id="vendor_name_input" value="{{old('name')}}" placeholder="Naam leverancier" class="text-black w-full max-w-md mx-auto text-center rounded">
+                    <x-text-input type="text" name="name" id="vendor_name_input" value="{{old('name')}}" placeholder="Naam leverancier" class="text-black w-full max-w-md mx-auto text-center rounded" />
                     
-                    <label for="vendor_address_input">Adres</label>
+                    <x-input-label for="vendor_address_input">Adres</x-input-label>
                     @error('address')
                         <p class="text-red-700 dark:text-red-400">{{$message}}</p>
                     @enderror
-                    <input type="text" name="address" id="vendor_address_input" value="{{old('address')}}" placeholder="Adres leverancier" class="text-center text-black w-full max-w-md mx-auto"/>
+                    <x-text-input type="text" name="address" id="vendor_address_input" value="{{old('address')}}" placeholder="Adres leverancier" class="text-center text-black w-full max-w-md mx-auto"/>
                     
-                    <label for="vendor_zipcode_input">Postcode</label>
+                    <x-input-label for="vendor_zipcode_input">Postcode</x-input-label>
                     @error('zipcode')
                         <p class="text-red-700 dark:text-red-400">{{$message}}</p>
                     @enderror
-                    <input type="text" name="zipcode" id="vendor_zipcode_input" value="{{old('zipcode')}}" placeholder="Postcode leverancier" class="text-center text-black w-full max-w-md mx-auto"/>
+                    <x-text-input type="text" name="zipcode" id="vendor_zipcode_input" value="{{old('zipcode')}}" placeholder="Postcode leverancier" class="text-center text-black w-full max-w-md mx-auto"/>
                 </div>
 
                 <div class="grid grid-cols-1 gap-y-2 h-max">
-                        <label for="vendor_city_input">Plaats</label>
+                        <x-input-label for="vendor_city_input">Plaats</x-input-label>
                         @error('zipcode')
                             <p class="text-red-700 dark:text-red-400">{{$message}}</p>
                         @enderror
-                        <input type="text" name="city" id="vendor_city_input" value="{{old('city')}}" placeholder="Stad leverancier" class="text-center text-black w-full max-w-md mx-auto"/>
+                        <x-text-input type="text" name="city" id="vendor_city_input" value="{{old('city')}}" placeholder="Stad leverancier" class="text-center text-black w-full max-w-md mx-auto"/>
                     
-                        <label for="vendor_country_input">Land</label>
+                        <x-input-label for="vendor_country_input">Land</x-input-label>
                         @error('country')
                             <p class="text-red-700 dark:text-red-400">{{$message}}</p>
                         @enderror
-                        <input type="text" name="country" id="vendor_country_input" value="{{old('country')}}" placeholder="Land leverancier" class="text-center text-black w-full max-w-md mx-auto"/>
+                        <x-text-input type="text" name="country" id="vendor_country_input" value="{{old('country')}}" placeholder="Land leverancier" class="text-center text-black w-full max-w-md mx-auto"/>
                 </div>
             </div>
 

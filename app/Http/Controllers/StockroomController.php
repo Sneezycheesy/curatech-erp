@@ -9,9 +9,17 @@ use App\Models\Rack;
 class StockroomController extends Controller
 {
     //
-    public function index(Request $rq) {
+    public function index(Request $request) {
+        $stockrooms = Stockroom::all();
+
+        if ($request->search) {
+            $stockrooms = Stockroom::where('name', 'like', "%$request->search%")
+                ->orWhere('location', 'like', "$request->search%")
+                ->get();
+        }
+
         return view('stockrooms.index', [
-            'stockrooms' => Stockroom::all(),
+            'stockrooms' => $stockrooms,
         ]);
     }
 

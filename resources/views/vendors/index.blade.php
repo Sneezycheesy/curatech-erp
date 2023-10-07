@@ -2,10 +2,8 @@
     <x-slot name="header">
         {{ __('Leveranciers') }}
     </x-slot>
-    <x-searchbar route="{{route('vendors')}}"
-        target="#vendors_container"
-        swap="outerHTML">    
-        <x-new-button hx-get="{{route('vendors.create')}}" class="w-full h-full"/>
+    <x-searchbar>    
+        <x-new-button type="button" onclick="window.location.href = '/vendors/create'" class="w-full h-full"/>
     </x-searchbar>
     
     @include('vendors.partials.Vendors')
