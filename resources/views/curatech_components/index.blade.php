@@ -9,7 +9,7 @@
         swap="outerHTML"
     >
         <x-new-button type="button"
-            hx-get="{{route('components_create')}}"
+            onclick="browseTo(&quot;{{route('components.create')}}&quot;)"
             value="Creëer" 
             class="col-span-2 w-full h-full hover:cursor-pointer" />
     </x-searchbar>

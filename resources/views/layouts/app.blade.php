@@ -12,6 +12,19 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/87011d2ad4.js" crossorigin="anonymous"></script>
 
+    <!-- Set x-cloak to not display to prevent modals from showing on initial page load/reload
+        Defining it here sets the attribute before css files can be loaded, since these load after the page is initialized
+    -->
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
+
+        <script lang="text/javascript">
+            function browseTo(url) {
+                window.location.href = url;
+            }
+        </script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
