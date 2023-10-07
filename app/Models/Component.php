@@ -25,6 +25,8 @@ class Component extends Model
         'component_type',
         'component_value',
         'component_unit',
+        'stock_machine',
+        'smd',
     ];
 
     protected $casts = [
