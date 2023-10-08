@@ -16,7 +16,7 @@
             function browseTo(url) {
                 window.location.href = url;
             }
-        </script>
+        </script>        
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

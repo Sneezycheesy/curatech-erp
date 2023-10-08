@@ -21,6 +21,6 @@ class DesiredStock extends Model
     }
 
     public function curatechComponents(): BelongsToMany {
-        return $this->belongsToMany(Component::class, 'curatech_components_desired_stocks', 'desired_stock_id', 'curatech_product_id');
+        return $this->belongsToMany(Component::class, 'curatech_components_desired_stocks', 'desired_stock_id', 'curatech_component_id');
     }
 }

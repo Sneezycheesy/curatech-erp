@@ -59,30 +59,30 @@ class Component extends Model
     }
 
     public function priceRequiredStock($calculation = false) {
-        if (!$this->required_stock() || $this->required_stock() <= $this->stock) {
+        if (!$this->requiredStock() || $this->requiredStock() <= $this->stock) {
             return 0;
         }
 
-        $price = ($this->required_stock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
+        $price = ($this->requiredStock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
         return $calculation ? $price : number_format($price, 2, ',', '.');
     }
 
     # Return the amount of components required to be able to produce the DESIRED
     # amount of Curatech Products that use this component
-    public function required_stock() {
+    public function requiredStock() {
         $stock_required = 0;
-        foreach ($this->curatech_products()->get() as $cp) {
-           $stock_required += $cp->stock_desired > 0 ? $cp->stock_desired : 0;
+        foreach ($this->desired_stocks()->get() as $ds) {
+           $stock_required += $ds->amount_to_make > 0 ? $ds->amount_to_make : 0;
         } 
         return $stock_required;
     }
 
     public function stock_shortage() {
-        if($this->stock - $this->required_stock() > 0) {
+        if($this->stock - $this->requiredStock() > 0) {
             return '';
         }
 
-        return $this->required_stock() - $this->stock;
+        return $this->requiredStock() - $this->stock;
     }
 
     public function maxUnitPrice() {

@@ -17,7 +17,7 @@ class PurchasesController extends Controller
                 ->orderBy('component_id', 'ASC')
                 ->get()
                 ->filter(function($comp) {
-                    return $comp->required_stock() > 0;
+                    return $comp->requiredStock() > 0;
                 })->chunk(100),
         ]);
     }
@@ -33,7 +33,7 @@ class PurchasesController extends Controller
             ->orderBy('component_id', 'ASC')
             ->get()
             ->filter(function($comp) {
-                return $comp->required_stock() > 0;
+                return $comp->requiredStock() > 0;
             }),
         ]);
     }

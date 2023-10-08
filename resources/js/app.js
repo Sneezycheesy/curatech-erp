@@ -1,5 +1,6 @@
 import './bootstrap';
 import 'htmx.org';
+import 'tailwind-scrollbar-hide';
 
 import Alpine from 'alpinejs';
 

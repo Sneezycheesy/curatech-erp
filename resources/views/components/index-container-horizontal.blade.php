@@ -1,4 +1,4 @@
-<div id="index-container-horizontal" class="grid overflow-x-scroll grid-rows-2 grid-flow-col auto-cols-max gap-2 w-full p-2 mx-auto">
+<div id="index-container-horizontal" class="grid overflow-x-scroll grid-rows-2 grid-flow-col auto-cols-max gap-2 w-full p-2 mx-auto scrollbar-hide">
     {{$slot}}
 </div>
 

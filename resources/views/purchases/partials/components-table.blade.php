@@ -33,7 +33,7 @@
 
         <!-- minimaal nodige voorraad -->
         <x-paragraph>
-            {{$comp->required_stock()}}
+            {{$comp->requiredStock()}}
         </x-paragraph>
 
         <!-- Tekort -->        

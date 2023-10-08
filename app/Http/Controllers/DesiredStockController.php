@@ -21,7 +21,7 @@ class DesiredStockController extends Controller
 
         return view('desired_stocks.index', [
             'desired_stocks' => $desired_stocks,
-            'components' => $curatech_components,
+            'curatech_components' => $curatech_components,
         ]);
     }
 

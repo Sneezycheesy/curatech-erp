@@ -16,7 +16,7 @@ class RestockController extends Controller
             'components' => Component::orderBy('component_id', 'ASC')
                 ->get()
                 ->filter(function($comp) {
-                    return $comp->required_stock() > 0;
+                    return $comp->requiredStock() > 0;
                 }),
             'total_price' => $this->totalPrice(),
             'stock_value' => $this->totalStockValue(),
@@ -32,7 +32,7 @@ class RestockController extends Controller
             'components' => Component::orderBy('component_id', 'ASC')
             ->get()
             ->filter(function($comp) {
-                return $comp->required_stock() > 0;
+                return $comp->requiredStock() > 0;
             }),
             'total_price' => $this->totalPrice(),
             'stock_value' => $this->totalStockValue(),
@@ -119,7 +119,7 @@ class RestockController extends Controller
         $components = Component::orderBy('component_id', 'ASC')
         ->get()
         ->filter(function($comp) {
-            return $comp->required_stock() > 0;
+            return $comp->requiredStock() > 0;
         });
 
         $total_price = 0;
@@ -135,7 +135,7 @@ class RestockController extends Controller
         $components = Component::where('stock', '>', 0)
             ->get()
             ->filter(function ($comp) {
-                return $comp->required_stock() > 0;
+                return $comp->requiredStock() > 0;
             });
         foreach($components as $component) {
             $total_value += $component->vendors()
