@@ -59,11 +59,11 @@ class Component extends Model
     }
 
     public function priceRequiredStock($calculation = false) {
-        if (!$this->requiredStock() || $this->requiredStock() <= $this->stock) {
+        if (!$this->requiredStock() || $this->requiredStock() <= $this->stock + $this->stock_machines) {
             return 0;
         }
 
-        $price = ($this->requiredStock() - $this->stock) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
+        $price = ($this->requiredStock() - $this->stock - $this->stock_machines) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
         return $calculation ? $price : number_format($price, 2, ',', '.');
     }
 
@@ -77,12 +77,12 @@ class Component extends Model
         return $stock_required;
     }
 
-    public function stock_shortage() {
+    public function stockShortage() {
         if($this->stock - $this->requiredStock() > 0) {
             return '';
         }
 
-        return $this->requiredStock() - $this->stock;
+        return $this->requiredStock() - $this->stock - $this->stock_machines;
     }
 
     public function maxUnitPrice() {

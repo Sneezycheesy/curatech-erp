@@ -38,7 +38,7 @@
 
         <!-- Tekort -->        
         <x-paragraph>
-            {{$comp->stock_shortage()}}
+            {{$comp->stockShortage()}}
         </x-paragraph>
 
         <div>

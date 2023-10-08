@@ -17,7 +17,7 @@ class DesiredStockController extends Controller
         $desired_stocks = DesiredStock::where('expiration_date', '>=', now())
             ->with('curatechProduct')
             ->paginate(50);
-        $curatech_components = Component::whereHas('desired_stocks')->paginate(50);
+        $curatech_components = Component::whereHas('desired_stocks')->with('vendors')->paginate(15);
 
         return view('desired_stocks.index', [
             'desired_stocks' => $desired_stocks,

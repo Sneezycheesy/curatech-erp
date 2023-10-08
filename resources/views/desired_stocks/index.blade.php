@@ -2,7 +2,7 @@
 <x-slot name="header">
     Inkoop
 </x-slot>
-    <x-index-container-horizontal>
+    <x-index-container-horizontal id="desired-stocks-container">
         @foreach($desired_stocks as $desired_stock)
         <x-details-container class="min-w-[20rem]">
             <x-details-container-title>
@@ -13,10 +13,21 @@
             <x-paragraph>Te maken aantal: {{$desired_stock->amount_to_make}}</x-paragraph>
         </x-details-container>
         @endforeach
+
+        @if($desired_stocks->nextPageUrl())
+        <div 
+            hx-get="{{$desired_stocks->nextPageUrl()}}"
+            hx-select="#index-container-horizontal>div"
+            hx-swap="outerHTML"
+            hx-trigger="intersect"
+            hx-indicator="#container-horizontal-loading-indicator"
+        >
+        </div>
+        @endif
     </x-index-container-horizontal>
 
     <x-title class="w-full">Overzicht</x-title>
-    <x-table>
+    <x-table class="col-span-full">
         <x-slot name="header">
             <x-paragraph>Artikelnummer</x-paragraph>
             <x-paragraph class="hidden md:block">Magazijn</x-paragraph>
@@ -25,23 +36,44 @@
             <x-paragraph class="hidden lg:block">Leveranciers</x-paragraph>
             <x-paragraph class="hidden lg:block">Stukprijs</x-paragraph>
             <x-paragraph>Nodig</x-paragraph>
+            <x-paragraph>Tekort</x-paragraph>
             <x-paragraph class="hidden lg:block">Totaal</x-paragraph>
         </x-slot>
 
         <x-slot name="tbody">
-        @foreach($curatech_components as $curatech_component)
-        <x-table-row>
-            <x-paragraph>{{$curatech_component->component_id}}</x-pragraph>
-            <x-paragraph></x-pragraph>
-            <x-paragraph></x-pragraph>
-            <x-paragraph></x-pragraph>
-            <x-paragraph></x-pragraph>
-            <x-paragraph></x-pragraph>
-            <x-paragraph></x-pragraph>
-            <x-paragraph></x-pragraph>
-            <x-paragraph></x-pragraph>
-        </x-table-row>
-        @endforeach
+            @foreach($curatech_components as $curatech_component)
+            <x-table-row>
+                <x-paragraph>{{$curatech_component->component_id}}</x-pragraph>
+                <x-paragraph class="hidden md:block">{{$curatech_component->stock}}</x-pragraph>
+                <x-paragraph class="hidden md:block">{{$curatech_component->stock_machines}}</x-pragraph>
+                <x-paragraph class="hidden md:block">{{$curatech_component->stock + $curatech_component->stock_machines}}</x-pragraph>
+                <x-paragraph class="hidden lg:block">
+                    @if ($curatech_component->vendors()->first())
+                    {{$curatech_component->vendors()->first()->name}}
+                    @endif
+                </x-pragraph>
+                <x-paragraph class="hidden lg:block">
+                    @if ($curatech_component->vendors()->first())
+                    €{{$curatech_component->vendors()->first()->pivot->component_unit_price}}
+                    @endif
+                </x-pragraph>
+                <x-paragraph>{{$curatech_component->requiredStock()}}</x-pragraph>
+                <x-paragraph>{{$curatech_component->stockShortage()}}</x-pragraph>
+                <x-paragraph class="hidden lg:block">€{{$curatech_component->priceRequiredStock()}}</x-pragraph>
+            </x-table-row>
+            @endforeach
+
+            @if($curatech_components->nextPageUrl())
+            <div 
+                hx-get="{{$curatech_components->nextPageUrl()}}"
+                hx-select="#table-body-container>div"
+                hx-swap="outerHTML"
+                hx-trigger="intersect"
+                hx-indicator="#loading-indicator"
+            >
+            </div>
+            @endif
         </x-slot>
+
     </x-table>
 </x-app-layout>
