@@ -5,7 +5,7 @@
     </x-slot>
     <x-searchbar>
         <x-new-button type="button"
-            onclick="window.location.href = '/components/create'"
+            onclick="browseTo(&quot;{{route('components.create')}}&quot;)"
             value="Creëer" 
             class="col-span-2 w-full h-full hover:cursor-pointer" />
     </x-searchbar>
