@@ -45,6 +45,7 @@ Route::post('/curatech_products/{id}/add_component', [CuratechProductController:
 Route::delete('/curatech_products/{id}/remove_component', [CuratechProductController::class, 'removeComponent'])->middleware(['auth', 'verified'])->name('curatech_products.remove_component');
 
 Route::get('/desired_stocks', [DesiredStockController::class, 'index'])->middleware(['auth'])->name('desired_stocks.index');
+Route::get('/desired_stocks/{desired_stock}', [DesiredStockController::class, 'show'])->middleware(['auth'])->name('desired_stocks.details');
 
 // Purchases
 Route::get('/purchases', [RestockController::class, 'index'])->middleware(['auth', 'verified'])->name('purchases');

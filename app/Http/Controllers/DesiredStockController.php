@@ -6,6 +6,8 @@ use App\Models\Component;
 use App\Models\DesiredStock;
 use Illuminate\Http\Request;
 
+use Mauritius\LaravelHtmx\Http\HtmxResponseClientRedirect;
+
 class DesiredStockController extends Controller
 {
     /**
@@ -47,6 +49,7 @@ class DesiredStockController extends Controller
     public function show(DesiredStock $desiredStock)
     {
         //
+        return view('desired_stocks.details');
     }
 
     /**
