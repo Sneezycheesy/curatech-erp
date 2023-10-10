@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Component;
 use App\Models\DesiredStock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use Mauritius\LaravelHtmx\Http\HtmxResponseClientRedirect;
 
@@ -73,8 +74,19 @@ class DesiredStockController extends Controller
      */
     public function update(Request $request, DesiredStock $desiredStock)
     {
+        $validator = Validator::make($request->all(), [
+            'amount_initial' => 'min:1',
+            'start_date' => 'before:expiration_date',
+            'expiration_date' => 'required|after:start_date',
+        ]);
+
+        if($validator->fails()) {
+            return redirect(route('desired_stocks.edit', $desiredStock))
+                ->withErrors($validator);
+        }
+
         //
-        return view('desired_stocks.details', [
+        return view('desired_stocks.partials.information-container', [
             'desired_stock' => $desiredStock,
             'curatech_product' => $desiredStock->curatechProduct()->first(),
             'curatech_components' => $desiredStock->curatechComponents()->paginate(50),

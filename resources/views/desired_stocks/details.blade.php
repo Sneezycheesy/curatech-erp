@@ -6,33 +6,7 @@
     <div class="w-full p-8 grid grid-cols-1 md:grid-cols-2 gap-x-5">
         <div id="details-container" class="relative h-max">
             <x-title>Informatie</x-title>
-            <div id="information-container">
-                <x-paragraph>Product</x-paragraph>
-                <x-paragraph>{{$curatech_product->name}}</x-paragraph>
-
-                <x-paragraph>Gewenst aantal</x-paragraph>
-                <x-paragraph>{{$desired_stock->amount_initial}}</x-paragraph>
-
-                <x-paragraph>Gemaakt aantal</x-paragraph>
-                <x-paragraph>{{$desired_stock->amount_made}}</x-paragraph>
-
-                <x-paragraph>Te maken aantal</x-paragraph>
-                <x-paragraph>{{$desired_stock->amount_to_make}}</x-paragraph>
-
-                <x-paragraph>Startdatum</x-paragraph>
-                <x-paragraph>{{$desired_stock->start_date}}</x-paragraph>
-
-                <x-paragraph>Verloopdatum</x-paragraph>
-                <x-paragraph>{{$desired_stock->expiration_date}}</x-paragraph>
-
-                @if($desired_stock->expiration_date >= now())
-                <x-edit-button class="absolute right-0 bottom-0 translate-y-full"
-                    hx-get="{{route('desired_stocks.edit', $desired_stock)}}"
-                    hx-target="#information-container"
-                >
-                </x-edit-button>
-                @endif
-            </div>
+            @include('desired_stocks.partials.information-container')
         </div>
         <div>
             <x-title>Componenten</x-title>
