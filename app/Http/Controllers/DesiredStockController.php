@@ -80,6 +80,7 @@ class DesiredStockController extends Controller
             'expiration_date' => 'required|after:start_date',
         ]);
 
+        // When validation fails, return the form with errors
         if($validator->fails()) {
             return redirect(route('desired_stocks.edit', $desiredStock))
                 ->withErrors($validator);

@@ -19,7 +19,7 @@
         @if($desired_stocks->nextPageUrl())
         <div 
             hx-get="{{$desired_stocks->nextPageUrl()}}"
-            hx-select="#index-container-horizontal>div"
+            hx-select="#index-container-horizontal>a"
             hx-swap="outerHTML"
             hx-trigger="intersect"
             hx-indicator="#container-horizontal-loading-indicator"
