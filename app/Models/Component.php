@@ -78,7 +78,7 @@ class Component extends Model
     }
 
     public function stockShortage() {
-        if($this->stock - $this->requiredStock() > 0) {
+        if($this->stock + $this->stock_machines - $this->requiredStock() > 0) {
             return '';
         }
 

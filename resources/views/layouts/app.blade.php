@@ -21,6 +21,9 @@
             .htmx-indicator {
                 display: none;
             }
+            .htmx-request{
+                display:block;
+            }
         </style>
 
         <script lang="text/javascript">

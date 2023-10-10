@@ -4,7 +4,7 @@
     {{ $header }}
     </x-table-header>
 
-    <div id="table-body-container">
+    <div id="table-body-container" {{$tbody->attributes->merge(['class' => "max-h-[32rem] overflow-y-auto scrollbar-hide"])}}>
     {{ $tbody }}
     </div>
 

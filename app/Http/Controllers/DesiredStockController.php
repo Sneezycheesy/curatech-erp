@@ -19,7 +19,7 @@ class DesiredStockController extends Controller
         $desired_stocks = DesiredStock::where('expiration_date', '>=', now())
             ->with('curatechProduct')
             ->paginate(50);
-        $curatech_components = Component::whereHas('desired_stocks')->with('vendors')->paginate(15);
+        $curatech_components = Component::whereHas('desired_stocks')->with('vendors')->paginate(50);
 
         return view('desired_stocks.index', [
             'desired_stocks' => $desired_stocks,
@@ -49,7 +49,11 @@ class DesiredStockController extends Controller
     public function show(DesiredStock $desiredStock)
     {
         //
-        return view('desired_stocks.details');
+        return view('desired_stocks.details', [
+            'desired_stock' => $desiredStock,
+            'curatech_product' => $desiredStock->curatechProduct()->first(),
+            'curatech_components' => $desiredStock->curatechComponents()->paginate(50),
+        ]);
     }
 
     /**
@@ -58,6 +62,10 @@ class DesiredStockController extends Controller
     public function edit(DesiredStock $desiredStock)
     {
         //
+        return view('desired_stocks.edit', [
+            'desired_stock' => $desiredStock,
+            'curatech_product' => $desiredStock->curatechProduct()->first(),
+        ]);
     }
 
     /**
@@ -66,6 +74,11 @@ class DesiredStockController extends Controller
     public function update(Request $request, DesiredStock $desiredStock)
     {
         //
+        return view('desired_stocks.details', [
+            'desired_stock' => $desiredStock,
+            'curatech_product' => $desiredStock->curatechProduct()->first(),
+            'curatech_components' => $desiredStock->curatechComponents()->paginate(50),
+        ]);
     }
 
     /**
