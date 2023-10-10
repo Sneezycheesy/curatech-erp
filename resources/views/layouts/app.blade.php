@@ -17,6 +17,10 @@
     -->
         <style>
             [x-cloak] { display: none !important; }
+
+            .htmx-indicator {
+                display: none;
+            }
         </style>
 
         <script lang="text/javascript">

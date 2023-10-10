@@ -8,5 +8,5 @@
     {{ $tbody }}
     </div>
 
-    <i id="loading-indicator" class="htmx-indicator w-full fas fa-spinner fa-spin text-5xl text-center text-black dark:text-white col-span-full"></i>
+    <i id="loading-indicator" class="htmx-indicator fas fa-spinner fa-spin text-5xl text-center text-black dark:text-white col-span-full"></i>
 </div>
