@@ -76,7 +76,7 @@ class Component extends Model
                 $query->where('desired_stock_id', $desiredStock->id);
             })
             ->get() as $ds) {
-           $stock_required += $ds->amount_to_make > 0 ? $ds->amount_to_make : 0;
+           $stock_required += $ds->pivot->amount_to_make > 0 ? $ds->pivot->amount_to_make : 0;
         } 
         return $stock_required;
     }
@@ -102,7 +102,10 @@ class Component extends Model
     }
 
     public function desired_stocks(): BelongsToMany {
-        return $this->belongsToMany(DesiredStock::class, 'curatech_components_desired_stocks', 'curatech_component_id', 'desired_stock_id');
+        return $this->belongsToMany(DesiredStock::class, 'curatech_components_desired_stocks', 'curatech_component_id', 'desired_stock_id')
+            ->withPivot('amount_initial')
+            ->withPivot('amount_made')
+            ->withPivot('amount_to_make');
     }
 
     public function manufacturers(): BelongsToMany {
