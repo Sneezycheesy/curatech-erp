@@ -6,6 +6,7 @@ use App\Models\WriteOff;
 use App\Models\CuratechProduct;
 use App\Models\Component;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WriteOffController extends Controller
 {
@@ -32,12 +33,13 @@ class WriteOffController extends Controller
     public function store(Request $request)
     {
         $error = null;
-        if (!is_numeric($request->amount) || $request->amount < 0){
-            return "Vul geldig getal in";
-        }
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|numeric|integer',
+            'component_id' => 'required|integer',
+        ]);
 
-        if(!is_integer(intval($request->amount))) {
-            return "Vul een heel getal in";
+        if ($validator->fails()) {
+            return '';
         }
 
         if (isset($request->component_id)) {

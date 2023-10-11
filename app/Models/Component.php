@@ -69,9 +69,13 @@ class Component extends Model
 
     # Return the amount of components required to be able to produce the DESIRED
     # amount of Curatech Products that use this component
-    public function requiredStock() {
+    public function requiredStock($desiredStock = null) {
         $stock_required = 0;
-        foreach ($this->desired_stocks()->get() as $ds) {
+        foreach ($this->desired_stocks()
+            ->when($desiredStock, function ($query) use ($desiredStock) {
+                $query->where('desired_stock_id', $desiredStock->id);
+            })
+            ->get() as $ds) {
            $stock_required += $ds->amount_to_make > 0 ? $ds->amount_to_make : 0;
         } 
         return $stock_required;

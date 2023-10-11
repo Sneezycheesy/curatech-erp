@@ -10,16 +10,24 @@
                     <x-paragraph class="text-xl">{{$comp->component_id}}</x-paragraph>
                 </div>
                 <div>
-                    <x-paragraph class="text-lg">Voorraad</x-paragraph>
+                    <x-paragraph class="text-lg">Voorraad magazijn</x-paragraph>
                     <x-paragraph class="text-xl">{{$comp->stock}}</x-paragraph>
                 </div>
                 <div>
-                    <x-paragraph class="text-lg">Courant</x-paragraph>
+                    <x-paragraph class="text-lg">Voorraad machines</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->stock_machines}}</x-paragraph>
+                </div>
+                <div>
+                    <x-paragraph class="text-lg">Leverbaar</x-paragraph>
                     <x-paragraph class="text-xl">{{$comp->courant ? 'Ja' : 'Neen'}}</x-paragraph>
                 </div>
                 <div>
-                    <x-paragraph class="text-lg">LT</x-paragraph>
-                    <x-paragraph class="text-xl">{{$comp->lt}}</x-paragraph>
+                    <x-paragraph class="text-lg">Levertijd (in dagen)</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->time_to_delivery}}</x-paragraph>
+                </div>
+                <div>
+                    <x-paragraph class="text-lg">Verpakt per</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->package_size}}</x-paragraph>
                 </div>
                 <div>
                     <x-paragraph class="text-lg">Beschrijving</x-paragraph>
@@ -32,7 +40,7 @@
 
         <div class="flex justify-end w-full max-w-7xl py-5 mx-auto" x-data="{open_writeoff_modal: false, component_id: 0}">
             <x-primary-button class="mr-2" onclick="browseTo('/restocks/{{$comp->component_id}}/create')"><i class="fa-solid fa-wallet"></i></x-primary-button>
-            <x-primary-button class="mr-2"><i class="fa-solid fa-arrow-down"></i></x-primary-button>
+            <x-primary-button class="mr-2" @click="open_writeoff_modal = true"><i class="fa-solid fa-arrow-down"></i></x-primary-button>
             <x-edit-button onclick="browseTo('/components/edit/{{$comp->component_id}}')" class="w-max"></x-edit-button>
             @include('curatech_components.partials.write-off-modal')
         </div>

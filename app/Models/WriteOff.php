@@ -16,6 +16,7 @@ class WriteOff extends Model
         'component_id',
         'amount',
         'new_stock',
+        'stock_from',
         'created_at',
         'updated_at',
     ];

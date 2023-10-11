@@ -1,4 +1,4 @@
-<div x-show="confirm_delete_modal_open"
+<div x-cloak x-show="confirm_delete_modal_open"
     x-transition:enter="transition linear duration-300"
     x-transition:enter-start="opacity-0"
     x-transition:enter-end="opacity-100"

@@ -86,6 +86,8 @@ class DesiredStockController extends Controller
                 ->withErrors($validator);
         }
 
+        $desiredStock->update($request->except('_token'));
+
         //
         return view('desired_stocks.partials.information-container', [
             'desired_stock' => $desiredStock,
