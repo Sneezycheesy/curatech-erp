@@ -26,6 +26,8 @@ class DesiredStock extends Model
 
     public function curatechComponents(): BelongsToMany {
         return $this->belongsToMany(Component::class, 'curatech_components_desired_stocks', 'desired_stock_id', 'curatech_component_id')
+            ->withPivot('amount_made')
+            ->withPivot('amount_to_make')
             ->distinct()->orderBy('curatech_component_id', 'ASC');
     }
 }

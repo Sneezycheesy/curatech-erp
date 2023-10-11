@@ -35,13 +35,15 @@ class CuratechProductController extends Controller
 
     public function details(string $id, Request $request) {
         
-        $curatech_product = CuratechProduct::find($id);
+        $curatech_product = CuratechProduct::where('curatech_product_id', $id)->with('desiredStocks')->first();
         $writeoffs = $curatech_product->writeoffs()->orderBy('created_at', 'DESC')->distinct('created_at')->get();
+        $active_desired_stock = $curatech_product->desiredStocks()->where('start_date', '<=', now())->where('expiration_date', '>=', now())->first();
 
         return view('curatech_products.details', [
             'curatech_product' => $curatech_product,
             'components' => $curatech_product->components()->get(),
             'writeoffs' => $writeoffs,
+            'desired_stock' => $active_desired_stock,
         ]);
     }
 

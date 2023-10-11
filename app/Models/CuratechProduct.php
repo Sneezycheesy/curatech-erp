@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CuratechProduct extends Model
 {
@@ -30,7 +31,7 @@ class CuratechProduct extends Model
         return $this->hasMany(WriteOff::class);
     }
 
-    public function desired_stock(): HasMany {
+    public function desiredStocks(): HasMany {
         return $this->hasMany(DesiredStock::class);
     }
 

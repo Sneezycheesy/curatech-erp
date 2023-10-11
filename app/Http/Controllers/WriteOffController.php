@@ -27,15 +27,75 @@ class WriteOffController extends Controller
         //
     }
 
+    public function storeForCuratechProduct(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'curatech_product_id' => 'required|exists:curatech_products',
+            'amount' => 'required|integer',
+            'production_step' => 'required|in:SMD,ASSEMBLY',
+        ]);
+        
+        if($validator->fails()) {
+            dd ($validator->errors());
+        }
+
+        $smd = $request->production_step == 'SMD' ? true : false;
+        
+
+        $curatech_product = CuratechProduct::find($request->curatech_product_id);
+
+        $components = $curatech_product->components()->where('smd', $smd)->orderBy(!$smd ? 'stock' : 'stock_machines', 'ASC')->pluck('components.component_id')->toArray();
+        $components_to_update = array_count_values($components);
+
+
+        foreach($components_to_update as $comp=>$amount) {
+            $component = Component::find($comp);
+            $max_amount = ($smd ? $component->stock_machines : $component->stock) / $amount;
+            $validator = Validator::make($request->all(), [
+                'amount' => 'integer|max:' . $max_amount,
+            ], 
+            [
+                'amount.max' => "Kan maximaal :max producten afboeken",
+            ]);
+
+            if ($validator->fails()) {
+                return $validator->errors();
+            }
+        }
+        $writeoff = WriteOff::create([
+            'curatech_product_id' => $curatech_product->id,
+            'amount' => $request->amount,
+        ]);
+
+        $desired_stock = $curatech_product->desiredStocks()->where('start_date', '<=', now())->where('expiration_date', '>=', now())->first();
+        $desired_stock->update([
+            'amount_made' => $desired_stock->amount_made + $request->amount,
+            'amount_to_make' => $desired_stock->amount_to_make - $request->amount > 0 ? $desired_stock->amount_to_make - $request->amount : 0,
+        ]);
+
+        $desired_stock->curatechComponents()->where('smd', $smd)->get()->each(function ($comp) use ($request, $components_to_update) {
+            $comp->update(['amount_made' => $comp->amount_made + $request->amount * $components_to_update[$comp->component_id],
+                            'amount_to_make' => $comp->amount_to_make - $request->amount * $components_to_update[$comp->component_id] > 0 ? $comp->amount_to_make - $request->amount * $components_to_update[$comp->component_id] : 0,
+            ]);
+        });
+
+        $components = $curatech_product->components()->where('smd', $smd)->orderBy(!$smd ? 'stock' : 'stock_machines', 'ASC')->get();
+        $components->each(function ($comp) use ($request, $components_to_update, $smd) {
+            if (!$smd) {
+                $comp->update(['stock' => $comp->stock - ($request->amount * $components_to_update[$comp->component_id])]);
+            } else {
+                $comp->update(['stock_machines' => $comp->stock_machines - ($request->amount * $components_to_update[$comp->component_id])]);
+            }
+        });
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $error = null;
+    {        
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|integer',
             'component_id' => 'required|integer',
+            'amount' => 'required|numeric|integer',
         ]);
 
         if ($validator->fails()) {
@@ -44,12 +104,21 @@ class WriteOffController extends Controller
 
         if (isset($request->component_id)) {
             $component = Component::find($request->component_id);
+            $new_stock;
 
-            $component->update(['stock' => $component->stock - $request->amount]);
+            if($request->stock_from == 'STOCKROOM') {
+                $component->update(['stock' => $component->stock - $request->amount]);
+                $new_stock = $component->stock;
+            } else if ($request->stock_from == 'MACHINE') {
+                $component->update(['stock_machines' => $component->stock_machines - $request->amount]);
+                $new_stock = $component->stock_machines;
+            }
+
             WriteOff::create([
                 'component_id' => $component->id,
                 'amount' => $request->amount,
-                'new_stock' => $component->stock,
+                'new_stock' => $new_stock,
+                'stock_from' => $request->stock_from,
             ]);
         }
 

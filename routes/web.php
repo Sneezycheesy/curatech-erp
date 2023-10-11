@@ -51,7 +51,7 @@ Route::get('/desired_stocks/{desired_stock}/edit', [DesiredStockController::clas
 
 // Purchases
 Route::get('/purchases', [RestockController::class, 'index'])->middleware(['auth', 'verified'])->name('purchases');
-Route::post('/writeoffs/store', [WriteOffController::class, 'store'])->middleware(['auth', 'verified'])->name('writeoffs.store');
+Route::post('/writeoffs/store', [WriteOffController::class, 'storeForCuratechProduct'])->middleware(['auth', 'verified'])->name('writeoffs.store');
 Route::post('/purchases', [RestockController::class, 'updateDesiredStock'])->middleware(['auth', 'verified'])->name('purchases_update_stock');
 
 // Stockrooms

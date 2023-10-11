@@ -18,14 +18,27 @@
             <x-input-label>Curatech product</x-input-label>
             <x-select-box class="w-full" name="curatech_product_id">
                 <x-slot name="options">
-                @foreach($curatech_products as $curatech_product)
+                @if($curatech_product)
                     <option value="{{$curatech_product->curatech_product_id}}" :selected="curatech_product_id == '{{$curatech_product->curatech_product_id}}'">{{$curatech_product->name}}</option>
-                    @endforeach
+                @else
+                @foreach($curatech_products as $cp)
+                    <option value="{{$cp->curatech_product_id}}" :selected="curatech_product_id == '{{$cp->curatech_product_id}}'">{{$cp->name}}</option>
+                @endforeach
+                @endif
                 </x-slot>
             </x-select-box>
             <x-input-label>Aantal af te boeken</x-input-label>
             <x-error-message id="amount_error" class="my-2"></x-error-message>
             <x-text-input class="w-full" name="amount"/>
+
+            <x-input-label>Productiestap</x-input-label>
+            <x-select-box name="production_step" class="w-full">
+                <x-slot name="options">
+                    <option value="SMD">SMD</option>
+                    <option value="ASSEMBLY">Assemblage</option>
+                </x-slot>
+            </x-select-box>
+
             <div class="flex w-full justify-end mt-3">
                 <x-primary-button hx-post="{{route('writeoffs.store')}}" hx-target="#amount_error" hx-refresh="true" class="mr-2">OK</x-primary-button>
                 <x-primary-button type="button" @click="open_writeoff_modal = false">X</x-primary-button>

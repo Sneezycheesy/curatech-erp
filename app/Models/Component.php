@@ -25,7 +25,7 @@ class Component extends Model
         'component_type',
         'component_value',
         'component_unit',
-        'stock_machine',
+        'stock_machines',
         'smd',
     ];
 
