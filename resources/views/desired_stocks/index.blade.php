@@ -39,7 +39,13 @@
             <x-paragraph class="hidden lg:block">Stukprijs</x-paragraph>
             <x-paragraph>Nodig</x-paragraph>
             <x-paragraph>Tekort</x-paragraph>
-            <x-paragraph class="hidden lg:block">Totaal</x-paragraph>
+            <x-paragraph class="hidden lg:block">
+                Totaal
+                @if ($total_price > 0)
+                <br/>
+                €{{$total_price}}
+                @endif
+            </x-paragraph>
         </x-slot>
 
         <div class="max-h-[20rem]">
@@ -47,7 +53,11 @@
             {{ $i = false }}
             @foreach($curatech_components as $curatech_component)
             <x-table-row :counter="$i = !$i">
-                <x-paragraph>{{$curatech_component->component_id}}</x-pragraph>
+                <x-paragraph>
+                    <a href="{{route('components.details', $curatech_component->component_id)}}" class="hover:text-primary">
+                        {{$curatech_component->component_id}}
+                    </a>
+                </x-pragraph>
                 <x-paragraph class="hidden md:block">{{$curatech_component->stock}}</x-pragraph>
                 <x-paragraph class="hidden md:block">{{$curatech_component->stock_machines}}</x-pragraph>
                 <x-paragraph class="hidden md:block">{{$curatech_component->stock + $curatech_component->stock_machines}}</x-pragraph>

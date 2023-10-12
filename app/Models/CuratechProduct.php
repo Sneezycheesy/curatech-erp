@@ -24,7 +24,9 @@ class CuratechProduct extends Model
     }
 
     public function components() {
-        return $this->belongsToMany(Component::class, 'curatech_products_components', 'curatech_product_id', 'component_id')->withPivot('curatech_product_component_position');
+        return $this->belongsToMany(Component::class, 'curatech_products_components', 'curatech_product_id', 'component_id')
+            ->withPivot('curatech_product_component_position')
+            ->orderby('components.component_id');
     }
 
     public function writeoffs() {

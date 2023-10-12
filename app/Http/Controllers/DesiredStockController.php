@@ -7,6 +7,7 @@ use App\Models\CuratechProduct;
 use App\Models\DesiredStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Builder;
 
 use Mauritius\LaravelHtmx\Http\HtmxResponseClientRedirect;
 
@@ -19,13 +20,27 @@ class DesiredStockController extends Controller
     {
         //
         $desired_stocks = DesiredStock::where('expiration_date', '>=', now())
+            ->where('start_date', '<=', now());
+
+        /*
+            Only grab components that are actually needed for production (expected to be produced in the current period)
+        */
+        $curatech_components = Component::whereHas('curatech_products', function ($query) use ($desired_stocks) {
+                $dss = $query->with('desiredStocks', function ($qry) use($desired_stocks) {
+                    $qry->whereIn('id', $desired_stocks->pluck('id')->toArray());
+                });
+            })
+            ->with('vendors')
+            ->paginate(50);
+
+        $desired_stocks = $desired_stocks
             ->with('curatechProduct')
             ->paginate(50);
-        $curatech_components = Component::whereHas('curatech_products')->with('vendors')->paginate(50);
 
         return view('desired_stocks.index', [
             'desired_stocks' => $desired_stocks,
             'curatech_components' => $curatech_components,
+            'total_price' => $this->totalPrice(),
         ]);
     }
 
@@ -144,5 +159,21 @@ class DesiredStockController extends Controller
     public function destroy(DesiredStock $desiredStock)
     {
         //
+    }
+
+    private function totalPrice() {
+        
+        $components = Component::orderBy('component_id', 'ASC')
+        ->get()
+        ->filter(function($comp) {
+            return $comp->requiredStock() > 0;
+        });
+
+        $total_price = 0;
+        $components->each(function ($comp) use (&$total_price) {
+            $total_price += doubleval($comp->priceRequiredStock(true));
+        });
+
+        return number_format($total_price, 2, ',', '.');
     }
 }

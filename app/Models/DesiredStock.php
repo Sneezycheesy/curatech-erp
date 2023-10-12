@@ -26,6 +26,9 @@ class DesiredStock extends Model
     }
 
     public function curatechComponents() {
-        return $this->curatechProduct()->first()->components()->paginate(50);
+        $curatech_product_id = $this->curatechProduct->id;
+        return Component::whereHas('curatech_products', function($query) use($curatech_product_id) {
+            $query->where('curatech_products_components.curatech_product_id', $curatech_product_id);
+        })->paginate(50);
     }
 }
