@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Component;
+use App\Models\CuratechProduct;
 use App\Models\DesiredStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -39,9 +40,32 @@ class DesiredStockController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, CuratechProduct $curatech_product)
     {
         //
+        $expiration_date = null;
+        if ($curatech_product->activeDesiredStock()) {
+            $expiration_date = $curatech_product->activeDesiredStock()->expiration_date;
+        }
+
+        $validator = Validator::make($request->all(), [
+            'amount_initial' => 'required|numeric|integer|min:1',
+            'start_date' => 'required|after:' . $expiration_date ?? now(),
+            'expiration_date' => 'required|after:start_date',
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
+        DesiredStock::create([
+            'curatech_product_id' => $curatech_product->id,
+            'amount_initial' => $request->amount_initial,
+            'amount_made' => 0,
+            'amount_to_make' => $request->amount_initial,
+            'start_date' => $request->start_date,
+            'expiration_date' => $request->expiration_date,
+        ]);
     }
 
     /**

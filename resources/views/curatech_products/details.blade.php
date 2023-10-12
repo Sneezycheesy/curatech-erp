@@ -39,10 +39,32 @@
         </div>
 
         <!-- show desired stocks, both future and past -->
-        <div class="flex justify-between w-full p-3 mt-3">
-            <x-title>Voorraadschattingen</x-title>
-            <x-new-button />
+        <div class="flex justify-between w-full p-3 mt-3" x-data="{open_new_desired_stock_modal: false}">
+            <x-title>Productieschattingen</x-title>
+            <x-new-button x-on:click="open_new_desired_stock_modal = true" />
+            <x-modal-view name="new_desired_stock">
+                <x-slot name="title">
+                    Nieuwe Productieschatting
+                </x-slot>
+                <form class="w-1/2 mx-auto text-center" action="{{route('desired_stocks.store', $curatech_product)}}" 
+                    hx-post="{{route('desired_stocks.store', $curatech_product)}}" 
+                    hx-trigger="form.submit"
+                    method="post">
+                    @csrf
+                    <x-input-label>Te maken aantal</x-input-label>
+                    <x-text-input class="w-full" name="amount_initial"></x-text-input>
+
+                    <x-input-label class="mt-3">Startdatum</x-input-label>
+                    <x-text-input type="date" class="w-full" value="{{now()->format('Y-m-d')}}" min="{{now()->format('Y-m-d')}}" name="start_date" />
+
+                    <x-input-label class="mt-3">Verloopdatum</x-input-label>
+                    <x-text-input type="date" class="w-full" value="{{now()->addDays(1)->format('Y-m-d')}}" name="expiration_date" min="{{date('Y-m-d', strtotime(now()->addDays(1)))}}" />
+
+                    <x-primary-button class="mt-3">Opslaan</x-primary-button>
+                </form>
+            </x-modal-view>
         </div>
+
         <x-index-container class="md:grid-cols-4 p-3">
             @foreach($curatech_product->desiredStocks()->get() as $ds)
             <a href="{{route('desired_stocks.details', $ds)}}">

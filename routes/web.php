@@ -48,6 +48,7 @@ Route::get('/desired_stocks', [DesiredStockController::class, 'index'])->middlew
 Route::get('/desired_stocks/{desired_stock}', [DesiredStockController::class, 'show'])->middleware(['auth'])->name('desired_stocks.details');
 Route::post('/desired_stocks/{desired_stock}', [DesiredStockController::class, 'update'])->middleware(['auth'])->name('desired_stocks.update');
 Route::get('/desired_stocks/{desired_stock}/edit', [DesiredStockController::class, 'edit'])->middleware(['auth'])->name('desired_stocks.edit');
+Route::post('/desired_stocks/{curatech_product}/store', [DesiredStockController::class, 'store'])->middleware(['auth', 'verified'])->name('desired_stocks.store');
 
 // Purchases
 Route::get('/purchases', [RestockController::class, 'index'])->middleware(['auth', 'verified'])->name('purchases');

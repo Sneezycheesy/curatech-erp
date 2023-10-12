@@ -31,6 +31,11 @@ class CuratechProduct extends Model
         return $this->hasMany(WriteOff::class);
     }
 
+    public function activeDesiredStock(): DesiredStock {
+        return $this->desiredStocks()->where('start_date', '<=', now())
+            ->where('expiration_date', '>=', now())->first();
+    }
+
     public function desiredStocks(): HasMany {
         return $this->hasMany(DesiredStock::class);
     }
