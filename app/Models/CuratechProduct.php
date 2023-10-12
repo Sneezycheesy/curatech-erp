@@ -37,7 +37,8 @@ class CuratechProduct extends Model
     }
 
     public function desiredStocks(): HasMany {
-        return $this->hasMany(DesiredStock::class);
+        return $this->hasMany(DesiredStock::class)
+            ->orderBy('start_date', 'ASC');
     }
 
     public static function find($id) {

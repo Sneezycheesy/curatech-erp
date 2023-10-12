@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -72,7 +73,7 @@ class Component extends Model
     public function requiredStock($desiredStock = null) {
         $stock_required = 0;
         foreach ($this->desired_stocks()
-            ->when($desiredStock, function ($query) use ($desiredStock) {
+            ->when($desiredStock, function (Builder $query) use ($desiredStock) {
                 $query->where('desired_stock_id', $desiredStock->id);
             })
             ->get() as $ds) {

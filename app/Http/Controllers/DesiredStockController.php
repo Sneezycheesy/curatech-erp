@@ -21,7 +21,7 @@ class DesiredStockController extends Controller
         $desired_stocks = DesiredStock::where('expiration_date', '>=', now())
             ->with('curatechProduct')
             ->paginate(50);
-        $curatech_components = Component::whereHas('desired_stocks')->with('vendors')->paginate(50);
+        $curatech_components = Component::whereHas('curatech_products')->with('vendors')->paginate(50);
 
         return view('desired_stocks.index', [
             'desired_stocks' => $desired_stocks,
@@ -44,6 +44,7 @@ class DesiredStockController extends Controller
     {
         //
         $expiration_date = null;
+
         if ($curatech_product->activeDesiredStock()) {
             $expiration_date = $curatech_product->activeDesiredStock()->expiration_date;
         }
@@ -55,6 +56,23 @@ class DesiredStockController extends Controller
         ]);
 
         if ($validator->fails()) {
+            return $validator->errors();
+        }
+
+        
+        $expiration_date = $curatech_product->desiredStocks()
+            ->where('start_date', '>=', $request->start_date)
+            ->orderBy('start_date', 'ASC')
+            ->pluck('start_date')
+            ->first() ?? null;
+
+        $validator = Validator::make($request->all(), [
+            'start_date' => 'before:' . $expiration_date . '|after:' . now(),
+            'expiration_date' => 'before:' . $expiration_date . '|after:start_date',
+        ]);
+
+        if ($validator->fails()) {
+            dump($request->all());
             return $validator->errors();
         }
 
@@ -77,7 +95,7 @@ class DesiredStockController extends Controller
         return view('desired_stocks.details', [
             'desired_stock' => $desiredStock,
             'curatech_product' => $desiredStock->curatechProduct()->first(),
-            'curatech_components' => $desiredStock->curatechComponents()->paginate(50),
+            'curatech_components' => $desiredStock->curatechComponents(),
         ]);
     }
 

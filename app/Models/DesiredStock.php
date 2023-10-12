@@ -13,6 +13,7 @@ class DesiredStock extends Model
     use HasFactory;
 
     protected $fillable = [
+        'curatech_product_id',
         'amount_initial',
         'amount_made',
         'amount_to_make',
@@ -24,10 +25,7 @@ class DesiredStock extends Model
         return $this->belongsTo(CuratechProduct::class);
     }
 
-    public function curatechComponents(): BelongsToMany {
-        return $this->belongsToMany(Component::class, 'curatech_components_desired_stocks', 'desired_stock_id', 'curatech_component_id')
-            ->withPivot('amount_made')
-            ->withPivot('amount_to_make')
-            ->distinct()->orderBy('curatech_component_id', 'ASC');
+    public function curatechComponents() {
+        return $this->curatechProduct()->first()->components()->paginate(50);
     }
 }
