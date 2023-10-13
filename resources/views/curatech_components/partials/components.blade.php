@@ -1,18 +1,30 @@
-<div id="components_container" class="col-span-3 grid grid-cols-3 gap-y-2 auto-rows-max max-h-[400px] overflow-y-scroll p-1">
-@for($i = 0; $i < count($components); $i++)
-    <a href="{{route('components.details', $components[$i]->component_id)}}" 
-        class="col-span-3 grid grid-cols-3 auto-rows-max text-paragraph-700 dark:text-paragraph-200 hover:text-paragraph-200 
-        hover:dark:text-paragraph-100 hover:cursor-pointer py-2 hover:ring hover:ring-primary transition-all duration-200
-        {{$i % 2 ? 'dark:bg-cbg-700 bg-cbg-200' : 'dark:bg-cbg-600 bg-cbg-100'}}">
-        <div>
-            {{$components[$i]->component_id}}
-        </div>
-        <div class="inline overflow-hidden text-ellipsis whitespace-nowrap">
-            {{$components[$i]->description}}
-        </div>
-        <div>
-            {{$components[$i]->stock}}
-        </div>
+<x-slot name="tbody">
+@php
+    $counter = false;
+@endphp
+@foreach($curatech_components as $curatech_component)
+    <a href="{{route('components.details', $curatech_component->component_id)}}">
+    <x-table-row counter="{{$counter = !$counter}}">
+        <x-paragraph>
+            {{$curatech_component->component_id}}
+        </x-paragraph>
+        <x-paragraph class="inline overflow-hidden text-ellipsis whitespace-nowrap">
+            {{$curatech_component->description}}
+        </x-paragraph>
+        <x-paragraph>
+            {{$curatech_component->stock}}
+        </x-paragraph>
+    </x-table-row>
     </a>
-@endfor
-</div>
+@endforeach
+        @if($curatech_components->nextPageUrl())
+        <a 
+            hx-get="{{$curatech_components->nextPageUrl()}}"
+            hx-select="#table-body-container>a"
+            hx-swap="outerHTML"
+            hx-trigger="intersect"
+            hx-indicator="#loading-indicator"
+        >
+        </a>
+        @endif
+</x-slot>

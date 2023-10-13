@@ -11,18 +11,18 @@
     </x-searchbar>
 
     <!-- Components overview -->
-    <div class="grid grid-cols-3 grid-flow-cols text-paragraph-light dark:text-paragraph-dark pt-7 max-w-7xl mx-auto text-center gap-y-2">
-        <div class="grid col-span-5 grid-cols-3 grid-flows-cols text-center text-title-light dark:text-title-dark pb-2 border-b-2 border-cbg-700 overlow-y-scroll">
-            <div>
+    <x-table>
+        <x-slot name="header">
+            <x-paragraph>
                 ID
-            </div>
-            <div>
+            </x-paragraph>
+            <x-paragraph>
                 Beschrijving
-            </div>
-            <div>
+            </x-paragraph>
+            <x-paragraph>
                 Voorraad
-            </div>
-        </div>
+            </x-paragraph>
+        </x-slot>
         @include('curatech_components.partials.components')
-    </div>
+    </x-table>
 </x-app-layout>

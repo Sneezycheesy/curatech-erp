@@ -12,13 +12,9 @@
         </a>
         <a href="{{route('vendors')}}" class="flex items-center hover:bg-red-400 hover:black:bg-red-500 justify-center bg-red-200 w-full h-[100px] text-black dark:bg-red-600 dark:text-white">
             Leveranciers
-        </a>
-        <a href="{{route('purchases')}}" class="flex items-center hover:bg-red-400 hover:black:bg-red-500 justify-center bg-red-200 w-full h-[100px] text-black dark:bg-red-600 dark:text-white">
-            Inkoop (WIP)
-        </a>
-        
+        </a>        
         <a href="{{route('desired_stocks.index')}}" class="flex items-center hover:bg-red-400 hover:black:bg-red-500 justify-center bg-red-200 w-full h-[100px] text-black dark:bg-red-600 dark:text-white">
-            Inkoop (NIEUW CONCEPT WIP)
+            Inkoop (WIP)
         </a>
         <a href="{{route('stockrooms')}}" class="flex items-center hover:bg-red-400 hover:black:bg-red-500 justify-center bg-red-200 w-full h-[100px] text-black dark:bg-red-600 dark:text-white">
             Magazijnbeheer (WIP)

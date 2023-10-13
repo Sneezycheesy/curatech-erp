@@ -13,16 +13,16 @@ use App\Models\Stockroom;
 class ComponentController extends Controller
 {
     public function get(Request $request) {
-        $components = Component::all();
+        $components = Component::paginate(50);
 
         if ($request->search) {
             $components = Component::where('component_id', 'like', "%$request->search%")
                 ->orWhere('description', 'like', "%$request->search%")
-                ->get();
+                ->paginate(50);
         }
 
         return view('curatech_components.index', [
-            'components' => $components,
+            'curatech_components' => $components,
         ])->withInput($request->search);
     }
 
