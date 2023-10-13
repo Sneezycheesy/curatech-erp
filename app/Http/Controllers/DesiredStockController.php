@@ -25,13 +25,11 @@ class DesiredStockController extends Controller
         /*
             Only grab components that are actually needed for production (expected to be produced in the current period)
         */
-        $curatech_components = Component::whereHas('curatech_products', function ($query) use ($desired_stocks) {
-                $dss = $query->with('desiredStocks', function ($qry) use($desired_stocks) {
-                    $qry->whereIn('id', $desired_stocks->pluck('id')->toArray());
-                });
-            })
+        $curatech_components = Component::whereHas('desired_curatech_products')
+            ->with('curatech_products')
+            ->with('desired_curatech_products')
             ->with('vendors')
-            ->paginate(50);
+            ->paginate(15);
 
         $desired_stocks = $desired_stocks
             ->with('curatechProduct')
@@ -40,7 +38,7 @@ class DesiredStockController extends Controller
         return view('desired_stocks.index', [
             'desired_stocks' => $desired_stocks,
             'curatech_components' => $curatech_components,
-            'total_price' => $this->totalPrice(),
+            'total_price' => $this->totalPrice($curatech_components),
         ]);
     }
 
@@ -161,16 +159,10 @@ class DesiredStockController extends Controller
         //
     }
 
-    private function totalPrice() {
+    private function totalPrice($components) {
         
-        $components = Component::orderBy('component_id', 'ASC')
-        ->get()
-        ->filter(function($comp) {
-            return $comp->requiredStock() > 0;
-        });
-
         $total_price = 0;
-        $components->each(function ($comp) use (&$total_price) {
+        $components->each(function ($comp) use ($total_price) {
             $total_price += doubleval($comp->priceRequiredStock(true));
         });
 

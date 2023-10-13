@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 
 class CuratechProduct extends Model
 {
@@ -33,9 +35,9 @@ class CuratechProduct extends Model
         return $this->hasMany(WriteOff::class);
     }
 
-    public function activeDesiredStock(): DesiredStock {
-        return $this->desiredStocks()->where('start_date', '<=', now())
-            ->where('expiration_date', '>=', now())->first();
+    public function activeDesiredStock(): HasOne {
+        return $this->hasOne(DesiredStock::class)->where('start_date', '<=', now())
+            ->where('expiration_date', '>=', now());
     }
 
     public function desiredStocks(): HasMany {

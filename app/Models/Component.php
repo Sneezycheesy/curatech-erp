@@ -61,11 +61,12 @@ class Component extends Model
     }
 
     public function priceRequiredStock($calculation = false) {
-        if (!$this->requiredStock() || $this->requiredStock() <= $this->stock + $this->stock_machines) {
+        $required_stock = $this->requiredStock();
+        if (!$required_stock || $required_stock <= $this->stock + $this->stock_machines) {
             return 0;
         }
 
-        $price = ($this->requiredStock() - $this->stock - $this->stock_machines) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
+        $price = ($required_stock - $this->stock - $this->stock_machines) * $this->vendors()->orderBy('component_unit_price', 'ASC')->pluck('component_unit_price')->first();
         return $calculation ? $price : number_format($price, 2, ',', '.');
     }
 
@@ -73,13 +74,12 @@ class Component extends Model
     # amount of Curatech Products that use this component
     public function requiredStock($desiredStock = null) {
         $stock_required = 0;
-        foreach ($this->desired_stocks()
-            ->when($desiredStock, function (Builder $query) use ($desiredStock) {
-                $query->where('desired_stock_id', $desiredStock->id);
-            })
-            ->get() as $ds) {
-           $stock_required += $ds->pivot->amount_to_make > 0 ? $ds->pivot->amount_to_make : 0;
-        } 
+
+        $curatech_products = $this->desired_curatech_products;
+        foreach($curatech_products as $curatech_product) {
+            $stock_required += $curatech_product->activeDesiredStock->amount_to_make;
+        }
+
         return $stock_required;
     }
 
@@ -103,11 +103,12 @@ class Component extends Model
         return $this->belongsToMany(CuratechProduct::class, 'curatech_products_components', 'component_id', 'curatech_product_id');
     }
 
-    public function desired_stocks(): BelongsToMany {
-        return $this->belongsToMany(DesiredStock::class, 'curatech_components_desired_stocks', 'curatech_component_id', 'desired_stock_id')
-            ->withPivot('amount_initial')
-            ->withPivot('amount_made')
-            ->withPivot('amount_to_make');
+    public function desired_curatech_products(): BelongsToMany {
+        return $this->curatech_products()->whereHas('activeDesiredStock');
+    }
+
+    public function desired_stocks() {
+        return $this->curatech_products()->whereHas('activeDesiredStock');
     }
 
     public function manufacturers(): BelongsToMany {
