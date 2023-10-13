@@ -38,7 +38,10 @@ class DesiredStockController extends Controller
         return view('desired_stocks.index', [
             'desired_stocks' => $desired_stocks,
             'curatech_components' => $curatech_components,
-            'total_price' => $this->totalPrice($curatech_components),
+            'total_price' => $this->totalPrice(Component::with('curatech_products')
+            ->with('desired_curatech_products')
+            ->with('vendors')
+            ->get()),
         ]);
     }
 
@@ -159,10 +162,9 @@ class DesiredStockController extends Controller
         //
     }
 
-    private function totalPrice($components) {
-        
+    private function totalPrice($components) {     
         $total_price = 0;
-        $components->each(function ($comp) use ($total_price) {
+        $components->each(function ($comp) use (&$total_price) {
             $total_price += doubleval($comp->priceRequiredStock(true));
         });
 

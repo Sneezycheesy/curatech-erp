@@ -100,14 +100,11 @@ class Component extends Model
     }
 
     public function curatech_products(): BelongsToMany { 
-        return $this->belongsToMany(CuratechProduct::class, 'curatech_products_components', 'component_id', 'curatech_product_id');
+        return $this->belongsToMany(CuratechProduct::class, 'curatech_products_components', 'component_id', 'curatech_product_id')
+            ->with('activeDesiredStock');
     }
 
     public function desired_curatech_products(): BelongsToMany {
-        return $this->curatech_products()->whereHas('activeDesiredStock');
-    }
-
-    public function desired_stocks() {
         return $this->curatech_products()->whereHas('activeDesiredStock');
     }
 
