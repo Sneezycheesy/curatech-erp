@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-background-light dark:bg-background-dark border-b border-bdr-light dark:border-bdr-dark">
+<nav x-data="{ open: false }" class="sticky bg-background-light dark:bg-background-dark border-b border-bdr-light dark:border-bdr-dark">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -32,12 +32,16 @@
                     </x-nav-link>
                 </div>
             </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:inline-flex w-full items-center justify-end text-right">
+                    <i class="fa-regular fa-sun dark:text-cbg-200 hover:cursor-pointer" onclick="toggleTheme()"></i>
+                </div>
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-paragraph-light dark:text-paragraph-dark bg-cbg-100 dark:bg-cbg-900 hover:text-cbg-700 dark:hover:text-cbg-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex whitespace-nowrap items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-paragraph-light dark:text-paragraph-dark bg-cbg-100 dark:bg-cbg-900 hover:text-cbg-700 dark:hover:text-cbg-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">
@@ -121,3 +125,31 @@
         </div>
     </div>
 </nav>
+
+<script lang="text/javascript">
+    setTheme();
+    function setTheme() {
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    }
+
+    function toggleTheme() {
+        // Whenever the user explicitly chooses light mode
+        if(localStorage.theme) {
+            localStorage.removeItem('theme');
+        } else {
+            if(window.matchMedia('(prefers-color-scheme: dark)')) {
+                localStorage.theme = 'light';
+            }
+            else {
+                localStorage.theme = 'dark';
+            }
+        }
+
+
+        setTheme();
+    }
+</script>
