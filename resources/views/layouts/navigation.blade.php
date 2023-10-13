@@ -32,8 +32,8 @@
                     </x-nav-link>
                 </div>
             </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:inline-flex w-full items-center justify-end text-right">
-                    <i class="fa-regular fa-sun dark:text-cbg-200 hover:cursor-pointer" onclick="toggleTheme()"></i>
+                <div class="space-x-8 -my-px ml-10 mr-5 sm:mr-0 inline-flex w-full items-center justify-end text-right">
+                    <i class="fa-regular fa-sun dark:text-paragraph-dark hover:cursor-pointer" onclick="toggleTheme()"></i>
                 </div>
 
 
@@ -73,7 +73,7 @@
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-paragraph-light dark:text-paragraph-dark hover:text-paragraph-dark dark:hover:text-paragraph-light hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-paragraph-light dark:text-paragraph-dark hover:text-paragraph-dark dark:hover:text-paragraph-light hover:bg-cbg-100 dark:hover:bg-cbg-900 focus:outline-none focus:bg-cbg-100 dark:focus:bg-cbg-900 focus:text-cbg-500 dark:focus:text-cbg-400 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -90,14 +90,16 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-        <!-- <x-responsive-nav-link :href="route('components')" :active="request()->routeIs('components')">
+        <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link :href="route('components')" :active="request()->routeIs('components')">
                 {{ __('Componenten') }}
             </x-responsive-nav-link>
         </div>
+        <div class="pt-2 pb-3 space-y-1">
         <x-responsive-nav-link :href="route('curatech_products')" :active="request()->routeIs('curatech_products')">
                 {{ __('Producten') }}
             </x-responsive-nav-link>
-        </div> -->
+        </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
