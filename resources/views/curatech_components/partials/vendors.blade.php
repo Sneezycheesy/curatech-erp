@@ -1,5 +1,5 @@
 
-<div class="grid w-full grid-cols-7 grid-flow-cols auto-grid-rows gap-y-2 gap-x-2 text-center max-w-7xl mx-auto h-max px-2">
+<div class="">
     @if (!$disabled)
     <div class="grid grid-cols-7 col-span-7 text-white">
         <div class="col-span-3 text-2xl grid auto-rows-max grid-cols-1">
@@ -41,28 +41,43 @@
     @endif
 
     <!-- Display TABLE of linked COMPONENTS-->
-    <div class="grid {{$disabled ? 'grid-cols-3' : 'grid-cols-4 mt-3'}} border-b-2 border-cbg-600 col-span-7">
-        <x-input-label>Naam</x-input-label>
-        <x-input-label>Productnummer</x-input-label>
-        <x-input-label>stukprijs</x-input-label>
+    <x-table>
+    <x-slot name="header">
+        <x-paragraph>Naam</x-paragraph>
+        <x-paragraph>Productnummer</x-paragraph>
+        <x-paragraph>stukprijs</x-paragraph>
+        <x-paragraph>Opmerking</x-paragraph>
 
         @if (!$disabled)
-        <div><i class="fa-solid fa-gear"></i></div>
+        <x-paragraph><i class="fa-solid fa-gear"></i></x-paragraph>
         @endif
-    </div>
+    </x-slot>
+
+    <x-slot name="tbody">
+    @php
+        $counter = false;
+    @endphp
+        @foreach ( $vendors as $vendor )
+        <x-table-row counter="{{$counter = !$counter}}">
+            <x-paragraph>{{$vendor->name}}</x-paragraph>
+            <x-paragraph>{{$vendor->pivot->vendor_product_nr}}</x-paragraph>
+            <x-paragraph>€{{$vendor->pivot->component_unit_price}}</x-paragraph>
+            <x-paragraph class="whitespace-nowrap overflow-hidden text-ellipsis hover:whitespace-normal">{{$vendor->pivot->remark}}</x-paragraph>
+
+            @if(!$disabled)
+                <x-paragraph @click="confirm_delete_modal_open = true"><i class="fa-solid fa-trash hover:cursor-pointer hover:text-red-400"></i></x-paragraph>
+            @endif
+
+            @include('curatech_components.partials.vendor-delete-confirm')
+        </x-table-row>
+        @endforeach
+    </x-slot>
+    </x-table>
 
     @foreach ( $vendors as $vendor )
-    <div id="vendor_listitem_{{$vendor->id}}" class="grid col-span-7 {{$disabled ? 'grid-cols-3' : 'grid-cols-4'}} hover:bg-red-700rounded overflow-y-scroll"
+    <div id="vendor_listitem_{{$vendor->id}}" class="grid col-span-7 {{$disabled ? 'grid-cols-4' : 'grid-cols-5'}} hover:bg-red-700rounded overflow-y-scroll"
         x-data="{confirm_delete_modal_open: false}">
-        <div>{{$vendor->name}}</div>
-        <div>{{$vendor->pivot->vendor_product_nr}}</div>
-        <div>€{{$vendor->pivot->component_unit_price}}</div>
-
-        @if(!$disabled)
-            <div @click="confirm_delete_modal_open = true"><i class="fa-solid fa-trash hover:cursor-pointer hover:text-red-400"></i></div>
-        @endif
-
-        @include('curatech_components.partials.vendor-delete-confirm')
+        
     </div>
     @endforeach
 </div>

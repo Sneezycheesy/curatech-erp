@@ -29,6 +29,12 @@
                     <x-paragraph class="text-lg">Verpakt per</x-paragraph>
                     <x-paragraph class="text-xl">{{$comp->package_size}}</x-paragraph>
                 </div>
+                @if($comp->feed)
+                <div>
+                    <x-paragraph class="text-lg">Feed</x-paragraph>
+                    <x-paragraph class="text-xl">{{$comp->feed}}</x-paragraph>
+                </div>
+                @endif
                 <div>
                     <x-paragraph class="text-lg">Beschrijving</x-paragraph>
                     <x-paragraph class="text-xl">{{$comp->description}}</x-paragraph>

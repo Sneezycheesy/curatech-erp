@@ -61,7 +61,7 @@ class ComponentController extends Controller
 
         return view('curatech_components.details', [
             'comp' => Component::find($id),
-            'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->get(),
+            'vendors' => Component::find($id)->vendors()->withPivot('component_unit_price')->withPivot('remark')->get(),
             'all_vendors' => Vendor::all()->whereNotIn('id', Component::find($id)->vendors()->pluck('vendors_components.vendor_id')->toArray()),
             'disabled' => true,
             'linked_shelves' => Component::find($id)->shelves()->get(),
