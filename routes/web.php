@@ -12,6 +12,7 @@ use App\Http\Controllers\RackController;
 use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\WriteOffController;
 use App\Http\Controllers\DesiredStockController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthenticatedSessionController::class, 'create'])
+    ->name('login');
 
 Route::get('/dashboard', function () {
     return view('dashboard', ['curatech_devices' => App\Models\CuratechProduct::all()]);

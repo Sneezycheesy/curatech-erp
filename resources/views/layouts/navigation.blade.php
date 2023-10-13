@@ -127,31 +127,3 @@
         </div>
     </div>
 </nav>
-
-<script lang="text/javascript">
-    setTheme();
-    function setTheme() {
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
-    }
-
-    function toggleTheme() {
-        // Whenever the user explicitly chooses light mode
-        if(localStorage.theme) {
-            localStorage.removeItem('theme');
-        } else {
-            if(window.matchMedia('(prefers-color-scheme: dark)')) {
-                localStorage.theme = 'light';
-            }
-            else {
-                localStorage.theme = 'dark';
-            }
-        }
-
-
-        setTheme();
-    }
-</script>
